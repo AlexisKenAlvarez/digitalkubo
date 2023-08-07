@@ -5,6 +5,8 @@ export const teamSet = [
     text: "Cris P. Bacon",
 
     text1: "marketing eme",
+
+    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed",
   },
   {
     image: "/icon.webp",
@@ -12,6 +14,8 @@ export const teamSet = [
     text: "Hamburger Cheese JR.",
 
     text1: "marketing eme",
+
+    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed",
   },
   {
     image: "/icon.webp",
@@ -19,6 +23,8 @@ export const teamSet = [
     text: "Hamburger Cheese JR.",
 
     text1: "marketing eme",
+
+    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed",
   },
   {
     image: "/icon.webp",
@@ -26,6 +32,8 @@ export const teamSet = [
     text: "Hamburger Cheese JR.",
 
     text1: "marketing eme",
+
+    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed",
   },
   {
     image: "/icon.webp",
@@ -33,6 +41,8 @@ export const teamSet = [
     text: "Hamburger Cheese JR.",
 
     text1: "marketing eme",
+
+    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed",
   },
   {
     image: "/icon.webp",
@@ -40,5 +50,7 @@ export const teamSet = [
     text: "Hamburger Cheese JR.",
 
     text1: "marketing eme",
+
+    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed",
   },
 ];
