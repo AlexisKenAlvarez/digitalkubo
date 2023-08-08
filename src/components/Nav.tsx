@@ -97,7 +97,6 @@ const Nav = () => {
                         {session ? <motion.li onClick={() => { signOut() }} initial={{ x: 100, opacity: 0 }} animate={navDesktopActive ? { x: 0, opacity: 1 } : {}} transition={{ duration: 0.7, delay: 0.5 * 0.3, ease: [0.16, 0.77, 0.47, .97] }} className={`border-b-[1px] border-black/10 py-5`}>
                             Logout
                         </motion.li> : null}
-
                     </ul>
 
                     <div className="font-primary text-center -mt-2 px-6">

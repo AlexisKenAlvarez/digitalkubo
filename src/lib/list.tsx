@@ -1,10 +1,5 @@
 import { HelpCircle, HelpingHand, Phone } from "lucide-react"
-import { BiSolidDashboard, BiSolidContact } from 'react-icons/bi'
-import { AiFillPlusSquare } from 'react-icons/ai'
-import { MdDocumentScanner } from 'react-icons/md'
-import { BsFillQuestionSquareFill } from 'react-icons/bs'
-import { IoMdHelpBuoy } from 'react-icons/io'
-import { LayoutDashboard, PlusSquare, ScrollText } from 'lucide-react';
+import { BiSolidDashboard, BiSolidPlusSquare } from 'react-icons/bi'
 
 
 export const registerList: inputInterface[] = [
@@ -85,6 +80,20 @@ export const navList = [
         slug: '/faq',
         icon: <HelpCircle className="mr-2 h-4 w-4" />
     },
+]
+
+export const menuList = [
+    {
+        label: 'SOPs',
+        link: '/admin',
+        icon: <BiSolidDashboard />
+    },
+    {
+        label: 'Create SOP',
+        link: '/admin/create',
+        icon: <BiSolidPlusSquare />
+    },
+
 
 ]
 

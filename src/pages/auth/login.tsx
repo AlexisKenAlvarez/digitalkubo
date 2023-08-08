@@ -11,12 +11,14 @@ import { FcGoogle } from "react-icons/fc";
 
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/router';
 import { TbLoaderQuarter } from "react-icons/tb";
 import Image from "next/image";
 
 const page = () => {
     const [debounce, setDebounce] = useState(false);
+    const router = useRouter();
+
 
     const signupSchema = z.object({
         email: z.string().email(),
@@ -36,7 +38,6 @@ const page = () => {
     } = useForm<userInput>({ resolver: zodResolver(signupSchema) });
 
     const submit = async (data: userInput) => {
-        const router = useRouter();
 
         if (!debounce) {
             setDebounce(true);

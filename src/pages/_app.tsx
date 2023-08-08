@@ -37,7 +37,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             theme="light"
             transition={Slide}
           />
-          <div className="mt-14 md:mt-24 bg-bg">
+          <div className="mt-14 md:mt-[6.5rem] bg-bg">
             <Component {...pageProps} />
           </div>
           <Footer />
