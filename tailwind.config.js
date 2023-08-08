@@ -6,7 +6,7 @@ module.exports = {
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-	],
+  ],
   theme: {
     container: {
       center: true,
@@ -54,7 +54,11 @@ module.exports = {
         gry: '#959595',
         button: '#8E5C44',
         nav: '#D1770E',
-        bg: '#F7F7F7'
+        bg: '#F7F7F7',
+      },
+      fontFamily: {
+        secondary: ['var(--font-inter)'],
+        primary: ['var(--font-montserrat)']
       },
       boxShadow: {
         aboutShadow: '-9px 10px 0px 2px rgba(0,0,0,1)'
