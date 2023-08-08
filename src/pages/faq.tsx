@@ -3,7 +3,6 @@ import React from "react";
 import Image from "next/image";
 import Questions from "@/components/Questions";
 
-
 const faq = () => {
 
     const faqList = [
@@ -38,7 +37,7 @@ const faq = () => {
     ]
 
     return (
-        <div className="w-full min-h-screen h-auto sm:py-4 relative sm:px-5 sm:flex sm:items-center md:items-center md:justify-center ">
+        <div className="w-full min-h-screen h-auto py-4 relative px-5 sm:flex sm:items-center md:items-center md:justify-center ">
             <div className="max-w-[1400px] ">
                 {/* FAQ HERO */}
                 <div className="flex items-center justify-center">
@@ -69,10 +68,10 @@ const faq = () => {
                 <div className="w-full h-auto mt-32">
                     <h1 className="text-5xl text-nav text-center font-bold">Questions</h1>
 
-                    <div className="">
+                    <div className="grid lg:grid-cols-2 items-center justify-center gap-5 mt-10">
                         {faqList.map((items, i) => {
                             return (
-                                <Questions title={items.title} desc={items.description} />
+                                <Questions title={items.title} desc={items.description} key={i} />
                             )
                         })}
                     </div>
