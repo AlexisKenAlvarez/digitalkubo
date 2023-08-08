@@ -25,9 +25,9 @@ const LeftMenu = () => {
                             return (
                                 <Link key={items.label} href={items.link}>
                                     <li
-                                        className={`py-2 hover:bg-cvsu/5 ${pathname === items.link ? ' text-cvsu' : 'text-black'}`}
+                                        className={`py-2 hover:text-nav ${pathname === items.link ? ' text-button' : 'text-black'}`}
                                         key={items.label}>
-                                        <div className="capitalize mx-auto flex items-center gap-x-2">
+                                        <div className="capitalize mx-auto flex items-center gap-x-2 font-medium">
                                             {items.icon}
                                             <h1 className="">
                                                 {items.label}

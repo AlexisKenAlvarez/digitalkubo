@@ -3,33 +3,24 @@ import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react"
 import { Session } from "next-auth";
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import {
     NavigationMenu,
-    NavigationMenuContent,
-    NavigationMenuIndicator,
-    NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
-    NavigationMenuTrigger,
-    NavigationMenuViewport,
     navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import { menuList } from "@/lib/list";
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
-    const session = await getSession(ctx)
-    console.log(session)
+const index = () => {
 
-    return {
-        props: {
-            session: session
-        }
-    }
-}
+    const router = useRouter()
 
-const index = ({ session }: { session: Session }) => {
+    const pathname = router.pathname
+
+
     return (
         <div className="bg-[#F3F3F3] flex lg:flex-row flex-col">
             <LeftMenu />
@@ -42,12 +33,15 @@ const index = ({ session }: { session: Session }) => {
                                     <NavigationMenuList>
                                         <button>
                                             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                                <div className="text-xl">
-                                                    {items.icon}
+                                                <div className={`flex items-center ${pathname === items.link ? 'text-nav' : ''}`}>
+                                                    <div className="text-xl">
+                                                        {items.icon}
+                                                    </div>
+                                                    <p className="ml-2">
+                                                        {items.label}
+                                                    </p>
                                                 </div>
-                                                <p className="ml-2">
-                                                    {items.label}
-                                                </p>
+
                                             </NavigationMenuLink>
                                         </button>
                                     </NavigationMenuList>
