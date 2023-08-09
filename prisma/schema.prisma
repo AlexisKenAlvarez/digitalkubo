@@ -40,6 +40,11 @@ model ForgotToken {
   @@index([email, token])
 }
 
+model Admins {
+  id    Int    @id @default(autoincrement())
+  email String @unique @db.VarChar(100)
+}
+
 model AccountTypes {
   id          Int     @id @default(autoincrement())
   accountType String  @db.VarChar(20)
@@ -53,4 +58,11 @@ model VerficationToken {
   userEmail Users  @relation(fields: [email], references: [email])
 
   @@index([email])
+}
+
+model ActionPlans {
+  id     Int     @id @default(autoincrement())
+  title  String  @db.VarChar(100)
+  locked Boolean @default(false)
+  link   String  @db.VarChar(150)
 }
