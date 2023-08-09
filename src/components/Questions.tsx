@@ -10,7 +10,9 @@ const Questions = ({ title, desc }: { title: string; desc: string }) => {
 
   return (
     <button
-      className="max-w-[45rem] rounded-lg border-[1px] border-nav"
+      className={`max-w-[45rem] rounded-lg border-[1px] border-nav ${
+        clicked ? "border-[#8E5C44]" : "border-nav"
+      }`}
       onClick={handleClick}
     >
       <div
