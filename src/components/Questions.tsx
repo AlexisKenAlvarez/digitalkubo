@@ -11,13 +11,13 @@ const Questions = ({ title, desc }: { title: string; desc: string }) => {
   return (
     <button
       className={`max-w-[45rem] rounded-lg border-[1px] border-nav ${
-        clicked ? "border-[#8E5C44]" : "border-nav"
+        clicked ? "border-button" : "border-nav"
       }`}
       onClick={handleClick}
     >
       <div
         className={`bg-nav w-full p-5 flex items-center justify-between rounded-md text-white ${
-          clicked ? "bg-[#8E5C44]" : "bg-nav"
+          clicked ? "bg-button" : "bg-nav"
         }`}
       >
         <h1 className=" font-primary">{title}</h1>
