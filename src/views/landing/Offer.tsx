@@ -2,10 +2,10 @@ import { Button } from "@/components/ui/button";
 
 const Offer = () => {
     return (
-        <section className="w-full min-h-screen px-24 2xl:px-5 pt-10 relative bg-white border-y-2">
+        <section className="w-full px-24 2xl:px-5 pt-10 relative bg-white border-y-2">
             <div className="max-w-[1400px] w-full mx-auto items-center">
                 <div className="w-full">
-                    <h1 className="text-[#D1770E] font-primary md:text-[43px] font-bold md:text-center text-[40px] sm:text-[60px]">
+                    <h1 className="text-[#D1770E] font-primary md:text-[43px] font-bold md:text-center text-[40px] sm:text-[60px] tracking-wide">
                         WHAT WE OFFER?</h1>
                 </div>
                 <div className="w-full my-4 mx-auto flex">
