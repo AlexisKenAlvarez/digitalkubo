@@ -84,12 +84,12 @@ export const navList = [
 
 export const menuList = [
     {
-        label: 'SOPs',
+        label: 'Dashboard',
         link: '/admin',
         icon: <BiSolidDashboard />
     },
     {
-        label: 'Create SOP',
+        label: 'Create ACP',
         link: '/admin/create',
         icon: <BiSolidPlusSquare />
     },
