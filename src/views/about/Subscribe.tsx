@@ -18,7 +18,7 @@ const Subscribe = () => {
             SUBSCRIBE!
           </h1>
           <div className="py-5">
-            <Button className=" bg-button hover:bg-nav text-sm px-5 py-2.5 mr-2 mb-2">
+            <Button className=" bg-button hover:bg-nav text-sm px-5 py-2.5 mr-2 mb-2 font-secondary">
               <p className="">SUBSCRIBE</p>
             </Button>
           </div>
