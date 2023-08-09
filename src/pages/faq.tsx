@@ -25,26 +25,6 @@ const faq = () => {
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed",
     },
-    {
-      title: "Lorem Ipsum?",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed",
-    },
-    {
-      title: "Lorem Ipsum?",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed",
-    },
-    {
-      title: "Lorem Ipsum?",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed",
-    },
-    {
-      title: "Lorem Ipsum?",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed",
-    },
   ];
 
   return (
@@ -57,10 +37,12 @@ const faq = () => {
               FREQUENTLY ASKED QUESTIONS
             </h1>
             <div className="font-inter">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente
-              dolores quisquam fugit perspiciatis quae vel? Quas, modi ipsum.
-              Magni distinctio nam maiores. Deserunt reiciendis, omnis maxime
-              fuga molestias ullam minima.
+              <p className="text-black/70">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Sapiente dolores quisquam fugit perspiciatis quae vel? Quas,
+                modi ipsum. Magni distinctio nam maiores. Deserunt reiciendis,
+                omnis maxime fuga molestias ullam minima.
+              </p>
             </div>
           </div>
           <div className="w-[50%] lg:block hidden">
@@ -78,16 +60,29 @@ const faq = () => {
         <div className="w-full h-auto mt-32">
           <h1 className="text-5xl text-nav text-center font-bold">Questions</h1>
 
-          <div className="grid lg:grid-cols-2 items-center justify-center gap-5 mt-10">
-            {faqList.map((items, i) => {
-              return (
-                <Questions
-                  title={items.title}
-                  desc={items.description}
-                  key={i}
-                />
-              );
-            })}
+          <div className="flex flex-row  mt-10  ">
+            <div className=" flex flex-col w-[50%] gap-5 p-2">
+              {faqList.map((items, i) => {
+                return (
+                  <Questions
+                    title={items.title}
+                    desc={items.description}
+                    key={i}
+                  />
+                );
+              })}
+            </div>
+            <div className=" flex flex-col w-[50%] gap-5 p-2 ">
+              {faqList.map((items, i) => {
+                return (
+                  <Questions
+                    title={items.title}
+                    desc={items.description}
+                    key={i}
+                  />
+                );
+              })}
+            </div>
           </div>
         </div>
         {/* CONTACT US */}
