@@ -12,13 +12,13 @@ const Location = () => {
 
       <iframe
         className="w-full min-h-screen"
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3862.118348790875!2d120.97936827594731!3d14.535222378672197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397cbfc84288ed7%3A0xe842057d2e701f9b!2sSM%20Mall%20of%20Asia!5e0!3m2!1sen!2sph!4v1691468896759!5m2!1sen!2sph"
-        //   width=""
-        //   height="300"
-        //   //   style="border:0;"
-        //   //   allowfullscreen=""
-        //   loading="lazy"
-        //   referrerpolicy="no-referrer-when-downgrade"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2620.1014290379035!2d2.3537549769005954!3d48.95155449414505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66939de4deebb%3A0xe219f0aee9315277!2s4%20Av.%20Sacco%20et%20Vanzetti%2C%2093200%20Saint-Denis%2C%20France!5e0!3m2!1sen!2sph!4v1691590933385!5m2!1sen!2sph"
+        // width="600"
+        // height="450"
+        // style="border:0;"
+        // allowfullscreen=""
+        // loading="lazy"
+        // referrerpolicy="no-referrer-when-downgrade"
       ></iframe>
     </div>
   );

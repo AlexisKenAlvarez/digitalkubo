@@ -7,7 +7,7 @@ const What = () => {
         WHAT IS DIGITAL KUBO
       </h1>
       <div>
-        <h1 className="max-w-[60rem] md:pt-5 text-center mt-5 font-secondary text-black/70">
+        <h1 className="max-w-[60rem] md:pt-5 text-justify mt-5 font-secondary text-black/70">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam, quis nostrud exercitation ullamco laboris nisi ut
