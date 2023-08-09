@@ -17,7 +17,7 @@ const Questions = ({ title, desc }: { title: string; desc: string }) => {
     >
       <div
         className={`bg-nav w-full p-5 flex items-center justify-between rounded-md text-white ${
-          clicked ? "bg-button" : "bg-nav"
+          clicked ? "bg-[#8E5C44]" : "bg-nav"
         }`}
       >
         <h1 className=" font-primary">{title}</h1>
