@@ -13,7 +13,7 @@ import { TbLoaderQuarter } from 'react-icons/tb'
 import Image from 'next/image';
 import { useFetchDebounce } from '@/components/handlers/fetchDebounce';
 
-const signup = () => {
+const Signup = () => {
 
     const { data: fetchData, debounce, setDebounce } = useFetchDebounce()
     const router = useRouter()
@@ -123,4 +123,4 @@ const signup = () => {
     );
 }
 
-export default signup;
+export default Signup;

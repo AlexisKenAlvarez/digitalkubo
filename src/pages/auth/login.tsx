@@ -15,7 +15,7 @@ import { useRouter } from 'next/router';
 import { TbLoaderQuarter } from "react-icons/tb";
 import Image from "next/image";
 
-const page = () => {
+const Page = () => {
     const [debounce, setDebounce] = useState(false);
     const router = useRouter();
 
@@ -164,4 +164,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default Page;

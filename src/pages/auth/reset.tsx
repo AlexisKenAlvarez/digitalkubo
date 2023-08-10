@@ -15,7 +15,7 @@ import { TbLoaderQuarter } from 'react-icons/tb'
 import { useFetchDebounce } from '@/components/handlers/fetchDebounce';
 
 
-const page = () => {
+const Page = () => {
 
     const { data: fetchData, debounce, setDebounce } = useFetchDebounce()
     const [sent, setSent] = useState(false)
@@ -112,4 +112,4 @@ const page = () => {
     );
 }
 
-export default page;
+export default Page;

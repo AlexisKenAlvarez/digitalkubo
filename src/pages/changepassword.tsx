@@ -54,7 +54,7 @@ export async function getServerSideProps(context: { query: { token?: string, ema
     }
 }
 
-const changepassword = ({ email }: { email: string }) => {
+const ChangePassword = ({ email }: { email: string }) => {
 
     const router = useRouter()
     const { data: fetchData, debounce, setDebounce } = useFetchDebounce()
@@ -145,4 +145,4 @@ const changepassword = ({ email }: { email: string }) => {
     )
 }
 
-export default changepassword;
+export default ChangePassword;
