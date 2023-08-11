@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import cloudinary from '../../lib/cloudinary';
 import formidable from 'formidable'
+import { prisma } from './_base'
 
 export const config = {
     api: {
@@ -10,31 +11,39 @@ export const config = {
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
+    // const { title, locked } = req.body
+
+    const title = 'My First Action Plan'
+    const locked = false
+
     try {
 
-        const addPdf = () => {
+        const addPdf = async (url: string, title: string, locked: string) => {
+            const data = await prisma.actionPlans.create({
+                data: {
+                    title,
+                    locked: locked === 'locked' ? true : false,
+                    link: url
+                }
+            })
 
+            return data
         }
 
-        const form = formidable({ multiples: false });
+        const form = formidable({ multiples: true });
 
         form.parse(req, async (err: any, fields: any, files: any) => {
 
-            console.log(fields.upload_preset[0])
-            console.log(files.file[0].filepath)
-
             const data = await cloudinary.uploader.unsigned_upload(files.file[0].filepath, fields.upload_preset[0], { folder: 'digitalkubo' });
 
-
             if (data) {
+                const add = await addPdf(data.secure_url, fields.title[0], fields.access[0])
 
-                const url = data.secure_url
-                console.log(data)
+                console.log(add)
 
                 res.status(200).json({ success: true });
-            } else {
-                res.status(200).json({ success: false });
             }
+  
 
         });
 

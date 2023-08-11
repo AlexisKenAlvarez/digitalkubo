@@ -18,6 +18,7 @@ import { useFetchDebounce } from '@/components/handlers/fetchDebounce';
 const Page = () => {
 
     const { data: fetchData, debounce, setDebounce } = useFetchDebounce()
+    
     const [sent, setSent] = useState(false)
 
     const router = useRouter()
