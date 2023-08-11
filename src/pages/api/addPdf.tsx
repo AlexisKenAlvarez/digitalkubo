@@ -11,6 +11,11 @@ export const config = {
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
     try {
+
+        const addPdf = () => {
+
+        }
+
         const form = formidable({ multiples: false });
 
         form.parse(req, async (err: any, fields: any, files: any) => {
