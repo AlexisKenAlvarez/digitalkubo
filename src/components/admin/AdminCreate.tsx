@@ -132,6 +132,8 @@ const AdminCreate = () => {
 
         const upload = await sendMultipleRequests(dataArr)
 
+        console.log(upload)
+
     }
 
     return (
