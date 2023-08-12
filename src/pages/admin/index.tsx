@@ -1,6 +1,5 @@
 import LeftMenu from "@/components/admin/LeftMenu";
 import TopMenu from "@/components/admin/TopMenu";
-import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -15,7 +14,7 @@ import {
 } from "@/components/ui/table"
 import { PiTrashSimpleThin } from "react-icons/pi";
 
-const index = () => {
+const Index = () => {
 
     const { isLoading, isError, error, data } = useQuery({
         queryKey: ['adminData'],
@@ -73,4 +72,4 @@ const index = () => {
     );
 }
 
-export default index;
+export default Index;
