@@ -77,7 +77,7 @@ const Nav = () => {
 
     return (
         <>
-            <nav className={`w-full h-[calc(100vh-60px)] md:hidden block right-0 top-[60px] bottom-0 bg-white text-black z-40 fixed transition-all  ease-in-out duration-500 ${navDesktopActive ? 'translate-x-0' : 'translate-x-full'}`}>
+            <nav className={`w-full min-h-[calc(100vh-60px)] md:hidden block right-0 top-[56px] bottom-0 bg-white text-black z-40 fixed transition-all  ease-in-out duration-500 ${navDesktopActive ? 'translate-x-0' : 'translate-x-full'}`}>
 
                 {/* NAV FOR MOBILE */}
                 <div className="overflow-auto max-h-[100%] h-full w-full pb-20 right-0">
