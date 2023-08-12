@@ -16,7 +16,7 @@ const Offer = () => {
     return (
         <>
             <section className="w-full px-24 2xl:px-5 pt-10 bg-white border-y">
-                <div className="max-w-[1400px] w-full">
+                <div className="max-w-[1400px] w-full mx-auto">
                     <div className="w-full">
                         <h1 className="text-[#D1770E] font-primary md:text-[43px] font-bold md:text-center text-[40px] sm:text-[60px] tracking-wide">
                             WHAT WE OFFER?</h1>
