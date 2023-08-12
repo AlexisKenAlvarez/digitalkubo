@@ -3,7 +3,7 @@ import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Nav from "@/components/Nav";
-import { Inter, Montserrat } from "next/font/google";
+import { Inter } from "next/font/google";
 import Footer from "@/components/Footer";
 import { Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,17 +16,12 @@ const inter = Inter({
   variable: '--font-inter',
 })
 
-const montserrat = Montserrat({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-montserrat',
-})
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>
       <QueryClientProvider client={queryClient}>
-        <div className={`${inter.variable} ${montserrat.variable}`}>
+        <div className={`${inter.variable}`}>
           <Nav />
           <ToastContainer
             position="bottom-center"

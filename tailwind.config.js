@@ -58,7 +58,7 @@ module.exports = {
       },
       fontFamily: {
         secondary: ['var(--font-inter)'],
-        primary: ['var(--font-montserrat)']
+        primary: ['Montserrat']
       },
       boxShadow: {
         aboutShadow: '-9px 10px 0px 2px rgba(0,0,0,1)'
