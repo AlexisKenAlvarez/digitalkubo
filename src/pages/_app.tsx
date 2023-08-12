@@ -8,6 +8,8 @@ import Footer from "@/components/Footer";
 import { Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
+
 const queryClient = new QueryClient();
 
 const inter = Inter({
