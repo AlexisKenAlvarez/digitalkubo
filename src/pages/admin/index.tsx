@@ -19,6 +19,7 @@ const Index = () => {
     const { isLoading, isError, error, data } = useQuery({
         queryKey: ['adminData'],
         queryFn: () => getData(),
+        staleTime: 1000 * 60 * 60 * 24,
     })
 
     const getData = async () => {
