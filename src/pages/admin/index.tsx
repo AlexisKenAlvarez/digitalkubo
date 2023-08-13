@@ -1,5 +1,5 @@
-import LeftMenu from "@/components/admin/LeftMenu";
-import TopMenu from "@/components/admin/TopMenu";
+import LeftMenu from "@/views/admin/LeftMenu";
+import TopMenu from "@/views/admin/TopMenu";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -16,7 +16,7 @@ import { PiTrashSimpleThin } from "react-icons/pi";
 
 const Index = () => {
 
-    const { isLoading, isError, error, data } = useQuery({
+    const { isLoading, isError, error, data, refetch } = useQuery({
         queryKey: ['adminData'],
         queryFn: () => getData(),
         staleTime: 1000 * 60 * 60 * 24,
@@ -24,9 +24,10 @@ const Index = () => {
 
     const getData = async () => {
         const { data } = await axios.get('/api/getPdf')
+        console.log("execute")
         return data
     }
-
+    
 
     return (
         <div className="bg-[#F3F3F3] flex lg:flex-row flex-col">

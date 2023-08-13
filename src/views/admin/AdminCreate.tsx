@@ -1,13 +1,10 @@
-
-
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
-
-import { BsUnlockFill, BsFillLockFill, BsLockFill } from 'react-icons/bs'
+import { BsUnlockFill, BsLockFill } from 'react-icons/bs'
 
 import {
     Card,
@@ -40,11 +37,12 @@ import {
     TableRow,
 } from "@/components/ui/table"
 
-import { Label } from "../ui/label";
+import { Label } from "../../components/ui/label";
 import { PiTrashSimpleThin } from 'react-icons/pi'
 import axios from "axios";
 import { toast } from "react-toastify";
 import { TbLoaderQuarter } from "react-icons/tb";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const AdminCreate = () => {
 
@@ -54,9 +52,21 @@ const AdminCreate = () => {
 
     const [error, setError] = useState('')
     const [debounce, setDebounce] = useState(false)
+    const queryClient = useQueryClient()
+
+    const createPdfMutation = useMutation({
+        mutationFn: uploadData,
+        onSuccess: (data) => {
+            queryClient.invalidateQueries(['adminData'])
+            console.log("Success", data)
+        }
+    })
+
+    const handleSubmit = () => {
+        createPdfMutation.mutate()
+    }
 
     const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-
 
         if (e.target.files && e.target.files.length > 0) {
             const uploadedFile = e.target.files[0]
@@ -66,8 +76,6 @@ const AdminCreate = () => {
             if (uploadedFile.type !== 'application/pdf') {
                 setError('File must be a type of pdf.')
             }
-
-
         }
 
     }
@@ -110,7 +118,7 @@ const AdminCreate = () => {
 
     const nameValue = watch('acpName')
 
-    const uploadData = async () => {
+    async function uploadData() {
 
         async function sendMultipleRequests(formDataArray: FormData[]) {
             const requests = formDataArray.map((formData) =>
@@ -143,6 +151,7 @@ const AdminCreate = () => {
                 setData([])
             }
             setDebounce(false)
+
         }
     }
 
@@ -302,7 +311,7 @@ const AdminCreate = () => {
                         </TableBody>
                     </Table>
 
-                    <Button className="mt-10" onClick={uploadData}>
+                    <Button className="mt-10" onClick={handleSubmit}>
                         {debounce ? <TbLoaderQuarter className="animate-spin" /> : "Upload"}
                     </Button>
                 </div>

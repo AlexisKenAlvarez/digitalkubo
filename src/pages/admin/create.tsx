@@ -1,6 +1,6 @@
-import AdminCreate from "@/components/admin/AdminCreate";
-import LeftMenu from "@/components/admin/LeftMenu";
-import TopMenu from "@/components/admin/TopMenu";
+import AdminCreate from "@/views/admin/AdminCreate";
+import LeftMenu from "@/views/admin/LeftMenu";
+import TopMenu from "@/views/admin/TopMenu";
 
 
 const create = () => {

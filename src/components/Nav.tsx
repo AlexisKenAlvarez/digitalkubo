@@ -24,7 +24,6 @@ import DashboardMobile from './authComponents/DashboardMobile';
 import { signOut, useSession } from 'next-auth/react';
 import { navList } from "@/lib/list";
 
-
 const Nav = () => {
 
     const [navDesktopActive, setNav] = useState(false)
