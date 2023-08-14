@@ -45,7 +45,7 @@ const Latest = () => {
                         </div>
                     </Slider>
                 </div>
-                <div className="max-w-[1400px] w-full mx-auto flex-wrap py-16 gap-x-10">
+                <div className="max-w-[1400px] w-full mx-auto flex-wrap md:flex-nowrap md:flex py-16 gap-x-10">
                     <div className="w-full text-center">
                         <h1 className="text-[#D1770E] font-primary md:text-[40px] font-bold md:text-center text-[24px] tracking-wide">
                             PROMOTE YOUR BUSINESS</h1>
@@ -56,8 +56,8 @@ const Latest = () => {
                             <p className="font-secondary md:text-[16px]">See More</p>
                         </Button>
                     </div>
-                    <div className="w-full align-center h-fit hidden md:block">
-                        <img className="mx-auto hidden l:block" src="business.webp"></img>
+                    <div className="w-full align-center h-fit hidden lg:block">
+                        <img className="mx-auto hidden md:block" src="business.webp"></img>
                     </div>
                 </div>
             </div>
