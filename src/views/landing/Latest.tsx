@@ -8,7 +8,7 @@ const Latest = () => {
         dots: true,
         infinite: true,
         speed: 500,
-        slidesToShow: 1,
+        slidesToShow: 4,
         slidesToScroll: 1
     };
     return (
@@ -19,6 +19,7 @@ const Latest = () => {
                 </h1>
                 <Slider {...settings}>
                     <div>
+
                         <h3>1</h3>
                     </div>
                     <div>

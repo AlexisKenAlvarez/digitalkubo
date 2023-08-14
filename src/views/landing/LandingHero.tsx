@@ -2,10 +2,9 @@ import { Button } from "@/components/ui/button";
 
 const LandingHero = () => {
     return (
-        <section className="w-full min-h-screen px-24 2xl:px-5 py-10 pt-[8rem] relative">
-            <div className="max-w-[1400px] w-full mx-auto">
-                <h1 className="text-[#D1770E] font-primary md:text-[100px] font-bold md:text-left text-[40px] tracking-wide">
-                    {" "}
+        <section className="w-full min-h-screen 2xl:px-5 py-10 flex relative md:min-h-screen items-center">
+            <div className="w-[50%] mx-auto pl-14">
+                <h1 className="text-[#D1770E] font-primary md:text-[90px] font-bold md:text-left text-[40px] tracking-wide">
                     DIGITALKUBO
                 </h1>
 
@@ -16,6 +15,9 @@ const LandingHero = () => {
                 <Button className="bg-button hover:bg-nav text-lg mt-6 mr-2 mb-2 px-6 py-4">
                     <p className="font-secondary text-[1rem]">See More</p>
                 </Button>
+            </div>
+            <div className="w-full align-center h-fit">
+                <img className="mx-auto" src="kubo.webp"></img>
             </div>
         </section>
     );
