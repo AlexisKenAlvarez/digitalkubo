@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+
 import Offer from "@/views/landing/Offer";
 import LandingHero from "@/views/landing/LandingHero";
 import Latest from "@/views/landing/Latest";

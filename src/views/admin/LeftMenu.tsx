@@ -5,10 +5,16 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Separator } from '@/components/ui/separator'
+import { useRouter } from 'next/router';
 
 const LeftMenu = () => {
 
     const pathname = usePathname()
+    const router = useRouter()
+    
+    const handleNav = (link: string) => {
+        router.push(link)
+    }
 
     return (
         <div className="bg-white w-[14rem] h-screen border-r-[1px] border-black/10 flex-shrink-0 lg:block hidden">
@@ -23,7 +29,7 @@ const LeftMenu = () => {
                     <ul className="mx-auto w-full mt-2">
                         {menuList.map((items) => {
                             return (
-                                <Link key={items.label} href={items.link}>
+                                <Link key={items.label} href={items.link} replace>
                                     <li
                                         className={`py-2 hover:text-nav ${pathname === items.link ? ' text-button' : 'text-black'}`}
                                         key={items.label}>

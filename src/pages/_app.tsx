@@ -7,6 +7,8 @@ import { Inter } from "next/font/google";
 import Footer from "@/components/Footer";
 import { Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from 'next/router'
+
 
 const queryClient = new QueryClient();
 
@@ -18,6 +20,9 @@ const inter = Inter({
 
 
 function MyApp({ Component, pageProps }: AppProps) {
+
+  const router = useRouter()
+
   return (
     <SessionProvider session={pageProps.session}>
       <QueryClientProvider client={queryClient}>
@@ -34,7 +39,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             transition={Slide}
           />
           <div className="mt-14 md:mt-[6.5rem] bg-bg">
-            <Component {...pageProps} />
+            <Component {...pageProps} key={router.asPath} />
           </div>
           <Footer />
         </div>

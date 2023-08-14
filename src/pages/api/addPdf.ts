@@ -18,10 +18,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
     try {
 
-        const addPdf = async (url: string, title: string, locked: string) => {
+        const addPdf = async (url: string, title: string, locked: string, fileName: string) => {
             const data = await prisma.actionPlans.create({
                 data: {
                     title,
+                    fileName,
                     locked: locked === 'locked' ? true : false,
                     link: url
                 }
@@ -37,9 +38,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
             const data = await cloudinary.uploader.unsigned_upload(files.file[0].filepath, fields.upload_preset[0], { folder: 'digitalkubo' });
 
             if (data) {
-                const add = await addPdf(data.secure_url, fields.title[0], fields.access[0])
-
-                console.log(add)
+                const add = await addPdf(data.secure_url, fields.title[0], fields.access[0], fields.fileName[0])
 
                 res.status(200).json({ success: true });
             }

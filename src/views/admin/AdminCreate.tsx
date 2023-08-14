@@ -1,13 +1,10 @@
-
-
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
-
-import { BsUnlockFill, BsFillLockFill, BsLockFill } from 'react-icons/bs'
+import { BsUnlockFill, BsLockFill } from 'react-icons/bs'
 
 import {
     Card,
@@ -34,16 +31,18 @@ import {
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
 
-import { Label } from "../ui/label";
-import { useFetchDebounce } from "../handlers/fetchDebounce";
+import { Label } from "../../components/ui/label";
+import { PiTrashSimpleThin } from 'react-icons/pi'
 import axios from "axios";
+import { toast } from "react-toastify";
+import { TbLoaderQuarter } from "react-icons/tb";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const AdminCreate = () => {
 
@@ -52,14 +51,22 @@ const AdminCreate = () => {
     const formData = new FormData()
 
     const [error, setError] = useState('')
+    const [debounce, setDebounce] = useState(false)
+    const queryClient = useQueryClient()
 
-    const formDataArray = [
-        { id: 'formData1', formData: new FormData() },
-        // Add more FormData objects as needed
-    ];
+    const createPdfMutation = useMutation({
+        mutationFn: uploadData,
+        onSuccess: (data) => {
+            queryClient.invalidateQueries(['adminData'])
+            console.log("Success", data)
+        }
+    })
+
+    const handleSubmit = () => {
+        createPdfMutation.mutate()
+    }
 
     const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-
 
         if (e.target.files && e.target.files.length > 0) {
             const uploadedFile = e.target.files[0]
@@ -69,8 +76,6 @@ const AdminCreate = () => {
             if (uploadedFile.type !== 'application/pdf') {
                 setError('File must be a type of pdf.')
             }
-
-
         }
 
     }
@@ -89,7 +94,7 @@ const AdminCreate = () => {
         }
     })
 
-    const { control, formState: { errors }, watch } = form
+    const { control, formState: { errors }, watch, setValue } = form
 
     const createAcp = (data: nameType) => {
         if (!file) {
@@ -104,12 +109,16 @@ const AdminCreate = () => {
 
 
             setData(items => [...items, formData]);
+            setValue('acpName', '')
+            setValue('acpType', 'unlocked')
+            setFile(undefined)
+
         }
     }
 
     const nameValue = watch('acpName')
 
-    const uploadData = async () => {
+    async function uploadData() {
 
         async function sendMultipleRequests(formDataArray: FormData[]) {
             const requests = formDataArray.map((formData) =>
@@ -124,16 +133,33 @@ const AdminCreate = () => {
                 const responses = await Promise.all(requests);
                 console.log('All requests completed:', responses);
 
+                return true
+
                 // Perform your action here after all requests are done
             } catch (error) {
                 console.error('Error:', error);
+                return false
             }
         }
 
-        const upload = await sendMultipleRequests(dataArr)
+        if (!debounce) {
+            setDebounce(true)
+            const upload = await sendMultipleRequests(dataArr)
 
-        console.log(upload)
+            if (upload) {
+                toast.success('Uploaded successfully.')
+                setData([])
+            }
+            setDebounce(false)
 
+        }
+    }
+
+    const handleDelete = (i: number) => {
+        const originalData = [...dataArr]
+        originalData.splice(i, 1)
+
+        setData(originalData)
     }
 
     return (
@@ -257,30 +283,39 @@ const AdminCreate = () => {
 
                 </div>
 
-                <Table className="mt-20">
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead>Title</TableHead>
-                            <TableHead>Access</TableHead>
-                            <TableHead>File</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {dataArr.map((items, i) => {
-                            return (
-                                <TableRow key={i}>
-                                    <TableCell className="text-black">{items.get('title')?.toString()}</TableCell>
-                                    <TableCell className="text-black capitalize">{items.get('access')?.toString()}</TableCell>
-                                    <TableCell className="text-black">{items.get('fileName')?.toString()}</TableCell>
-                                </TableRow>
-                            )
-                        })}
-                    </TableBody>
-                </Table>
+                <div className={`mt-20 ${dataArr.length > 0 ? 'block' : 'hidden'}`}>
+                    <Table >
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>Title</TableHead>
+                                <TableHead>Access</TableHead>
+                                <TableHead>File</TableHead>
+                                <TableHead>Delete</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {dataArr.map((items, i) => {
+                                return (
+                                    <TableRow key={i}>
+                                        <TableCell className="text-black">{items.get('title')?.toString()}</TableCell>
+                                        <TableCell className="text-black capitalize">{items.get('access')?.toString()}</TableCell>
+                                        <TableCell className="text-black">{items.get('fileName')?.toString()}</TableCell>
+                                        <TableCell className="text-black">
+                                            <button onClick={() => { handleDelete(i) }}>
+                                                <PiTrashSimpleThin className='text-lg hover:text-red-500 transition-all ease-in-out' />
+                                            </button>
+                                        </TableCell>
+                                    </TableRow>
+                                )
+                            })}
+                        </TableBody>
+                    </Table>
 
-                <Button className="mt-10" onClick={uploadData}>
-                    Upload
-                </Button>
+                    <Button className="mt-10" onClick={handleSubmit}>
+                        {debounce ? <TbLoaderQuarter className="animate-spin" /> : "Upload"}
+                    </Button>
+                </div>
+
 
             </div>
 
