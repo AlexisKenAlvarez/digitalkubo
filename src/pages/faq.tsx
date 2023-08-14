@@ -60,7 +60,7 @@ const faq = () => {
             Questions
           </h1>
 
-          <div className="flex md:flex-row  mt-10 flex-col items-center justify-center  ">
+          <div className="flex md:flex-row  mt-10 flex-col items-start justify-center  ">
             <div className=" flex flex-col md:w-[50%] gap-5 p-2">
               {faqList.map((items, i) => {
                 return (
@@ -72,7 +72,7 @@ const faq = () => {
                 );
               })}
             </div>
-            <div className=" flex flex-col md:w-[50%] gap-5 p-2 md:al">
+            <div className=" flex flex-col md:w-[50%] gap-5 p-2 ">
               {faqList.map((items, i) => {
                 return (
                   <Questions
