@@ -9,8 +9,6 @@ const about = () => {
     <div className="w-full min-h-screen h-auto">
       <About />
       <What />
-
-      <Subscribe />
       <Location />
     </div>
   );

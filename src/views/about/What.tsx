@@ -3,7 +3,7 @@ import React from "react";
 const What = () => {
   return (
     <div className="bg-[#F7F7F7] w-[full] min-h-[70vh] py-10 h-auto flex flex-col items-center md:justify-center justify-start px-5">
-      <h1 className="font-bold md:text-5xl sm:text-4xl text-xl text-[#D1770E] font-primary">
+      <h1 className="font-bold md:text-5xl sm:text-4xl text-5xl text-[#D1770E] font-primary text-center">
         WHAT IS DIGITAL KUBO
       </h1>
       <div>

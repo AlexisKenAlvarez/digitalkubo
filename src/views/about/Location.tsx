@@ -3,7 +3,7 @@ import React from "react";
 const Location = () => {
   return (
     <div className="w-full flex flex-col h-auto items-center justify-center px-5 py-10 font-primary">
-      <h1 className="text-center text-[#D1770E] text-4xl font-bold p-2">
+      <h1 className="text-center text-[#D1770E] text-6xl font-bold p-2">
         Location
       </h1>
       <h1 className="text-center text-[#000000] text-1xl md:text-1xl py-4 font-secondary ">
