@@ -3,7 +3,7 @@ import axios from "axios";
 
 export async function checkReset(email: string, token: string) {
 
-    const { data } = await axios.post(`${process.env.NEXTAUTH_URL}/api/checkPassword`, {
+    const { data } = await axios.post(`/api/checkPassword`, {
         email,
         token
     })
@@ -12,7 +12,7 @@ export async function checkReset(email: string, token: string) {
 }
 
 export async function deletePdf(public_id: string) {
-    const { data } = await axios.post(`${process.env.NEXTAUTH_URL}/api/deletePdf`, {
+    const { data } = await axios.post(`/api/deletePdf`, {
         public_id
     })
 

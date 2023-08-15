@@ -5,11 +5,11 @@ import {
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { AiFillDelete } from 'react-icons/ai'
+
 import { MoreHorizontal } from "lucide-react"
+import DeleteButton from "./DeleteButton"
 
 export type ColumnData = {
     id: string,
@@ -17,20 +17,9 @@ export type ColumnData = {
     access: string,
     file: string,
     delete: JSX.Element
-    link: string
+    link: string,
+    publicId: string
 }
-
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
 
 
 
@@ -92,29 +81,11 @@ export const columns: ColumnDef<ColumnData>[] = [
         cell: ({ row }) => {
             const pdf = row.original
 
+            const publicId = pdf.publicId
+
             return (
-                <button>
-                    <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                            <AiFillDelete className="text-xl hover:text-red-500" />
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                            <AlertDialogHeader>
-                                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                                <AlertDialogDescription>
-                                    This action cannot be undone. This will permanently delete this action plan anywhere in the website.
-                                </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction>Continue</AlertDialogAction>
-                            </AlertDialogFooter>
-                        </AlertDialogContent>
-                    </AlertDialog>
-                </button>
+                <DeleteButton publicId={publicId} />
             )
         }
     }
-
-
 ]

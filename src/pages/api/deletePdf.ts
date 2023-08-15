@@ -2,14 +2,20 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import cloudinary from '../../lib/cloudinary';
 import * as dotenv from "dotenv";
 dotenv.config();
-import axios from 'axios';
+import { prisma } from './_base';
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     try {
         const { public_id } = req.body;
 
-        const data = cloudinary.uploader.destroy(`${public_id}`, { invalidate: true })
+        const deletePdf = await prisma.actionPlans.deleteMany({
+            where: {
+                publicId: public_id
+            }
+        })
+
+        const data = await cloudinary.uploader.destroy(public_id, { invalidate: true })
 
         console.log(data)
         res.status(200).json({ success: true });
