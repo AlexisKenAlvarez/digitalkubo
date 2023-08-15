@@ -8,7 +8,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Button } from "../ui/button"
+import { AiFillDelete } from 'react-icons/ai'
 import { MoreHorizontal } from "lucide-react"
 
 export type ColumnData = {
@@ -19,6 +19,18 @@ export type ColumnData = {
     delete: JSX.Element
     link: string
 }
+
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 
 
@@ -67,12 +79,42 @@ export const columns: ColumnDef<ColumnData>[] = [
                         >
                             Copy PDF Link
                         </DropdownMenuItem>
-                        <DropdownMenuItem>Delete ACP</DropdownMenuItem>
                         <DropdownMenuItem>Edit</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )
-        }
+        },
+
     },
+    {
+        header: "Delete",
+        id: "delete",
+        cell: ({ row }) => {
+            const pdf = row.original
+
+            return (
+                <button>
+                    <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <AiFillDelete className="text-xl hover:text-red-500" />
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    This action cannot be undone. This will permanently delete this action plan anywhere in the website.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction>Continue</AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
+                </button>
+            )
+        }
+    }
+
 
 ]

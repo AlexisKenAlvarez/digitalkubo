@@ -33,8 +33,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
             const data = await cloudinary.uploader.unsigned_upload(files.file[0].filepath, fields.upload_preset[0], { folder: 'digitalkubo' });
 
-            console.log(data)
-
             if (data) {
                 const add = await addPdf(data.secure_url, fields.title[0], fields.access[0], fields.fileName[0], data.public_id)
 

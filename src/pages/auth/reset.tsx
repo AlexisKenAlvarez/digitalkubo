@@ -69,7 +69,7 @@ const Page = () => {
                         <p className="text-black/50 max-w-[30rem] text-center">We have sent a password reset link to your email. If it does not appear on your inbox, try checking your ignore or promotions mailbox.</p>
 
                         <Link href="/auth/login">
-                            <h3 className="text-black/50 text-center mt-4">Back to <span className="font-bold text-cvsu cursor-pointer">Sign in</span></h3>
+                            <h3 className="text-black/50 text-center mt-4">Back to <span className="font-bold text-button hover:text-nav  cursor-pointer">Sign in</span></h3>
                         </Link>
                     </div>
                     : <div className="flex flex-col gap-y-3 mt-10">

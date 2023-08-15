@@ -54,12 +54,6 @@ export function DataTable<TData, TValue>({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
-        // initialState: {
-        //     columnVisibility: {
-        //         locked: screenSize.width >= 640 ? true : false,
-        //         fileName: screenSize.width >= 640 ? true : false
-        //     }
-        // }
     })
 
     return (

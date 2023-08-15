@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { changeList, loginList } from "@/lib/list"
+import { changeList } from "@/lib/list"
 import { Button } from "@/components/ui/button"
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -9,7 +9,6 @@ import { useRouter } from 'next/navigation'
 import { TbLoaderQuarter } from 'react-icons/tb'
 import { useFetchDebounce } from "@/components/handlers/fetchDebounce";
 import { toast } from 'react-toastify';
-import Image from 'next/image';
 import axios from "axios"
 
 interface ChangePasswordParams {
@@ -19,6 +18,7 @@ interface ChangePasswordParams {
 
 export async function getServerSideProps(context: { query: { token?: string, email?: string } }) {
     const { token, email } = context.query
+
 
     if (!token && !email) {
         return {
@@ -49,7 +49,7 @@ export async function getServerSideProps(context: { query: { token?: string, ema
 
     return {
         props: {
-            data: null
+            email
         }
     }
 }

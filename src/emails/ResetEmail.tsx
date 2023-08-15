@@ -35,12 +35,12 @@ export function ResetEmailTemplate({
                         src={`https://i.imgur.com/4DvsKbT_d.webp?maxwidth=760&fidelity=grand`}
                         width="40"
                         height="33"
-                        alt="ERWIN"
+                        alt="DigitalKubo"
                     />
                     <Section>
                         <Text style={text}>Hi {userFirstname},</Text>
                         <Text style={text}>
-                            Someone recently requested a password change for your ERWIN
+                            Someone recently requested a password change for your DigitalKubo
                             account. If this was you, you can set a new password here:
                         </Text>
                         <Button style={button} href={resetPasswordLink}>
@@ -56,7 +56,7 @@ export function ResetEmailTemplate({
                             To keep your account secure, please don&apos;t forward this email
                             to anyone
                         </Text>
-                        <Text style={text}>- ERWIN Team</Text>
+                        <Text style={text}>- DigitalKubo Team</Text>
                     </Section>
                 </Container>
             </Body>
@@ -93,7 +93,7 @@ const resetText = {
 }
 
 const button = {
-    backgroundColor: '#0ED145',
+    backgroundColor: '#8E5C44',
     borderRadius: '4px',
     color: '#fff',
     fontFamily: "'Open Sans', 'Helvetica Neue', Arial",
