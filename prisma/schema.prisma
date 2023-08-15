@@ -66,4 +66,5 @@ model ActionPlans {
   fileName String   @db.VarChar(100)
   locked   Boolean? @default(false)
   link     String   @db.VarChar(150)
+  publicId String   @db.VarChar(55)
 }

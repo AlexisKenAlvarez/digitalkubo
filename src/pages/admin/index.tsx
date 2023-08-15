@@ -2,24 +2,13 @@ import LeftMenu from "@/views/admin/LeftMenu";
 import TopMenu from "@/views/admin/TopMenu";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
+import { columns } from "@/components/admin/Columns";
+import { DataTable } from "@/components/admin/Data-Table";
 
 import {
     ColumnDef,
-    flexRender,
-    getCoreRowModel,
-    useReactTable,
 } from "@tanstack/react-table"
 
-import { PiTrashSimpleThin } from "react-icons/pi";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -52,32 +41,7 @@ const Index = () => {
                     {/* INSERT CODE BELOW */}
                     <div className="w-full  min-h-[calc(100vh-80px)]  bg-white">
                         {isLoading ? <p>Loading...</p> :
-                            <Table >
-                                <TableHeader>
-                                    <TableRow>
-                                        <TableHead>Title</TableHead>
-                                        <TableHead className="md:flex items-center hidden">Access</TableHead>
-                                        <TableHead>File</TableHead>
-                                        <TableHead>Delete</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    {data.data.map((items: { title: string, locked: boolean, link: string, fileName: string }, i: number) => {
-                                        return (
-                                            <TableRow key={i} className="">
-                                                <TableCell className="text-black  md:text-sm text-xs">{items.title}</TableCell>
-                                                <TableCell className="text-black capitalize md:block hidden">{items.locked ? "Locked" : "Unlocked"}</TableCell>
-                                                <TableCell className="text-black  md:text-sm text-xs">{items.fileName}</TableCell>
-                                                <TableCell className="text-black">
-                                                    <button>
-                                                        <PiTrashSimpleThin className='text-lg hover:text-red-500 transition-all ease-in-out' />
-                                                    </button>
-                                                </TableCell>
-                                            </TableRow>
-                                        )
-                                    })}
-                                </TableBody>
-                            </Table>
+                            <DataTable columns={columns} data={data.data} />
                         }
                     </div>
                 </div>
