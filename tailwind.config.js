@@ -2,10 +2,10 @@
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
   theme: {
     container: {
@@ -50,19 +50,20 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        cvsu: '#0ed145',
-        gry: '#959595',
-        button: '#8E5C44',
-        nav: '#D1770E',
-        bg: '#F7F7F7',
-        
+        cvsu: "#0ed145",
+        gry: "#959595",
+        button: "#8E5C44",
+        nav: "#D1770E",
+        bg: "#F7F7F7",
+        lock: "#EEEEEE",
+        lock2: "#939292",
       },
       fontFamily: {
-        secondary: ['var(--font-poppins)'],
-        primary: ['Montserrat']
+        secondary: ["var(--font-poppins)"],
+        primary: ["Montserrat"],
       },
       boxShadow: {
-        aboutShadow: '-9px 10px 0px 2px rgba(0,0,0,1)'
+        aboutShadow: "-9px 10px 0px 2px rgba(0,0,0,1)",
       },
       keyframes: {
         "accordion-down": {
@@ -80,7 +81,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"),
-
-  ],
-}
+  plugins: [require("tailwindcss-animate")],
+};
