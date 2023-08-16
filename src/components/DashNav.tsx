@@ -19,7 +19,7 @@ const DashNav = () => {
     },
   ];
   return (
-    <div className="w-full flex flex-row border-b-2 border-black/10">
+    <div className="w-full flex flex-row border-b-2 border-black/10 container">
       <div className="flex gap-x-4 p-4 ">
         {dashLink.map((items, i) => {
           return (
