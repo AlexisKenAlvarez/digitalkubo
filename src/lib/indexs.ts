@@ -54,3 +54,114 @@ export const teamSet = [
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed",
   },
 ];
+
+export const actionSet = [
+  {
+    image: "/action.webp",
+
+    title: "ACP 001: Test title for action plan to the planet earth ",
+
+    text: "Unlocked",
+
+    text1: "Free",
+  },
+  {
+    image: "/action.webp",
+
+    title: "ACP 001: Test title for action plan to the planet earth ",
+
+    text: "Unlocked",
+
+    text1: "Free",
+  },
+  {
+    image: "/action.webp",
+
+    title: "ACP 001: Test title for action plan to the planet earth ",
+
+    text: "Unlocked",
+
+    text1: "Free",
+  },
+  {
+    image: "/action.webp",
+
+    title: "ACP 001: Test title for action plan to the planet earth ",
+
+    text: "Unlocked",
+
+    text1: "Free",
+  },
+  {
+    image: "/action.webp",
+
+    title: "ACP 001: Test title for action plan to the planet earth ",
+
+    text: "Unlocked",
+
+    text1: "Free",
+  },
+  {
+    image: "/action.webp",
+
+    title: "ACP 001: Test title for action plan to the planet earth ",
+
+    text: "Unlocked",
+
+    text1: "Free",
+  },
+  {
+    image: "/action.webp",
+
+    title: "ACP 001: Test title for action plan to the planet earth ",
+
+    text: "Unlocked",
+
+    text1: "Free",
+  },
+  {
+    image: "/action.webp",
+
+    title: "ACP 001: Test title for action plan to the planet earth ",
+
+    text: "Unlocked",
+
+    text1: "Free",
+  },
+  {
+    image: "/action.webp",
+
+    title: "ACP 001: Test title for action plan to the planet earth ",
+
+    text: "Unlocked",
+
+    text1: "Free",
+  },
+  {
+    image: "/action.webp",
+
+    title: "ACP 001: Test title for action plan to the planet earth ",
+
+    text: "Unlocked",
+
+    text1: "Free",
+  },
+  {
+    image: "/action.webp",
+
+    title: "ACP 001: Test title for action plan to the planet earth ",
+
+    text: "Unlocked",
+
+    text1: "Free",
+  },
+  {
+    image: "/action.webp",
+
+    title: "ACP 001: Test title for action plan to the planet earth ",
+
+    text: "Unlocked",
+
+    text1: "Free",
+  },
+];
