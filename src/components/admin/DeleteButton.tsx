@@ -14,13 +14,17 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { AiFillDelete } from 'react-icons/ai'
 
-const DeleteButton = ({ publicId }: { publicId: string }) => {
+const DeleteButton = ({ publicId, locked }: { publicId: string, locked: boolean }) => {
     const queryClient = useQueryClient()
 
     const deleteMutation = useMutation({
         mutationFn: handleDelete,
         onSuccess: () => {
-            queryClient.invalidateQueries(['adminData'])
+            if (locked) {
+                queryClient.invalidateQueries(['adminDataLocked'])
+            } else {
+                queryClient.invalidateQueries(['adminDataUnlocked'])
+            }
         }
     })
 

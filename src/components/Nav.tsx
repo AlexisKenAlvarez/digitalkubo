@@ -73,8 +73,9 @@ const Nav = () => {
   return (
     <>
       <nav
-        className={`w-full min-h-[calc(100vh-60px)] md:hidden block right-0 top-[56px] bottom-0 bg-white text-black z-40 fixed transition-all  ease-in-out duration-500 ${navDesktopActive ? "translate-x-0" : "translate-x-full"
-          }`}
+        className={`w-full min-h-[calc(100vh-60px)] md:hidden block right-0 top-[56px] bottom-0 bg-white text-black z-40 fixed transition-all  ease-in-out duration-500 ${
+          navDesktopActive ? "translate-x-0" : "translate-x-full"
+        }`}
       >
         {/* NAV FOR MOBILE */}
         <div className="overflow-auto max-h-[100%] h-full w-full pb-20 right-0">
@@ -143,14 +144,16 @@ const Nav = () => {
         </div>
       </nav>
       <nav
-        className={`w-full h-auto transtion-bg ease-in-out duration-300 fixed top-0 left-0 border-b-[1px] border-b-black/5 z-30 ${navDesktopActive
+        className={`w-full h-auto transtion-bg ease-in-out duration-300 fixed top-0 left-0 border-b-[1px] border-b-black/5 z-30 ${
+          navDesktopActive
             ? "bg-button md:bg-white md:text-button text-white"
             : " bg-white text-button"
-          }`}
+        }`}
       >
         <div
-          className={`w-full h-8 bg-black/80 items-center md:flex hidden relative top-0 left-0 overflow-hidden transition-all ease-in-out duration-300 ${scrolled ? "max-h-0" : "max-h-8"
-            }`}
+          className={`w-full h-8 bg-black/80 items-center md:flex hidden relative top-0 left-0 overflow-hidden transition-all ease-in-out duration-300 ${
+            scrolled ? "max-h-0" : "max-h-8"
+          }`}
         >
           <button className="text-[12px] text-center text-white w-full">
             <p className="">Subscribe for up to 50% discount!</p>
@@ -162,8 +165,9 @@ const Nav = () => {
             {/* <Image src="/logo.webp" alt="Logo" width="500" height="500" className='w-10' /> */}
             <Link href="/">
               <h1
-                className={`font-bold text-2xl tracking-widest cursor-pointer font-primary ${navDesktopActive ? "md:text-nav text-white" : "text-nav"
-                  }`}
+                className={`font-bold text-2xl tracking-widest cursor-pointer font-primary ${
+                  navDesktopActive ? "md:text-nav text-white" : "text-nav"
+                }`}
               >
                 DIGITALKUBO
               </h1>
@@ -210,21 +214,24 @@ const Nav = () => {
                     </div> */}
 
           <button
-            className={` mt-2 mr-3 flex-col items-end gap-y-3 md:hidden flex transition-all ease-in-out duration-300 ${navDesktopActive ? "rotate-[360deg]" : "rotate-0"
-              }`}
+            className={` mt-2 mr-3 flex-col items-end gap-y-3 md:hidden flex transition-all ease-in-out duration-300 ${
+              navDesktopActive ? "rotate-[360deg]" : "rotate-0"
+            }`}
             onClick={handleNavDesktop}
           >
             <div
-              className={` transition-all ease-in-out duration-300 ${navDesktopActive
+              className={` transition-all ease-in-out duration-300 ${
+                navDesktopActive
                   ? "bg-white rotate-[-45deg] w-8 translate-y-[9px] h-[3px]"
                   : "w-8 h-[3px] bg-nav"
-                }`}
+              }`}
             ></div>
             <div
-              className={` transition-all ease-in-out duration-300  ${navDesktopActive
+              className={` transition-all ease-in-out duration-300  ${
+                navDesktopActive
                   ? "bg-white rotate-[45deg] w-8 h-[3px] -translate-y-[6px]"
                   : "w-6 h-[3px] bg-nav"
-                }`}
+              }`}
             ></div>
           </button>
         </div>
