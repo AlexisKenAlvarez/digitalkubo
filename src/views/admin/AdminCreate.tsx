@@ -57,7 +57,8 @@ const AdminCreate = () => {
     const createPdfMutation = useMutation({
         mutationFn: uploadData,
         onSuccess: (data) => {
-            queryClient.invalidateQueries(['adminData'])
+            queryClient.invalidateQueries(['adminDataLocked'])
+            queryClient.invalidateQueries(['adminDataUnlocked'])
             console.log("Success", data)
         }
     })
@@ -77,7 +78,6 @@ const AdminCreate = () => {
                 setError('File must be a type of pdf.')
             }
         }
-
     }
 
     const nameSchema = z.object({

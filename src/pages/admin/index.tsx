@@ -17,17 +17,30 @@ interface DataTableProps<TData, TValue> {
 
 const Index = () => {
 
-    const { isLoading, isError, error, data, refetch } = useQuery({
-        queryKey: ['adminData'],
+    const unlockedPdf = useQuery({
+        queryKey: ['adminDataUnlocked'],
         queryFn: () => getData(),
         staleTime: 1000 * 60 * 60 * 24,
     })
 
+    const lockedPdf = useQuery({
+        queryKey: ['adminDataLocked'],
+        queryFn: () => getDataLocked(),
+        staleTime: 1000 * 60 * 60 * 24,
+    })
+
     const getData = async () => {
-        const { data } = await axios.get('/api/getPdf')
-        console.log("execute")
+        const { data } = await axios.post('/api/getPdf', { locked: false })
+
         return data
     }
+
+    const getDataLocked = async () => {
+        const { data } = await axios.post('/api/getPdf', { locked: true })
+
+        return data
+    }
+
 
 
     return (
@@ -40,8 +53,8 @@ const Index = () => {
                 <div className="w-full h-auto min-h-[calc(100vh-80px)] flex items-center justify-center lg:px-4 py-4 ">
                     {/* INSERT CODE BELOW */}
                     <div className="w-full  min-h-[calc(100vh-80px)]  bg-white">
-                        {isLoading ? <p>Loading...</p> :
-                            <DataTable columns={columns} data={data.data} />
+                        {unlockedPdf.isLoading ? <p>Loading...</p> :
+                            <DataTable columns={columns} data={unlockedPdf.data.data} />
                         }
                     </div>
                 </div>

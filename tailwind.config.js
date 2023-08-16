@@ -55,9 +55,10 @@ module.exports = {
         button: '#8E5C44',
         nav: '#D1770E',
         bg: '#F7F7F7',
+        
       },
       fontFamily: {
-        secondary: ['var(--font-inter)'],
+        secondary: ['var(--font-poppins)'],
         primary: ['Montserrat']
       },
       boxShadow: {
@@ -80,6 +81,6 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate"),
-  
-],
+
+  ],
 }

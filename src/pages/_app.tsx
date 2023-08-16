@@ -3,7 +3,7 @@ import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Nav from "@/components/Nav";
-import { Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
 import Footer from "@/components/Footer";
 import { Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -12,10 +12,11 @@ import { useRouter } from 'next/router'
 
 const queryClient = new QueryClient();
 
-const inter = Inter({
+const poppins = Poppins({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-inter',
+  variable: '--font-poppins',
+  weight: ["100", "200", "300", "400", "500", "600", "700"]
 })
 
 
@@ -26,7 +27,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>
       <QueryClientProvider client={queryClient}>
-        <div className={`${inter.variable}`}>
+        <div className={`${poppins.variable}`}>
           <Nav />
           <ToastContainer
             position="bottom-center"
@@ -38,7 +39,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             theme="light"
             transition={Slide}
           />
-          <div className="mt-14 md:mt-[6.5rem] bg-bg">
+          <div className="mt-14 md:mt-[6.5rem] bg-bg font-secondary">
             <Component {...pageProps} key={router.asPath} />
           </div>
           <Footer />

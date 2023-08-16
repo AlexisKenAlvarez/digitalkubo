@@ -61,10 +61,19 @@ model VerficationToken {
 }
 
 model ActionPlans {
-  id       Int      @id @default(autoincrement())
-  title    String   @db.VarChar(100)
-  fileName String   @db.VarChar(100)
-  locked   Boolean? @default(false)
-  link     String   @db.VarChar(150)
-  publicId String   @db.VarChar(55)
+  id       Int               @id @default(autoincrement())
+  title    String            @db.VarChar(100)
+  fileName String            @db.VarChar(100)
+  link     String            @db.VarChar(150)
+  publicId String            @db.VarChar(55)
+  locked   ActionPlanAccess?
+}
+
+model ActionPlanAccess {
+  id         Int         @id
+  actionPlan ActionPlans @relation(fields: [id], references: [id])
+  locked     Boolean     @default(false)
+
+  @@index([locked])
+  @@index([id])
 }

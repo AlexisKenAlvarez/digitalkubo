@@ -11,35 +11,42 @@ import {
 import { MoreHorizontal } from "lucide-react"
 import DeleteButton from "./DeleteButton"
 
-export type ColumnData = {
-    id: string,
-    title: string,
-    access: string,
-    file: string,
-    delete: JSX.Element
+export type ActionPlan = {
+    fileName: string,
+    id: number,
     link: string,
-    publicId: string
+    publicId: string,
+    title: string
 }
 
-
+export type ColumnData = {
+    id: string,
+    locked: boolean,
+    actionPlan: ActionPlan,
+}
 
 export const columns: ColumnDef<ColumnData>[] = [
     {
         accessorKey: "title",
         header: "Title",
-    },
-    {
-        accessorKey: "locked",
-        header: "Access",
         cell: ({ row }) => {
-            const formatted = row.getValue("locked") ? 'Locked' : 'Unlocked'
+            const pdf = row.original
 
-            return <div className="">{formatted}</div>
-        },
+            return (
+                <p className="">{pdf.actionPlan.title}</p>
+            )
+        }
     },
     {
         accessorKey: "fileName",
         header: "File Name",
+        cell: ({ row }) => {
+            const pdf = row.original
+
+            return (
+                <p className="">{pdf.actionPlan.fileName}</p>
+            )
+        }
     },
     {
         header: "Actions",
@@ -54,17 +61,11 @@ export const columns: ColumnDef<ColumnData>[] = [
                             {/* <span className="sr-only">Open menu</span> */}
                             <MoreHorizontal className="h-4 w-4" />
                         </button>
-                        {/* <div className="">
-                            <button className="">
-                                <MoreHorizontal className="h-4 w-4" />
-
-                            </button>
-                        </div> */}
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(pdf.link)}
+                            onClick={() => navigator.clipboard.writeText(pdf.actionPlan.publicId)}
                         >
                             Copy PDF Link
                         </DropdownMenuItem>
@@ -81,7 +82,9 @@ export const columns: ColumnDef<ColumnData>[] = [
         cell: ({ row }) => {
             const pdf = row.original
 
-            const publicId = pdf.publicId
+            const publicId = pdf.actionPlan.publicId
+
+            console.log(publicId)
 
             return (
                 <DeleteButton publicId={publicId} />

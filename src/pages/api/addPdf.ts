@@ -14,13 +14,19 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
 
         const addPdf = async (url: string, title: string, locked: string, fileName: string, public_id: string) => {
+
+
             const data = await prisma.actionPlans.create({
                 data: {
                     title,
                     fileName,
-                    locked: locked === 'locked' ? true : false,
                     link: url,
-                    publicId: public_id
+                    publicId: public_id,
+                    locked: {
+                        create: {
+                            locked: locked === 'locked' ? true : false
+                        }
+                    }
                 }
             })
 
