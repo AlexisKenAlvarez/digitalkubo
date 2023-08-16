@@ -59,7 +59,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             const options = {
                 from: 'alexisken1432@gmail.com',
                 to: email,
-                subject: 'ERWIN - Password Reset',
+                subject: 'DigitalKubo - Password Reset',
                 html: emailHtml,
             };
 
