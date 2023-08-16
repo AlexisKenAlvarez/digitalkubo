@@ -15,6 +15,7 @@ export default async function handler(
         actionPlan: true,
       },
     });
+
     res.status(200).json({ success: true, data });
   } catch (error) {
     console.log(error);

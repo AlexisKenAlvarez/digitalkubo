@@ -52,7 +52,7 @@ const Index = () => {
               {unlockedPdf.isLoading ? (
                 <p>Loading...</p>
               ) : (
-                <DataTable columns={columns} data={unlockedPdf.data.data}  />
+                <DataTable columns={columns} data={unlockedPdf.data.data} />
               )}
             </div>
             <Separator />

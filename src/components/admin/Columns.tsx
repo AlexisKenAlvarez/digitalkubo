@@ -33,14 +33,22 @@ export const columns: ColumnDef<ColumnData>[] = [
       return (
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          onClick={() => {
+            return column.toggleSorting(column.getIsSorted() === 'asc');
+          }}
+          className=" pl-0"
         >
           File Name
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
+    accessorFn: row => `${row.actionPlan.title}`,
     size: 400,
+    // cell: ({ row }) => {
+    //   const pdf = row.original;
+    //   return pdf.actionPlan.title;
+    // },
   },
   {
     accessorKey: "fileName",
@@ -48,9 +56,12 @@ export const columns: ColumnDef<ColumnData>[] = [
     size: 400,
     cell: ({ row }) => {
       const pdf = row.original;
-
       return <p className="">{pdf.actionPlan.fileName}</p>;
     },
+  },
+  {
+    accessorKey: "locked",
+    header: "Locked",
   },
   {
     header: "Actions",
