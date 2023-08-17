@@ -32,7 +32,7 @@ export type ColumnData = {
   actionPlan: ActionPlan;
 };
 
-export const columns: ColumnDef<ColumnData>[] = [
+export const Columns: ColumnDef<ColumnData>[] = [
   {
     accessorKey: "title",
     header: ({ column }) => {

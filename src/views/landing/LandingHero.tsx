@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import Image from 'next/image';
 
 const LandingHero = () => {
     return (
@@ -18,7 +19,7 @@ const LandingHero = () => {
                     </Button>
                 </div>
                 <div className="w-full align-center h-fit hidden md:block">
-                    <img className="mx-auto" src="kubo.webp"></img>
+                    <Image className="mx-auto" width="500" height="500" alt="Kubo" src="kubo.webp"/>
                 </div>
             </div>
 
