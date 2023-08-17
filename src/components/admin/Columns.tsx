@@ -86,7 +86,7 @@ export const Columns: ColumnDef<ColumnData>[] = [
         locked: pdf.locked,
         publicId,
       };
-      
+
       return (
         <>
           <AdminDropDown
