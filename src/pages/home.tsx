@@ -33,14 +33,10 @@ const Home = () => {
           height={20}
           width={20}
           alt="/"
-          className="absolute
-top-0 left-0
-object cover
-w-full h-full
-object-top"
+          className="absolute top-0 left-0 object cover w-full h-full object-top"
         />
         <div className=" w-[full] min-h-auto container relative z-10 pb-24 ">
-          <div className="pl-8 flex items-center justify-between" >
+          <div className="pl-8 md:flex items-center justify-between flex-row " >
           <div className=" flex flex-col ">
             <h1 className=" mt-6 text-3xl font-primary text-nav font-bold ">
               Action Plans
@@ -50,10 +46,11 @@ object-top"
             </p>
             </div>
             <div className="pr-8">
-            <Input className="w-64 border-nav" type="search" placeholder="Search" />
+              {/* SEARCH BAR */}
+            <Input className="w-64 mt-4 md:mt-0 border-nav" type="search" placeholder="Search" />
             </div>
           </div>
-          <div className="w-full mx-auto grid 2xl:grid-cols-4 px-8 lg:grid-cols-3 gap-8 md:grid-cols-2 items-center mt-10">
+          <div className="w-full mx-auto grid 2xl:grid-cols-4 px-3 lg:grid-cols-3 gap-8 md:grid-cols-2 items-center mt-10">
             {actionSet.map((action, i) => {
               return (
                 <div
@@ -98,7 +95,7 @@ object-top"
               Upgrade your account to unlock all the locked action plans.
             </p>
           </div>
-          <div className="w-full mx-auto grid 2xl:grid-cols-4 px-8 lg:grid-cols-3 gap-8 md:grid-cols-2 items-center mt-10">
+          <div className="w-full mx-auto grid 2xl:grid-cols-4 px-3 lg:grid-cols-3 gap-8 md:grid-cols-2 items-center mt-10">
             {actionSet.map((action, i) => {
               return (
                 <div
