@@ -49,7 +49,7 @@ object-top"
               Acess our free action plans
             </p>
             </div>
-            <div className="">
+            <div className="pr-8">
             <Input className="w-64 border-nav" type="search" placeholder="Search" />
             </div>
           </div>
