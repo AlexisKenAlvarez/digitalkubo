@@ -35,7 +35,7 @@ const AdminDropDown: FunctionComponent<PageProps> = ({
   const ref = React.useRef<HTMLDivElement>(null);
 
   const toggleSheet = () => {
-    setOpen((prevState) => !prevState);
+    setOpen((curr) => !curr);
   };
 
   const toggleDelete = () => {
