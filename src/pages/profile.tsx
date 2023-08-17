@@ -16,12 +16,12 @@ const profile = () => {
               My Profile
             </p>
             </div>
-            <div className="shadow-2xl container py-6 mt-4 flex flex-row justify-between">
+            <div className="shadow-md container py-6 mt-4 flex flex-row justify-between">
             <div className="flex flex-col">
             <h1 className="text-black/50 font-primary text-[24px]">Email</h1>
             <h1 className="text-black/50 font-primary text-[16px] font-bold pt-2">burgerfries@gmail.com</h1>
 
-            <h1 className="text-black/50 font-primary text-[24px] pt-2">Password</h1>
+            <h1 className="text-black/50 font-primary text-[24px] pt-4">Password</h1>
 
             <h1 className="text-black/50 font-primary text-[16px] font-bold py-2">************</h1>
             </div>
