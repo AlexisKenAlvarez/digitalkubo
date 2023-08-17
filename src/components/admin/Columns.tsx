@@ -16,7 +16,7 @@ export type ActionPlan = {
   pricing: {
     id: number;
     pricing: string;
-  }[];
+  };
 };
 
 export type ColumnData = {
@@ -57,10 +57,10 @@ export const Columns: ColumnDef<ColumnData>[] = [
   {
     accessorKey: "pricing",
     header: "Pricing",
-    accessorFn: (row) => `${row.actionPlan.pricing[0].pricing}`,
+    accessorFn: (row) => `${row.actionPlan.pricing.pricing}`,
     cell: ({ row }) => {
       const pdf = row.original;
-      return <p className="capitalize">{pdf.actionPlan.pricing[0].pricing}</p>;
+      return <p className="capitalize">{pdf.actionPlan.pricing.pricing}</p>;
     },
   },
   {
@@ -82,7 +82,7 @@ export const Columns: ColumnDef<ColumnData>[] = [
       const defaultValues = {
         id: parseInt(pdf.id),
         title: pdf.actionPlan.title,
-        pricing: pdf.actionPlan.pricing[0].pricing,
+        pricing: pdf.actionPlan.pricing.pricing,
         locked: pdf.locked,
         publicId,
       };

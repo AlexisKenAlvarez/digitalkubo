@@ -67,7 +67,7 @@ model ActionPlans {
   link     String            @db.VarChar(150)
   publicId String            @db.VarChar(55)
   locked   ActionPlanAccess?
-  pricing  ActionPlanPrice[]
+  pricing  ActionPlanPrice?
 }
 
 model ActionPlanAccess {

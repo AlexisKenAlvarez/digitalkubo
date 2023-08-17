@@ -53,15 +53,14 @@ const EditData: FunctionComponent<PageProps> = ({
 }) => {
   const formData = new FormData();
   const [file, setFile] = useState<File>();
-  const [dataArr, setData] = useState<FormData[]>([]);
   const [error, setError] = useState("");
-  const [changed, setChanged] = useState(false)
+  const [changed, setChanged] = useState(false);
 
   const nameSchema = z.object({
     acpName: z.string().min(3, "Must be atleast 3 characters long."),
     acpType: z.string().trim().min(1, "Pick a acp type"),
     acpPrice: z.string().trim().min(1, "Pick a acp price"),
-  }); 
+  });
 
   type nameType = z.infer<typeof nameSchema>;
 
@@ -84,14 +83,26 @@ const EditData: FunctionComponent<PageProps> = ({
   const nameValue = watch("acpName");
   const accessValue = watch("acpType");
   const pricingValue = watch("acpPrice");
-  
-  useEffect(() => {
-    if (nameValue !== defaultValues.title) {
-      setChanged(true)
-    }
 
-    
-  }, [nameValue])
+  useEffect(() => {
+    if (
+      nameValue !== defaultValues.title ||
+      accessValue !== checkAccess(defaultValues.locked) ||
+      pricingValue !== defaultValues.pricing
+    ) {
+      setChanged(true);
+    } else {
+      setChanged(false);
+    }
+  }, [nameValue, accessValue, pricingValue]);
+
+  const checkAccess = (isLocked: boolean) => {
+    if (isLocked) {
+      return "locked";
+    } else {
+      return "unlocked";
+    }
+  };
 
   const createAcp = (data: nameType) => {
     if (!file) {
@@ -105,7 +116,6 @@ const EditData: FunctionComponent<PageProps> = ({
       formData.append("fileName", file.name);
       formData.append("upload_preset", "digitalkubo");
 
-      setData((items) => [...items, formData]);
       setValue("acpName", "");
       setValue("acpType", "unlocked");
       setValue("acpPrice", "free");
@@ -295,11 +305,11 @@ const EditData: FunctionComponent<PageProps> = ({
                         variant="secondary"
                         className="w-full pointer-events-none h-full"
                       >
-                        <p className="">Upload Action Plan File</p>
+                        <p className="">Change action plan file</p>
                       </Button>
                     </Label>
                     <p className="opacity-0 pointer-events-none">
-                      Upload Action Plan
+                      New Action Plan
                     </p>
                     <Input
                       type="file"
@@ -328,8 +338,8 @@ const EditData: FunctionComponent<PageProps> = ({
                   )}
                 </div>
 
-                <Button type="submit" className="mt-4">
-                  Add to list
+                <Button type="submit" className="mt-4" disabled={!changed}>
+                  Confirm changes
                 </Button>
               </form>
             </Form>
