@@ -53,7 +53,7 @@ object-top"
             <Input className="w-64 border-nav" type="search" placeholder="Search" />
             </div>
           </div>
-          <div className="w-full mx-auto grid 2xl:grid-cols-4 px-8 lg:grid-cols-3 gap-5 md:grid-cols-2 items-center mt-10">
+          <div className="w-full mx-auto grid 2xl:grid-cols-4 px-8 lg:grid-cols-3 gap-8 md:grid-cols-2 items-center mt-10">
             {actionSet.map((action, i) => {
               return (
                 <div
@@ -98,7 +98,7 @@ object-top"
               Upgrade your account to unlock all the locked action plans.
             </p>
           </div>
-          <div className="w-full mx-auto grid 2xl:grid-cols-4 px-8 lg:grid-cols-3 gap-5 md:grid-cols-2 items-center mt-10">
+          <div className="w-full mx-auto grid 2xl:grid-cols-4 px-8 lg:grid-cols-3 gap-8 md:grid-cols-2 items-center mt-10">
             {actionSet.map((action, i) => {
               return (
                 <div
@@ -124,7 +124,6 @@ object-top"
                       {action.text2}
                     </Badge>
                     <span className="px-1"></span>
-           
                   </div>
                 </div>
               );
