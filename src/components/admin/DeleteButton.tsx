@@ -13,13 +13,11 @@ import { handleDelete } from "@/lib/client-methods";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 
-import { AiFillDelete } from "react-icons/ai";
-
 const DeleteButton = ({
   publicId,
   locked,
   open,
-  setDeleteOpen
+  setDeleteOpen,
 }: {
   publicId: string;
   locked: boolean;
@@ -29,7 +27,7 @@ const DeleteButton = ({
   const queryClient = useQueryClient();
 
   const toggleSheet = () => {
-    setDeleteOpen(curr => !curr);
+    setDeleteOpen((curr) => !curr);
   };
 
   const deleteMutation = useMutation({
@@ -62,7 +60,7 @@ const DeleteButton = ({
             <AlertDialogAction
               onClick={() => {
                 deleteMutation.mutate({ publicId });
-                toggleSheet()
+                toggleSheet();
               }}
             >
               Continue

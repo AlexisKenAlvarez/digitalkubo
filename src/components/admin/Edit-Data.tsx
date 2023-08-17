@@ -9,7 +9,7 @@ import {
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -37,7 +37,6 @@ import axios from "axios";
 interface PageProps {
   isOpen: boolean;
   toggleSheet: () => void;
-  customRef: React.RefObject<HTMLDivElement>;
   defaultValues: {
     id: number;
     title: string;
@@ -50,19 +49,19 @@ interface PageProps {
 const EditData: FunctionComponent<PageProps> = ({
   isOpen,
   toggleSheet,
-  customRef,
-  defaultValues
+  defaultValues,
 }) => {
   const formData = new FormData();
   const [file, setFile] = useState<File>();
   const [dataArr, setData] = useState<FormData[]>([]);
   const [error, setError] = useState("");
+  const [changed, setChanged] = useState(false)
 
   const nameSchema = z.object({
     acpName: z.string().min(3, "Must be atleast 3 characters long."),
     acpType: z.string().trim().min(1, "Pick a acp type"),
     acpPrice: z.string().trim().min(1, "Pick a acp price"),
-  });
+  }); 
 
   type nameType = z.infer<typeof nameSchema>;
 
@@ -83,6 +82,16 @@ const EditData: FunctionComponent<PageProps> = ({
   } = form;
 
   const nameValue = watch("acpName");
+  const accessValue = watch("acpType");
+  const pricingValue = watch("acpPrice");
+  
+  useEffect(() => {
+    if (nameValue !== defaultValues.title) {
+      setChanged(true)
+    }
+
+    
+  }, [nameValue])
 
   const createAcp = (data: nameType) => {
     if (!file) {
@@ -128,10 +137,7 @@ const EditData: FunctionComponent<PageProps> = ({
     <>
       {/* Edit Action Plan */}
       <Sheet open={isOpen}>
-        <SheetContent
-          className="border-l-[1px] border-l-black/10"
-          ref={customRef}
-        >
+        <SheetContent className="border-l-[1px] border-l-black/10">
           <button onClick={toggleSheet}>
             <X className="absolute top-3 right-3 h-5 w-5" />
           </button>
