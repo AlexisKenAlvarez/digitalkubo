@@ -67,6 +67,7 @@ model ActionPlans {
   link     String            @db.VarChar(150)
   publicId String            @db.VarChar(55)
   locked   ActionPlanAccess?
+  pricing  ActionPlanPrice[]
 }
 
 model ActionPlanAccess {
@@ -76,4 +77,13 @@ model ActionPlanAccess {
 
   @@index([locked])
   @@index([id])
+}
+
+model ActionPlanPrice {
+  id         Int         @id
+  actionPlan ActionPlans @relation(fields: [id], references: [id], onDelete: Cascade)
+  pricing       String      @db.VarChar(20)
+
+  @@index([id])
+  @@index([pricing])
 }

@@ -36,15 +36,15 @@ import { useEffect } from "react";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  count: number;
   pageSize: number;
+  tableName: string;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  count,
-  pageSize
+  pageSize,
+  tableName,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -82,10 +82,11 @@ export function DataTable<TData, TValue>({
 
   return (
     <>
-      <div className="flex items-center w-full ml-auto max-w-[24rem] gap-3">
+      <div className="flex md:items-center ml-auto w-full gap-3 md:justify-between md:flex-row flex-col justify-start items-start">
+        <h1 className="font-primary text-2xl">{tableName}</h1>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
+            <Button variant="outline" className="md:ml-auto">
               Columns
             </Button>
           </DropdownMenuTrigger>
@@ -177,15 +178,28 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
 
-      <div className="flex items-center justify-end space-x-2">
+      <div className="flex items-center justify-center lg:justify-end space-x-2">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.setPageIndex(0)}
+          disabled={!table.getCanPreviousPage()}
+        >
+          &lt;&lt;
+        </Button>
+
         <Button
           variant="outline"
           size="sm"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
-          Previous
+          Prev
         </Button>
+        <p className="text-sm">
+          Page {table.getState().pagination.pageIndex + 1} of{" "}
+          {table.getPageCount()}
+        </p>
         <Button
           variant="outline"
           size="sm"
@@ -193,6 +207,14 @@ export function DataTable<TData, TValue>({
           disabled={!table.getCanNextPage()}
         >
           Next
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+          disabled={!table.getCanNextPage()}
+        >
+          &gt;&gt;
         </Button>
       </div>
     </>

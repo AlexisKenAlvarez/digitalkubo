@@ -8,7 +8,6 @@ import { DataTable } from "@/components/admin/Data-Table";
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Separator } from "@/components/ui/separator";
-import { useRouter } from "next/router";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -16,35 +15,16 @@ interface DataTableProps<TData, TValue> {
 }
 
 const Index = () => {
-  const router = useRouter();
-  const { query } = router;
-
-  const [page, setPage] = React.useState(1);
-  const pageParam = query.page as string;
   const REACT_TABLE_PAGE_SIZE = 5;
 
-  React.useEffect(() => {
-    try {
-      let pageNum = parseInt(pageParam) || 1;
-      if (pageNum < 1) {
-        setPage(1);
-      } else {
-        setPage(pageNum);
-      }
-      console.log(pageNum);
-    } catch (error) {
-      setPage(1);
-    }
-  }, [pageParam]);
-
   const unlockedPdf = useQuery({
-    queryKey: ["adminData", "unlocked", { page }],
+    queryKey: ["adminData", { type: "unlocked" }],
     queryFn: () => getData(),
     staleTime: 1000 * 60 * 60 * 24,
   });
 
   const lockedPdf = useQuery({
-    queryKey: ["adminData", "locked", { page }],
+    queryKey: ["adminData", { type: "locked" }],
     queryFn: () => getDataLocked(),
     staleTime: 1000 * 60 * 60 * 24,
   });
@@ -70,30 +50,27 @@ const Index = () => {
           {/* INSERT CODE BELOW */}
           <div className="w-full min-h-[calc(100vh-80px)] bg-white flex flex-col gap-y-5">
             <div className="flex flex-col gap-y-4 sm:p-10 p-2">
-              <h1 className="font-primary text-2xl">Unlocked Action Plan</h1>
               {unlockedPdf.isLoading ? (
                 <p>Loading...</p>
               ) : (
                 <DataTable
                   columns={columns}
                   data={unlockedPdf.data.data}
-                  count={unlockedPdf.data.count}
                   pageSize={REACT_TABLE_PAGE_SIZE}
-
+                  tableName="Unlocked Action Plans"
                 />
               )}
             </div>
             <Separator />
             <div className="flex flex-col gap-y-4 sm:p-10 p-2">
-              <h1 className="font-primary text-2xl">Locked Action Plan</h1>
               {lockedPdf.isLoading ? (
                 <p>Loading...</p>
               ) : (
                 <DataTable
                   columns={columns}
                   data={lockedPdf.data.data}
-                  count={lockedPdf.data.count}
                   pageSize={REACT_TABLE_PAGE_SIZE}
+                  tableName="Locked Action Plans"
                 />
               )}
             </div>

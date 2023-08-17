@@ -8,23 +8,20 @@ export default async function handler(
   try {
     const { locked } = req.body;
 
-    const count = await prisma.actionPlanAccess.aggregate({
-      where: {
-        locked,
-      },
-      _count: true,
-    });
-
     const data = await prisma.actionPlanAccess.findMany({
       where: {
         locked,
       },
       include: {
-        actionPlan: true,
+        actionPlan: {
+          include: {
+            pricing: true,
+          },
+        },
       },
     });
 
-    res.status(200).json({ success: true, data, count: count._count });
+    res.status(200).json({ success: true, data });
   } catch (error) {
     console.log(error);
     res.status(400).json({ error });

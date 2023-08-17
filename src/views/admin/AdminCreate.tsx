@@ -80,6 +80,7 @@ const AdminCreate = () => {
   const nameSchema = z.object({
     acpName: z.string().min(3, "Must be atleast 3 characters long."),
     acpType: z.string().trim().min(1, "Pick a acp type"),
+    acpPrice: z.string().trim().min(1, "Pick a acp price"),
   });
 
   type nameType = z.infer<typeof nameSchema>;
@@ -89,6 +90,7 @@ const AdminCreate = () => {
     defaultValues: {
       acpName: "",
       acpType: "unlocked",
+      acpPrice: "free",
     },
   });
 
@@ -105,6 +107,8 @@ const AdminCreate = () => {
     } else {
       formData.append("title", data.acpName);
       formData.append("access", data.acpType);
+      formData.append("pricing", data.acpPrice);
+
       formData.append("file", file as Blob);
       formData.append("fileName", file.name);
       formData.append("upload_preset", "digitalkubo");
@@ -112,6 +116,7 @@ const AdminCreate = () => {
       setData((items) => [...items, formData]);
       setValue("acpName", "");
       setValue("acpType", "unlocked");
+      setValue("acpPrice", "free");
       setFile(undefined);
     }
   };
@@ -269,6 +274,58 @@ const AdminCreate = () => {
                     )}
                   />
 
+                  {/* acp Price */}
+                  <FormField
+                    control={control}
+                    name="acpPrice"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          <div className="flex sm:items-center gap-x-[5px] sm:flex-row flex-col">
+                            <h1 className="">Action Plan Pricing</h1>
+                            <p className="text-sm text-red-400">
+                              {errors.acpType?.message
+                                ? `- ${errors.acpType?.message}`
+                                : null}
+                            </p>
+                          </div>
+                        </FormLabel>
+                        <Select
+                          onValueChange={(e) => {
+                            field.onChange(e);
+                          }}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Free" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent
+                            position="popper"
+                            defaultValue="free"
+                          >
+                            <SelectItem
+                              value="free"
+                              className="cursor-pointer"
+                            >
+                              <div className="flex items-center gap-x-[5px] py-2">
+                                <p className="">Free</p>
+                              </div>
+                            </SelectItem>
+                            <SelectItem
+                              value="paid"
+                              className="cursor-pointer"
+                            >
+                              <div className="flex items-center gap-x-[5px] py-2">
+                                <p className="">Paid</p>
+                              </div>
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </FormItem>
+                    )}
+                  />
+
                   <div className="mt-3">
                     <div className="relative w-full">
                       <Label
@@ -291,6 +348,10 @@ const AdminCreate = () => {
                         className="hidden"
                         onChange={handleUpload}
                         accept="application/pdf"
+                        onClick={(e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+                          const element = e.target as HTMLInputElement
+                          element.value = ''
+                        }}
                       />
                     </div>
                     {file && (
