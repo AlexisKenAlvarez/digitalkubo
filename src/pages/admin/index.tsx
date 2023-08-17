@@ -1,3 +1,4 @@
+import * as React from "react";
 import LeftMenu from "@/views/admin/LeftMenu";
 import TopMenu from "@/views/admin/TopMenu";
 import { useQuery } from "@tanstack/react-query";
@@ -6,8 +7,8 @@ import { columns } from "@/components/admin/Columns";
 import { DataTable } from "@/components/admin/Data-Table";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { useRouter } from "next/router";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -15,14 +16,35 @@ interface DataTableProps<TData, TValue> {
 }
 
 const Index = () => {
+  const router = useRouter();
+  const { query } = router;
+
+  const [page, setPage] = React.useState(1);
+  const pageParam = query.page as string;
+  const REACT_TABLE_PAGE_SIZE = 5;
+
+  React.useEffect(() => {
+    try {
+      let pageNum = parseInt(pageParam) || 1;
+      if (pageNum < 1) {
+        setPage(1);
+      } else {
+        setPage(pageNum);
+      }
+      console.log(pageNum);
+    } catch (error) {
+      setPage(1);
+    }
+  }, [pageParam]);
+
   const unlockedPdf = useQuery({
-    queryKey: ["adminDataUnlocked"],
+    queryKey: ["adminData", "unlocked", { page }],
     queryFn: () => getData(),
     staleTime: 1000 * 60 * 60 * 24,
   });
 
   const lockedPdf = useQuery({
-    queryKey: ["adminDataLocked"],
+    queryKey: ["adminData", "locked", { page }],
     queryFn: () => getDataLocked(),
     staleTime: 1000 * 60 * 60 * 24,
   });
@@ -52,7 +74,13 @@ const Index = () => {
               {unlockedPdf.isLoading ? (
                 <p>Loading...</p>
               ) : (
-                <DataTable columns={columns} data={unlockedPdf.data.data} />
+                <DataTable
+                  columns={columns}
+                  data={unlockedPdf.data.data}
+                  count={unlockedPdf.data.count}
+                  pageSize={REACT_TABLE_PAGE_SIZE}
+
+                />
               )}
             </div>
             <Separator />
@@ -61,7 +89,12 @@ const Index = () => {
               {lockedPdf.isLoading ? (
                 <p>Loading...</p>
               ) : (
-                <DataTable columns={columns} data={lockedPdf.data.data} />
+                <DataTable
+                  columns={columns}
+                  data={lockedPdf.data.data}
+                  count={lockedPdf.data.count}
+                  pageSize={REACT_TABLE_PAGE_SIZE}
+                />
               )}
             </div>
           </div>

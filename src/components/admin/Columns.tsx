@@ -38,17 +38,13 @@ export const columns: ColumnDef<ColumnData>[] = [
           }}
           className=" pl-0"
         >
-          File Name
+          Title
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     accessorFn: row => `${row.actionPlan.title}`,
     size: 400,
-    // cell: ({ row }) => {
-    //   const pdf = row.original;
-    //   return pdf.actionPlan.title;
-    // },
   },
   {
     accessorKey: "fileName",
@@ -62,6 +58,10 @@ export const columns: ColumnDef<ColumnData>[] = [
   {
     accessorKey: "locked",
     header: "Locked",
+    cell: ({row}) => {
+      const pdf = row.original;
+      return <p className="capitalize">{pdf.locked.toString()}</p>
+    }
   },
   {
     header: "Actions",

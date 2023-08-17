@@ -38,7 +38,7 @@ import {
 } from "@/components/ui/table";
 
 import { Label } from "../../components/ui/label";
-import { PiTrashSimpleThin } from "react-icons/pi";
+import { AiFillDelete } from "react-icons/ai";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { TbLoaderQuarter } from "react-icons/tb";
@@ -56,8 +56,7 @@ const AdminCreate = () => {
   const createPdfMutation = useMutation({
     mutationFn: uploadData,
     onSuccess: (data) => {
-      queryClient.invalidateQueries(["adminDataLocked"]);
-      queryClient.invalidateQueries(["adminDataUnlocked"]);
+      queryClient.invalidateQueries(["adminData"]);
       console.log("Success", data);
     },
   });
@@ -316,44 +315,45 @@ const AdminCreate = () => {
           </Card>
         </div>
 
-        <div className={`mt-20 ${dataArr.length > 0 ? "block" : "hidden"}`}>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Title</TableHead>
-                <TableHead>Access</TableHead>
-                <TableHead>File</TableHead>
-                <TableHead>Delete</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {dataArr.map((items, i) => {
-                return (
-                  <TableRow key={i}>
-                    <TableCell className="text-black">
-                      {items.get("title")?.toString()}
-                    </TableCell>
-                    <TableCell className="text-black capitalize">
-                      {items.get("access")?.toString()}
-                    </TableCell>
-                    <TableCell className="text-black">
-                      {items.get("fileName")?.toString()}
-                    </TableCell>
-                    <TableCell className="text-black">
-                      <button
-                        onClick={() => {
-                          handleDelete(i);
-                        }}
-                      >
-                        <PiTrashSimpleThin className="text-lg hover:text-red-500 transition-all ease-in-out" />
-                      </button>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-
+        <div className={`${dataArr.length > 0 ? "block" : "hidden"}`}>
+          <div className="mt-20 border-[1px] border-black/10 rounded-lg overflow-hidden inline-block w-full">
+            <Table>
+              <TableHeader className="bg-black/5">
+                <TableRow>
+                  <TableHead>Title</TableHead>
+                  <TableHead>Access</TableHead>
+                  <TableHead>File</TableHead>
+                  <TableHead>Delete</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {dataArr.map((items, i) => {
+                  return (
+                    <TableRow key={i}>
+                      <TableCell className="text-black">
+                        {items.get("title")?.toString()}
+                      </TableCell>
+                      <TableCell className="text-black capitalize">
+                        {items.get("access")?.toString()}
+                      </TableCell>
+                      <TableCell className="text-black">
+                        {items.get("fileName")?.toString()}
+                      </TableCell>
+                      <TableCell className="text-black">
+                        <button
+                          onClick={() => {
+                            handleDelete(i);
+                          }}
+                        >
+                          <AiFillDelete className="text-lg hover:text-red-500 transition-all ease-in-out" />
+                        </button>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </div>
           <Button className="mt-10" onClick={handleSubmit}>
             {debounce ? <TbLoaderQuarter className="animate-spin" /> : "Upload"}
           </Button>
