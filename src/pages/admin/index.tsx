@@ -3,7 +3,7 @@ import LeftMenu from "@/views/admin/LeftMenu";
 import TopMenu from "@/views/admin/TopMenu";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { columns } from "@/components/admin/Columns";
+import { Columns } from "@/components/admin/Columns";
 import { DataTable } from "@/components/admin/Data-Table";
 
 import { ColumnDef } from "@tanstack/react-table";
@@ -54,7 +54,7 @@ const Index = () => {
                 <p>Loading...</p>
               ) : (
                 <DataTable
-                  columns={columns}
+                  columns={Columns}
                   data={unlockedPdf.data.data}
                   pageSize={REACT_TABLE_PAGE_SIZE}
                   tableName="Unlocked Action Plans"
@@ -67,7 +67,7 @@ const Index = () => {
                 <p>Loading...</p>
               ) : (
                 <DataTable
-                  columns={columns}
+                  columns={Columns}
                   data={lockedPdf.data.data}
                   pageSize={REACT_TABLE_PAGE_SIZE}
                   tableName="Locked Action Plans"

@@ -1,18 +1,11 @@
 import { ColumnDef } from "@tanstack/react-table";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
 import DeleteButton from "./DeleteButton";
 import { Button } from "../ui/button";
 import React from "react";
 import EditData from "./Edit-Data";
+import AdminDropDown from "./AdminDropDown";
 
 export type ActionPlan = {
   fileName: string;
@@ -86,73 +79,22 @@ export const Columns: ColumnDef<ColumnData>[] = [
       const pdf = row.original;
       const publicId = pdf.actionPlan.publicId;
 
-      const [isOpen, setOpen] = React.useState(false);
-      const [isDeleteOpen, setDeleteOpen] = React.useState(false);
-      const ref = React.useRef<HTMLDivElement>(null);
-
       const defaultValues = {
         id: parseInt(pdf.id),
         title: pdf.actionPlan.title,
         pricing: pdf.actionPlan.pricing[0].pricing,
         locked: pdf.locked,
-        publicId
-      }
-
-      const toggleSheet = () => {
-        setOpen((prevState) => !prevState);
+        publicId,
       };
-
-      const toggleDelete = () => {
-        setDeleteOpen((prevState) => !prevState);
-      };
-
-      React.useEffect(() => {
-        const handleClick = (event: { target: any }) => {
-          if (ref.current && !ref.current.contains(event.target)) {
-            setOpen(false);
-          }
-        };
-
-        document.addEventListener("click", handleClick, true);
-
-        return () => {
-          document.removeEventListener("click", handleClick, true);
-        };
-      }, [ref]);
-
+      
       return (
         <>
-          {/* Delete Action plan */}
-          <DeleteButton
+          <AdminDropDown
+            link={pdf.actionPlan.link}
             publicId={publicId}
             locked={pdf.locked}
-            open={isDeleteOpen}
-            setDeleteOpen={setDeleteOpen}
+            defaultValues={defaultValues}
           />
-
-          <EditData isOpen={isOpen} toggleSheet={toggleSheet} customRef={ref} defaultValues={defaultValues} />
-
-          {/* Dropdown Menu */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button className="h-8 w-8 p-0 ">
-                {/* <span className="sr-only">Open menu</span> */}
-                <MoreHorizontal className="h-4 w-4" />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem
-                onClick={() =>
-                  navigator.clipboard.writeText(pdf.actionPlan.link)
-                }
-              >
-                Copy PDF Link
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={toggleSheet}>Edit</DropdownMenuItem>
-              <DropdownMenuItem onClick={toggleDelete}>Delete</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
         </>
       );
     },

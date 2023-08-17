@@ -2,6 +2,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 const Latest = () => {
   var settings = {
@@ -25,7 +26,12 @@ const Latest = () => {
             {arr.map((items, i) => {
               return (
                 <div className="my-5" key={i + items}>
-                  <img src="pdf.webp"></img>
+                  <Image
+                    src="/pdf.webp"
+                    alt={i + items}
+                    width="500"
+                    height="500"
+                  ></Image>
                   <h3 className="my-5 text-[#D1770E] text-[14px] md:text-[16px] font-primary font-medium text-center">
                     {" "}
                     Action Plan 00{i + 1}
@@ -54,7 +60,13 @@ const Latest = () => {
             </Button>
           </div>
           <div className="w-full align-center h-fit hidden lg:block">
-            <img className="mx-auto hidden md:block" src="business.webp"></img>
+            <Image
+              className="mx-auto hidden md:block"
+              width="500"
+              height="500"
+              alt="Business"
+              src="/business.webp"
+            ></Image>
           </div>
         </div>
       </div>

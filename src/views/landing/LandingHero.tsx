@@ -19,7 +19,7 @@ const LandingHero = () => {
                     </Button>
                 </div>
                 <div className="w-full align-center h-fit hidden md:block">
-                    <Image className="mx-auto" width="500" height="500" alt="Kubo" src="kubo.webp"/>
+                    <Image className="mx-auto" width="500" height="500" alt="Kubo" src="/kubo.webp"/>
                 </div>
             </div>
 
