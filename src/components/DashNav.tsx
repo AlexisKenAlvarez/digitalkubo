@@ -28,7 +28,7 @@ const DashNav = () => {
               href={items.link}
               className={`${
                 router.pathname === items.link
-                  ? "text-nav border-b-2 pb-3"
+                  ? "text-nav border-b-2 pb-3 font-bold"
                   : "text-black pb-3 "
               }`}
             >

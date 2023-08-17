@@ -66,8 +66,10 @@ export const actionSet = [
     text: "Unlocked",
 
     text1: "Free",
+
+    text2: "Locked"
   },
-  {
+   {
     image: "/action.webp",
 
     image1: "/locked.webp",
@@ -77,8 +79,10 @@ export const actionSet = [
     text: "Unlocked",
 
     text1: "Free",
+
+    text2: "Locked"
   },
-  {
+   {
     image: "/action.webp",
 
     image1: "/locked.webp",
@@ -88,8 +92,10 @@ export const actionSet = [
     text: "Unlocked",
 
     text1: "Free",
+
+    text2: "Locked"
   },
-  {
+   {
     image: "/action.webp",
 
     image1: "/locked.webp",
@@ -99,8 +105,10 @@ export const actionSet = [
     text: "Unlocked",
 
     text1: "Free",
+
+    text2: "Locked"
   },
-  {
+   {
     image: "/action.webp",
 
     image1: "/locked.webp",
@@ -110,8 +118,10 @@ export const actionSet = [
     text: "Unlocked",
 
     text1: "Free",
+
+    text2: "Locked"
   },
-  {
+   {
     image: "/action.webp",
 
     image1: "/locked.webp",
@@ -121,8 +131,10 @@ export const actionSet = [
     text: "Unlocked",
 
     text1: "Free",
+
+    text2: "Locked"
   },
-  {
+   {
     image: "/action.webp",
 
     image1: "/locked.webp",
@@ -132,8 +144,10 @@ export const actionSet = [
     text: "Unlocked",
 
     text1: "Free",
+
+    text2: "Locked"
   },
-  {
+   {
     image: "/action.webp",
 
     image1: "/locked.webp",
@@ -143,8 +157,10 @@ export const actionSet = [
     text: "Unlocked",
 
     text1: "Free",
+
+    text2: "Locked"
   },
-  {
+   {
     image: "/action.webp",
 
     image1: "/locked.webp",
@@ -154,8 +170,10 @@ export const actionSet = [
     text: "Unlocked",
 
     text1: "Free",
+
+    text2: "Locked"
   },
-  {
+   {
     image: "/action.webp",
 
     image1: "/locked.webp",
@@ -165,8 +183,10 @@ export const actionSet = [
     text: "Unlocked",
 
     text1: "Free",
+
+    text2: "Locked"
   },
-  {
+   {
     image: "/action.webp",
 
     image1: "/locked.webp",
@@ -176,8 +196,10 @@ export const actionSet = [
     text: "Unlocked",
 
     text1: "Free",
+
+    text2: "Locked"
   },
-  {
+   {
     image: "/action.webp",
 
     image1: "/locked.webp",
@@ -187,5 +209,9 @@ export const actionSet = [
     text: "Unlocked",
 
     text1: "Free",
+
+    text2: "Locked"
   },
+  
+  
 ];

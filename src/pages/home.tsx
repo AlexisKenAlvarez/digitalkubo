@@ -121,12 +121,10 @@ object-top"
                       variant="outline"
                       className="text-black mt-2 bg-lock2/25"
                     >
-                      {action.text}
+                      {action.text2}
                     </Badge>
                     <span className="px-1"></span>
-                    <Badge variant="outline" className="text-black bg-lock2/25">
-                      {action.text1}
-                    </Badge>
+           
                   </div>
                 </div>
               );
