@@ -14,7 +14,7 @@ const Latest = () => {
   };
 
   const arr = [...new Array(6)];
-
+ 
   return (
     <section className="w-full md:px-24 2xl:px-5 md:py-10 relative bg-white">
       <div className="max-w-[1400px] w-full mx-auto flex flex-wrap">
