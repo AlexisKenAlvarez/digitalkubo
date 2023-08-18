@@ -3,43 +3,58 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import React from 'react';
 
 const Latest = () => {
+  const slider = React.useRef<Slider>(null);
   var settings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: 3,
     slidesToScroll: 1,
+    arrows: false,
+    responsive: [
+      {
+        breakpoint: 870,
+        settings: {
+          slidesToShow: 1,
+        },
+      }
+    ]
   };
 
   const arr = [...new Array(6)];
- 
+
   return (
     <section className="w-full md:px-24 2xl:px-5 md:py-10 relative bg-white">
       <div className="max-w-[1400px] w-full mx-auto flex flex-wrap">
         <div className="w-full mx-auto py-10">
           <h1 className="text-[#D1770E] font-primary md:text-[24px] font-bold md:text-left text-center text-[24px] tracking-wide">
-            LATEST ACTION PLANS
+            LATEST ACTION PLAN
           </h1>
-          <Slider {...settings} className="px-2 md:px-0">
-            {arr.map((items, i) => {
-              return (
-                <div className="my-5" key={i + items}>
-                  <Image
-                    src="/pdf.webp"
-                    alt={i + items}
-                    width="500"
-                    height="500"
-                  ></Image>
-                  <h3 className="my-5 text-[#D1770E] text-[14px] md:text-[16px] font-primary font-medium text-center">
-                    {" "}
-                    Action Plan 00{i + 1}
-                  </h3>
-                </div>
-              );
-            })}
-          </Slider>
+          <div className="border-2 flex items-center justify-center">
+            <Button className="text-[#ffffff] content-none p-2 md:text-[32px]" onClick={() => slider?.current?.slickPrev()}>{"<"}</Button>
+            <Slider {...settings} ref={slider} className="px-2 md:px-0 max-w-[300px] md:max-w-[1000px]">
+              {arr.map((items, i) => {
+                return (
+                  <div className="my-5 max-w-[18rem] ml-2 border-2" key={i + items}>
+                    <Image
+                      src="/pdf.webp"
+                      alt={i + items}
+                      width="500"
+                      height="500"
+                    ></Image>
+                    <h3 className="my-5 text-[#D1770E] text-[14px] md:text-[16px] font-primary font-medium text-center">
+                      {" "}
+                      Action Plan 00{i + 1}
+                    </h3>
+                  </div>
+                );
+              })}
+            </Slider>
+            <Button className="text-[#ffffff] content-none text-[32px]" onClick={() => slider?.current?.slickNext()}>{">"}</Button>
+          </div>
         </div>
         <div className="max-w-[1400px] w-full mx-auto flex-wrap md:flex-nowrap md:flex py-16 gap-x-10">
           <div className="w-full text-center">
