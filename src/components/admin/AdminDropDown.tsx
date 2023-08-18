@@ -28,11 +28,10 @@ const AdminDropDown: FunctionComponent<PageProps> = ({
   link,
   publicId,
   locked,
-  defaultValues
+  defaultValues,
 }) => {
   const [isOpen, setOpen] = React.useState(false);
   const [isDeleteOpen, setDeleteOpen] = React.useState(false);
-  const ref = React.useRef<HTMLDivElement>(null);
 
   const toggleSheet = () => {
     setOpen((curr) => !curr);
@@ -41,20 +40,6 @@ const AdminDropDown: FunctionComponent<PageProps> = ({
   const toggleDelete = () => {
     setDeleteOpen((prevState) => !prevState);
   };
-
-  React.useEffect(() => {
-    const handleClick = (event: { target: any }) => {
-      if (ref.current && !ref.current.contains(event.target)) {
-        setOpen(false);
-      }
-    };
-
-    document.addEventListener("click", handleClick, true);
-
-    return () => {
-      document.removeEventListener("click", handleClick, true);
-    };
-  }, [ref]);
 
   return (
     <div>
@@ -68,7 +53,6 @@ const AdminDropDown: FunctionComponent<PageProps> = ({
       <EditData
         isOpen={isOpen}
         toggleSheet={toggleSheet}
-        customRef={ref}
         defaultValues={defaultValues}
       />
       {/* Dropdown Menu */}
