@@ -68,7 +68,7 @@ const Index = () => {
               ) : (
                 <DataTable
                   columns={Columns}
-                  data={lockedPdf.data.data}
+                  data={lockedPdf.data?.data}
                   pageSize={REACT_TABLE_PAGE_SIZE}
                   tableName="Locked Action Plans"
                 />

@@ -44,9 +44,11 @@ const Offer = () => {
                       <div className="">
                         <Image
                           className="mx-auto"
+                          width="500"
+                          height="500"
                           alt={`Template${i}`}
                           key={template.img}
-                          src={template.img}
+                          src={`/${template.img}`}
                         ></Image>
                       </div>
                     </div>

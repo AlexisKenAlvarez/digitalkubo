@@ -7,22 +7,26 @@ import { Poppins } from "next/font/google";
 import Footer from "@/components/Footer";
 import { Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
+import { ProtectedLayout } from "@/components/layouts/protectedLayout";
 
+type AppPropsWithAuth = AppProps & {
+  Component: {
+    requireAuth?: boolean;
+  };
+};
 
 const queryClient = new QueryClient();
 
 const poppins = Poppins({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-poppins',
-  weight: ["100", "200", "300", "400", "500", "600", "700"]
-})
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-poppins",
+  weight: ["100", "200", "300", "400", "500", "600", "700"],
+});
 
-
-function MyApp({ Component, pageProps }: AppProps) {
-
-  const router = useRouter()
+function MyApp({ Component, pageProps }: AppPropsWithAuth) {
+  const router = useRouter();
 
   return (
     <SessionProvider session={pageProps.session}>
@@ -40,7 +44,13 @@ function MyApp({ Component, pageProps }: AppProps) {
             transition={Slide}
           />
           <div className="mt-14 md:mt-[6.5rem] bg-bg font-secondary">
-            <Component {...pageProps} key={router.asPath} />
+            {Component.requireAuth ? (
+              <ProtectedLayout>
+                <Component {...pageProps} />
+              </ProtectedLayout>
+            ) : (
+              <Component {...pageProps} key={router.asPath} />
+            )}
           </div>
           <Footer />
         </div>

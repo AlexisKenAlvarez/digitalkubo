@@ -9,12 +9,13 @@ import {
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { BsUnlockFill, BsLockFill } from "react-icons/bs";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import {
   Select,
@@ -33,38 +34,45 @@ import {
 
 import { Label } from "../../components/ui/label";
 import axios from "axios";
+import { toast } from "react-toastify";
+
+interface defaultValues {
+  id: number;
+  title: string;
+  pricing: string;
+  locked: boolean;
+  publicId: string;
+}
 
 interface PageProps {
   isOpen: boolean;
   toggleSheet: () => void;
-  customRef: React.RefObject<HTMLDivElement>;
-  defaultValues: {
-    id: number;
-    title: string;
-    pricing: string;
-    locked: boolean;
-    publicId: string;
-  };
+  defaultVal: defaultValues;
 }
 
 const EditData: FunctionComponent<PageProps> = ({
   isOpen,
   toggleSheet,
-  customRef,
-  defaultValues
+  defaultVal,
 }) => {
-  const formData = new FormData();
   const [file, setFile] = useState<File>();
-  const [dataArr, setData] = useState<FormData[]>([]);
+  const [debounce, setDebounce] = useState(false);
   const [error, setError] = useState("");
+  const [changed, setChanged] = useState(false);
+  const queryClient = useQueryClient();
+  const [defaultValues, setDefaultValues] = useState<defaultValues>({
+    title: "",
+    id: 0,
+    pricing: "",
+    locked: false,
+    publicId: "",
+  });
 
   const nameSchema = z.object({
     acpName: z.string().min(3, "Must be atleast 3 characters long."),
     acpType: z.string().trim().min(1, "Pick a acp type"),
     acpPrice: z.string().trim().min(1, "Pick a acp price"),
   });
-
-  type nameType = z.infer<typeof nameSchema>;
 
   const form = useForm<nameType>({
     resolver: zodResolver(nameSchema),
@@ -80,41 +88,146 @@ const EditData: FunctionComponent<PageProps> = ({
     formState: { errors },
     watch,
     setValue,
+    handleSubmit,
   } = form;
 
+  type nameType = z.infer<typeof nameSchema>;
+
   const nameValue = watch("acpName");
+  const accessValue = watch("acpType");
+  const pricingValue = watch("acpPrice");
 
-  const createAcp = (data: nameType) => {
-    if (!file) {
-      setError("Please upload a file.");
-    } else {
-      formData.append("title", data.acpName);
-      formData.append("access", data.acpType);
-      formData.append("pricing", data.acpPrice);
+  const updateMutation = useMutation({
+    mutationFn: async ({
+      id,
+      title,
+      locked,
+      pricing,
+      withImage,
+      formData,
+    }: {
+      id: number;
+      title: string;
+      locked: boolean;
+      pricing: string;
+      withImage: boolean;
+      formData?: FormData;
+    }) => {
+      try {
+        if (!withImage) {
+          console.log("NO IMAGE");
+          // Call the api update for updating without image changes
+          const updateData = await axios.post("/api/updatePdf", {
+            id: id,
+            title,
+            locked,
+            pricing,
+            withImage: false,
+          });
+          toast.success("Action plan updated successfully.");
 
-      formData.append("file", file as Blob);
-      formData.append("fileName", file.name);
-      formData.append("upload_preset", "digitalkubo");
+          return updateData.data;
+        } else {
+          // Call the api update for updating with image changes
+          const deleteImage = await axios.post("/api/deleteImage", {
+            publicId: defaultValues.publicId,
+          });
 
-      setData((items) => [...items, formData]);
-      setValue("acpName", "");
-      setValue("acpType", "unlocked");
-      setValue("acpPrice", "free");
+          const { data } = await axios.post("/api/addImage", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
+
+          console.log("Add Image", data);
+
+          const updateData = await axios.post("/api/updatePdf", {
+            id: id,
+            title,
+            locked,
+            pricing,
+            fileName: data.fileName,
+            link: data.secure_url,
+            publicId: data.public_id,
+            withImage: true,
+          });
+          setFile(undefined);
+          toast.success("Action plan updated successfully.");
+
+          return updateData.data;
+        }
+      } catch (error) {
+        toast.error("Something went wrong. Please try again later.");
+      }
+    },
+    onSuccess: () => {
+      // Check if the access has changed
+      if (checkAccess(defaultValues.locked) !== accessValue) {
+        console.log("Access has changed!");
+        queryClient.invalidateQueries(["adminData"]);
+      }
+
+      // Invalidate the cache for that has been changed
+      if (defaultValues.locked) {
+        queryClient.invalidateQueries(["adminData", { type: "locked" }]);
+      } else {
+        queryClient.invalidateQueries(["adminData", { type: "unlocked" }]);
+      }
+
+      setDebounce(false);
       setFile(undefined);
+      setChanged(false);
+      toggleSheet();
+    },
+    onError: () => {},
+  });
+
+  const checkAccess = (isLocked: boolean) => {
+    if (isLocked) {
+      return "locked";
+    } else {
+      return "unlocked";
     }
   };
 
-  async function uploadData() {
-    axios.post("/api/addPdf", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-  }
+  const createAcp = (data: nameType) => {
+    if (!debounce) {
+      setDebounce(true);
+      if (!file) {
+        updateMutation.mutate({
+          id: defaultValues.id,
+          title: data.acpName,
+          locked: data.acpType === "locked" ? true : false,
+          pricing: data.acpPrice,
+          withImage: false,
+        });
+      } else {
+        // if a user uploaded a file, then update the action plan with a file
 
+        const formData = new FormData();
+
+        formData.append("file", file as Blob);
+        formData.append("fileName", file.name);
+        formData.append("upload_preset", "digitalkubo");
+
+        updateMutation.mutate({
+          id: defaultValues.id,
+          title: data.acpName,
+          locked: data.acpType === "locked" ? true : false,
+          pricing: data.acpPrice,
+          withImage: true,
+          formData,
+        });
+      }
+    }
+    // if a user did not upload a file, then update the action plan without a file
+  };
+
+  // handles the uploading of the file
   const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const uploadedFile = e.target.files[0];
+      setChanged(true);
       setFile(uploadedFile);
       setError("");
 
@@ -124,14 +237,33 @@ const EditData: FunctionComponent<PageProps> = ({
     }
   };
 
+  useEffect(() => {
+    setDefaultValues(defaultVal);
+  }, [defaultVal]);
+
+  useEffect(() => {
+    if (
+      nameValue !== defaultValues.title ||
+      accessValue !== checkAccess(defaultValues.locked) ||
+      pricingValue !== defaultValues.pricing
+    ) {
+      setChanged(true);
+    } else {
+      setChanged(false);
+    }
+  }, [nameValue, accessValue, pricingValue]);
+
+  useEffect(() => {
+    form.setValue("acpName", defaultValues.title);
+    form.setValue("acpType", checkAccess(defaultValues.locked));
+    form.setValue("acpPrice", defaultValues.pricing);
+  }, [defaultValues]);
+
   return (
     <>
       {/* Edit Action Plan */}
       <Sheet open={isOpen}>
-        <SheetContent
-          className="border-l-[1px] border-l-black/10"
-          ref={customRef}
-        >
+        <SheetContent className="border-l-[1px] border-l-black/10">
           <button onClick={toggleSheet}>
             <X className="absolute top-3 right-3 h-5 w-5" />
           </button>
@@ -208,13 +340,14 @@ const EditData: FunctionComponent<PageProps> = ({
                       >
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Unlocked" />
+                            <SelectValue
+                              placeholder={
+                                defaultValues.locked ? "Locked" : "Unlocked"
+                              }
+                            />
                           </SelectTrigger>
                         </FormControl>
-                        <SelectContent
-                          position="popper"
-                          defaultValue="unlocked"
-                        >
+                        <SelectContent position="popper">
                           <SelectItem
                             value="unlocked"
                             className="cursor-pointer"
@@ -259,10 +392,16 @@ const EditData: FunctionComponent<PageProps> = ({
                       >
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Free" />
+                            <SelectValue
+                              placeholder={`${defaultValues.pricing
+                                .charAt(0)
+                                .toUpperCase()}${defaultValues.pricing.substring(
+                                1
+                              )}`}
+                            />
                           </SelectTrigger>
                         </FormControl>
-                        <SelectContent position="popper" defaultValue="free">
+                        <SelectContent position="popper">
                           <SelectItem value="free" className="cursor-pointer">
                             <div className="flex items-center gap-x-[5px] py-2">
                               <p className="">Free</p>
@@ -289,11 +428,11 @@ const EditData: FunctionComponent<PageProps> = ({
                         variant="secondary"
                         className="w-full pointer-events-none h-full"
                       >
-                        <p className="">Upload Action Plan File</p>
+                        <p className="">Change action plan file</p>
                       </Button>
                     </Label>
                     <p className="opacity-0 pointer-events-none">
-                      Upload Action Plan
+                      New Action Plan
                     </p>
                     <Input
                       type="file"
@@ -322,8 +461,15 @@ const EditData: FunctionComponent<PageProps> = ({
                   )}
                 </div>
 
-                <Button type="submit" className="mt-4">
-                  Add to list
+                <Button
+                  type="submit"
+                  className="mt-4"
+                  disabled={!changed}
+                  onClick={() => {
+                    handleSubmit(createAcp);
+                  }}
+                >
+                  {debounce ? "Updating..." : "Update"}
                 </Button>
               </form>
             </Form>
