@@ -74,7 +74,7 @@ const Page = () => {
   if (isRedirecting) {
     return (
       <div className="w-full min-h-screen">
-        <p>Redirecting...</p>
+        <p>Loading...</p>
       </div>
     );
   }

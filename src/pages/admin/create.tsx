@@ -2,6 +2,55 @@ import AdminCreate from "@/views/admin/AdminCreate";
 import LeftMenu from "@/views/admin/LeftMenu";
 import TopMenu from "@/views/admin/TopMenu";
 
+import axios from "axios";
+import { GetServerSideProps } from "next";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const session = await getServerSession(req, res, authOptions);
+
+  try {
+    if (session) {
+      const data = await axios.post("/api/checkAdmin", {
+        email: session?.user.email,
+      });
+
+      console.log(data);
+
+      if (data.data.success) {
+        return {
+          props: {
+            data: null,
+          },
+        };
+      } else {
+        return {
+          redirect: {
+            destination: "/home",
+            permanent: false,
+          },
+        };
+      }
+    }
+
+    return {
+      redirect: {
+        destination: "/auth/login",
+        permanent: false,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      redirect: {
+        destination: "/auth/login",
+        permanent: false,
+      },
+    };
+  }
+};
+
 const create = () => {
   return (
     <div className="bg-[#F3F3F3] flex lg:flex-row flex-col">

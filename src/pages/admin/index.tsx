@@ -8,11 +8,58 @@ import { DataTable } from "@/components/admin/Data-Table";
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Separator } from "@/components/ui/separator";
+import { GetServerSideProps } from "next";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const session = await getServerSession(req, res, authOptions);
+
+  try {
+    if (session) {
+      const data = await axios.post("/api/checkAdmin", {
+        email: session?.user.email,
+      });
+
+      console.log(data)
+
+      if (data.data.success) {
+        return {
+          props: {
+            data: null,
+          },
+        };
+      } else {
+        return {
+          redirect: {
+            destination: "/home",
+            permanent: false,
+          },
+        };
+      }
+    }
+
+    return {
+      redirect: {
+        destination: "/auth/login",
+        permanent: false,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      redirect: {
+        destination: "/auth/login",
+        permanent: false,
+      },
+    };
+  }
+};
 
 const Index = () => {
   const REACT_TABLE_PAGE_SIZE = 5;
