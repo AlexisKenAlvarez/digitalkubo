@@ -51,6 +51,7 @@ function MyApp({ Component, pageProps }: AppPropsWithAuth) {
             ) : (
               <Component {...pageProps} key={router.asPath} />
             )}
+            {/* <Component {...pageProps} key={router.asPath} /> */}
           </div>
           <Footer />
         </div>

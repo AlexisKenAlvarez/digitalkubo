@@ -3,9 +3,8 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 type Props = {
-    children: React.ReactElement;
-  };
-  
+  children: React.ReactElement;
+};
 
 export const ProtectedLayout = ({ children }: Props): JSX.Element => {
   const router = useRouter();
@@ -23,15 +22,17 @@ export const ProtectedLayout = ({ children }: Props): JSX.Element => {
     if (unAuthorized) {
       console.log("not authorized");
       router.push({
-        pathname: "/",
+        pathname: "/auth/login",
         query: { returnUrl: router.asPath },
       });
     }
   }, [loading, unAuthorized, sessionStatus, router]);
 
   // if the user refreshed the page or somehow navigated to the protected page
-  if (loading) {
-    return <>Loading app...</>;
+  if (unAuthorized) {
+    return <div className="w-full min-h-screen">
+      <p className="">Redirecting...</p>
+    </div>;
   }
 
   // if the user is authorized, render the page

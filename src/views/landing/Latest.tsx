@@ -53,7 +53,7 @@ const Latest = () => {
                   >
                     <Image
                       src="/pdf.webp"
-                      alt={i + items}
+                      alt={i.toString()}
                       width="500"
                       height="500"
                     ></Image>

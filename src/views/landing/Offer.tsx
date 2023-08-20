@@ -21,7 +21,6 @@ const Offer = () => {
     },
   ];
 
-  console.log("HELLo");
 
   return (
     <>
@@ -38,7 +37,7 @@ const Offer = () => {
                 return (
                   <div
                     className="text-[#0000004f] font-secondary font-medium"
-                    key={template.desc}
+                    key={`Description${i}`}
                   >
                     <div className="w-full md:py-4 md:px-20">
                       <div className="">
