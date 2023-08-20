@@ -3,7 +3,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import React from 'react';
+import React from "react";
 
 const Latest = () => {
   const slider = React.useRef<Slider>(null);
@@ -18,10 +18,10 @@ const Latest = () => {
       {
         breakpoint: 870,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 1,
         },
-      }
-    ]
+      },
+    ],
   };
 
   const arr = [...new Array(6)];
@@ -31,14 +31,26 @@ const Latest = () => {
       <div className="max-w-[1400px] w-full mx-auto flex flex-wrap">
         <div className="w-full mx-auto py-10">
           <h1 className="text-[#D1770E] font-primary md:text-[24px] font-bold md:text-left text-center text-[24px] tracking-wide">
-            LATEST ACTION PLAN
+            LATEST ACTION PLANS
           </h1>
-          <div className="border-2 flex max-w-[80rem] w-full items-center justify-center">
-            <Button className="text-[#ffffff] content-none p-2 lg:text-[32px]" onClick={() => slider?.current?.slickPrev()}>{"<"}</Button>
-            <Slider {...settings} ref={slider} className="px-2 md:px-0 max-w-[38rem] md:max-w-[56rem]">
+          <div className="border-2 flex items-center justify-center">
+            <Button
+              className="text-[#ffffff] content-none p-2 md:text-[32px]"
+              onClick={() => slider?.current?.slickPrev()}
+            >
+              {"<"}
+            </Button>
+            <Slider
+              {...settings}
+              ref={slider}
+              className="px-2 md:px-0 max-w-[300px] md:max-w-[1000px]"
+            >
               {arr.map((items, i) => {
                 return (
-                  <div className="my-5 max-w-[18rem] ml-2 border-2" key={i + items}>
+                  <div
+                    className="my-5 max-w-[18rem] ml-2 border-2"
+                    key={i + items}
+                  >
                     <Image
                       src="/pdf.webp"
                       alt={i + items}
@@ -53,7 +65,12 @@ const Latest = () => {
                 );
               })}
             </Slider>
-            <Button className="text-[#ffffff] content-none lg:text-[32px]" onClick={() => slider?.current?.slickNext()}>{">"}</Button>
+            <Button
+              className="text-[#ffffff] content-none text-[32px]"
+              onClick={() => slider?.current?.slickNext()}
+            >
+              {">"}
+            </Button>
           </div>
         </div>
         <div className="max-w-[1400px] w-full mx-auto flex-wrap md:flex-nowrap md:flex py-16 gap-x-10">
