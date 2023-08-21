@@ -2,8 +2,7 @@ import DashNav from "@/components/DashNav";
 import Link from "next/link";
 import React from "react";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input"
-
+import { Input } from "@/components/ui/input";
 
 import { actionSet } from "../lib/indexs";
 import Image from "next/image";
@@ -36,18 +35,22 @@ const Home = () => {
           className="absolute top-0 left-0 object cover w-full h-full object-top"
         />
         <div className=" w-[full] min-h-auto container relative z-10 pb-24 ">
-          <div className="pl-8 md:flex items-center justify-between flex-row " >
-          <div className=" flex flex-col ">
-            <h1 className=" mt-6 text-3xl font-primary text-nav font-bold ">
-              Action Plans
-            </h1>
-            <p className=" font-secondary text-black/50">
-              Acess our free action plans
-            </p>
+          <div className="pl-8 md:flex items-center justify-between flex-row ">
+            <div className=" flex flex-col ">
+              <h1 className=" mt-6 text-3xl font-primary text-nav font-bold ">
+                Action Plans
+              </h1>
+              <p className=" font-secondary text-black/50">
+                Acess our free action plans
+              </p>
             </div>
             <div className="pr-8">
               {/* SEARCH BAR */}
-            <Input className="w-64 mt-4 md:mt-0 border-nav" type="search" placeholder="Search" />
+              <Input
+                className="w-64 mt-4 md:mt-0 border-nav"
+                type="search"
+                placeholder="Search"
+              />
             </div>
           </div>
           <div className="w-full mx-auto grid 2xl:grid-cols-4 px-3 lg:grid-cols-3 gap-8 md:grid-cols-2 items-center mt-10">
@@ -131,5 +134,7 @@ const Home = () => {
     </div>
   );
 };
+
+Home.requireAuth = true;
 
 export default Home;

@@ -53,8 +53,9 @@ const AdminDropDown: FunctionComponent<PageProps> = ({
       <EditData
         isOpen={isOpen}
         toggleSheet={toggleSheet}
-        defaultValues={defaultValues}
+        defaultVal={defaultValues}
       />
+
       {/* Dropdown Menu */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
