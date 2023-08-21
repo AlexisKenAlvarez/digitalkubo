@@ -17,12 +17,13 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
 }
 
+// RUNS ON BACKEND
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getServerSession(req, res, authOptions);
 
   try {
     if (session) {
-      const data = await axios.post("/api/checkAdmin", {
+      const data = await axios.post(`${process.env.NEXTAUTH_URL}/api/checkAdmin`, {
         email: session?.user.email,
       });
 
@@ -51,7 +52,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
       },
     };
   } catch (error) {
-    console.log(error);
+    console.log("MAY ERROR PRE");
     return {
       redirect: {
         destination: "/auth/login",

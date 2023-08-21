@@ -4,7 +4,6 @@ import React from "react";
 
 const DashNav = () => {
   const router = useRouter();
-  console.log(router.pathname);
 
   const dashLink = [
     {

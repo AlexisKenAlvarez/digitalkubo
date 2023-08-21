@@ -8,6 +8,8 @@ export default async function handler(
   try {
     const { email } = req.body;
 
+    console.log(email)
+
     const data = await prisma.adminList.findMany({
       where: {
         email,
