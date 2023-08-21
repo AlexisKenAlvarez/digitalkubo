@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 
-const Offer = () => {
+const Offer = () => { 
   const templates = [
     {
       desc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime, enim odio, voluptate soluta porro inventore voluptas error temporibus obcaecati",
