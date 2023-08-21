@@ -7,7 +7,7 @@ import React from "react";
 
 const Latest = () => {
   const slider = React.useRef<Slider>(null);
-  var settings = {
+  var settings = { 
     dots: true,
     infinite: true,
     speed: 500,
