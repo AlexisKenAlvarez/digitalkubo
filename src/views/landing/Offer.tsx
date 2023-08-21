@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 
-const Offer = () => {
+const Offer = () => { 
   const templates = [
     {
       desc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime, enim odio, voluptate soluta porro inventore voluptas error temporibus obcaecati",
@@ -39,10 +39,10 @@ const Offer = () => {
                     className="text-[#0000004f] font-secondary font-medium"
                     key={`Description${i}`}
                   >
-                    <div className="w-full md:py-4 md:px-20">
+                    <div className="mx-auto w-[50%] md:w-full md:py-4 md:px-20">
                       <div className="">
                         <Image
-                          className="mx-auto"
+                          className="md:px-22"
                           width="500"
                           height="500"
                           alt={`Template${i}`}

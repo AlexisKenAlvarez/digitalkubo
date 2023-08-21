@@ -7,7 +7,7 @@ import React from "react";
 
 const Latest = () => {
   const slider = React.useRef<Slider>(null);
-  var settings = {
+  var settings = { 
     dots: true,
     infinite: true,
     speed: 500,
@@ -18,9 +18,15 @@ const Latest = () => {
       {
         breakpoint: 870,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
         },
       },
+      {
+        breakpoint: 390,
+        settings: {
+          slidesToShow: 1,
+        }
+      }
     ],
   };
 
@@ -31,9 +37,9 @@ const Latest = () => {
       <div className="max-w-[1400px] w-full mx-auto flex flex-wrap">
         <div className="w-full mx-auto py-10">
           <h1 className="text-[#D1770E] font-primary md:text-[24px] font-bold md:text-left text-center text-[24px] tracking-wide">
-            LATEST ACTION PLANS
+            LATEST ACTION PLAN
           </h1>
-          <div className="border-2 flex items-center justify-center">
+          <div className="flex items-center justify-center">
             <Button
               className="text-[#ffffff] content-none p-2 md:text-[32px]"
               onClick={() => slider?.current?.slickPrev()}
@@ -43,12 +49,12 @@ const Latest = () => {
             <Slider
               {...settings}
               ref={slider}
-              className="px-2 md:px-0 max-w-[300px] md:max-w-[1000px]"
+              className="px-2 md:px-0 max-w-[300px] md:max-w-[42rem] lg:max-w-[1000px]"
             >
               {arr.map((items, i) => {
                 return (
                   <div
-                    className="my-5 max-w-[18rem] ml-2 border-2"
+                    className="my-5 md:max-w-[18rem] lg:ml-2 border"
                     key={i + items}
                   >
                     <Image
@@ -66,7 +72,7 @@ const Latest = () => {
               })}
             </Slider>
             <Button
-              className="text-[#ffffff] content-none text-[32px]"
+              className="text-[#ffffff] content-none p-2 md:text-[32px]"
               onClick={() => slider?.current?.slickNext()}
             >
               {">"}
