@@ -13,6 +13,7 @@ export type ActionPlan = {
   link: string;
   publicId: string;
   title: string;
+  createdAt: Date
   pricing: {
     id: number;
     pricing: string;

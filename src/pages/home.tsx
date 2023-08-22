@@ -7,10 +7,14 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { ColumnData } from "@/components/admin/Columns";
 import ActionPlanSkeleton from "@/skeleton/ActionPlanSkeleton";
+import { debounce } from "lodash";
+import { FaFilter } from "react-icons/fa";
+import { BiSolidDownArrow } from "react-icons/bi";
 
 const Home = () => {
   const [search, setSearching] = useState("");
-  const [debounce, setDebounce] = useState(false);
+  const [sortOrder, setSortOrder] = useState("desc");
+  const [filterOpen, setFilterOpen] = useState(false);
 
   const [acpUnlocked, setAcpUnlocked] = useState<ColumnData[]>([
     {
@@ -22,6 +26,7 @@ const Home = () => {
         link: "",
         publicId: "",
         title: "",
+        createdAt: new Date(),
         pricing: {
           id: 0,
           pricing: "",
@@ -40,6 +45,7 @@ const Home = () => {
         link: "",
         publicId: "",
         title: "",
+        createdAt: new Date(),
         pricing: {
           id: 0,
           pricing: "",
@@ -66,7 +72,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    console.log("Hi");
+    console.log("HELLO")
     if (unlockedQuery.data) {
       setAcpUnlocked(unlockedQuery.data.data);
     }
@@ -76,40 +82,15 @@ const Home = () => {
     }
   }, [unlockedQuery.data, lockedQuery.data]);
 
+  const debouncedSearch = debounce((criteria) => {
+    setSearching(criteria);
+  }, 500);
+
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const message = e.target.value;
-    setSearching(message);
+    debouncedSearch(e.target.value);
   };
 
   useEffect(() => {
-    const debounceFunction = (filteredArray: ColumnData[], locked: boolean) => {
-      setDebounce(true);
-
-      if (debounce) {
-        console.log(debounce);
-        let timer = setTimeout(() => {
-          if (locked) {
-            setAcpLocked(filteredArray);
-          } else {
-            setAcpUnlocked(filteredArray);
-          }
-          setDebounce(false);
-        }, 1000);
-
-        return () => clearTimeout(timer);
-      } else {
-        let timer = setTimeout(() => {
-          if (locked) {
-            setAcpLocked(filteredArray);
-          } else {
-            setAcpUnlocked(filteredArray);
-          }
-          setDebounce(false);
-        }, 1000);
-        return () => clearTimeout(timer);
-      }
-    };
-
     if (unlockedQuery.data) {
       const filteredArrayUnlocked = unlockedQuery.data.data.filter(
         (item: { actionPlan: { title: string } }) => {
@@ -119,6 +100,10 @@ const Home = () => {
         }
       );
 
+      setAcpUnlocked(filteredArrayUnlocked);
+    }
+
+    if (lockedQuery.data) {
       const filteredArrayLocked = lockedQuery.data.data.filter(
         (item: { actionPlan: { title: string } }) => {
           return item.actionPlan.title
@@ -127,12 +112,64 @@ const Home = () => {
         }
       );
 
-      debounceFunction(filteredArrayUnlocked, false);
-      debounceFunction(filteredArrayLocked, true);
+      setAcpLocked(filteredArrayLocked);
     }
+
+    return () => {
+      debouncedSearch.cancel();
+    };
   }, [search]);
 
-  const arr = [...new Array(3)];
+  const dateFilter = [
+    {
+      label: "Oldest First",
+      value: "desc",
+    },
+    {
+      label: "Newest First",
+      value: "asc",
+    },
+  ];
+
+  const debounceOrder = (value: string) => {
+    try {
+      const sortedDataLocked = [...acpLocked].sort((a, b) => {
+        const dateA = new Date(a.actionPlan.createdAt).getTime();
+        const dateB = new Date(b.actionPlan.createdAt).getTime();
+
+        console.log(dateA, dateB)
+
+        if (value === "desc") {
+          return dateA - dateB;
+        } else {
+          return dateB - dateA;
+        }
+      });
+
+      const sortedDataUnlocked = [...acpUnlocked].sort((a, b) => {
+        const dateA = new Date(a.actionPlan.createdAt).getTime();
+        const dateB = new Date(b.actionPlan.createdAt).getTime();
+
+        if (value === "desc") {
+          return dateA - dateB;
+        } else {
+          return dateB - dateA;
+        }
+      });
+
+      setAcpUnlocked(sortedDataUnlocked);
+      setAcpLocked(sortedDataLocked);
+    } catch (error) {console.log(error)}
+  };
+
+  const handleSortOrder = debounce((value: string) => {
+    debounceOrder(value);
+    setSortOrder(value);
+  }, 300);
+
+  const handleFilterState = () => {
+    setFilterOpen((current) => !current);
+  };
 
   return (
     <div className="bg-[#F7F7F7] w-[full] ">
@@ -161,6 +198,48 @@ const Home = () => {
           className="absolute top-0 left-0 object cover w-full h-full object-top"
         />
         <div className=" w-[full] min-h-auto container relative z-10 pb-24">
+          <button
+            className="w-full bg-nav/10 hover:bg-nav/20 transition-bg ease-in-out duration-300 h-16 mt-4 flex items-center justify-between px-6 rounded-md"
+            onClick={handleFilterState}
+          >
+            <div className="flex items-center gap-x-4">
+              <FaFilter />
+              <p>Filters</p>
+            </div>
+
+            <BiSolidDownArrow
+              className={`transition-all ease-in-out duration-300 ${
+                filterOpen ? "" : "rotate-180"
+              }`}
+            />
+          </button>
+          <div
+            className={`w-full h-auto overflow-hidden origin-top transition-all ease-out duration-500 ${
+              filterOpen ? "max-h-[10rem]" : "max-h-0"
+            }`}
+          >
+            <div className="p-5">
+              <h2 className="">Fitler by Date</h2>
+              <div className="flex gap-x-5 items-center mt-2">
+                {dateFilter.map((items) => {
+                  return (
+                    <button
+                      className={` px-10 py-3 rounded-md hover:bg-nav/20 transition-all ease-in-out duration-300 capitalize ${
+                        items.value === sortOrder ? "bg-nav/20" : "bg-nav/10"
+                      }`}
+                      key={items.value}
+                      onClick={() => {
+                        handleSortOrder(items.value);
+                      }}
+                    >
+                      {items.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
           <div className="md:flex items-center justify-between flex-row">
             <div className=" flex flex-col ">
               <h1 className=" mt-6 text-3xl font-primary text-nav font-bold ">
@@ -176,20 +255,12 @@ const Home = () => {
               className="w-64 mt-4 md:mt-0 border-nav outline-0 focus-visible:ring-0"
               type="search"
               placeholder="Search"
-              value={search}
               onChange={handleSearch}
             />
           </div>
 
           <div className="w-full mx-auto grid 2xl:grid-cols-4 lg:grid-cols-3 gap-8 md:grid-cols-2 items-center mt-10">
-            {debounce ? (
-              <>
-                <ActionPlanSkeleton />
-                <ActionPlanSkeleton />
-                <ActionPlanSkeleton />
-                <ActionPlanSkeleton />
-              </>
-            ) : unlockedQuery.isLoading ? (
+            {unlockedQuery.isLoading ? (
               <>
                 <ActionPlanSkeleton />
                 <ActionPlanSkeleton />
@@ -245,14 +316,7 @@ const Home = () => {
             </p>
           </div>
           <div className="w-full mx-auto grid 2xl:grid-cols-4 lg:grid-cols-3 gap-8 md:grid-cols-2 items-center mt-10">
-            {debounce ? (
-              <>
-                <ActionPlanSkeleton />
-                <ActionPlanSkeleton />
-                <ActionPlanSkeleton />
-                <ActionPlanSkeleton />
-              </>
-            ) : lockedQuery.isLoading ? (
+            {lockedQuery.isLoading ? (
               <>
                 <ActionPlanSkeleton />
                 <ActionPlanSkeleton />

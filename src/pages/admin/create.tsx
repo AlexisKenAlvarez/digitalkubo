@@ -12,11 +12,10 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
   try {
     if (session) {
-      const data = await axios.post("/api/checkAdmin", {
+      const data = await axios.post(`${process.env.NEXTAUTH_URL}/api/checkAdmin`, {
         email: session?.user.email,
       });
 
-      console.log(data);
 
       if (data.data.success) {
         return {
