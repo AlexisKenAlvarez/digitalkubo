@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from 'next/link';
 
 const LandingHero = () => {
   return (
@@ -10,15 +11,17 @@ const LandingHero = () => {
             DIGITALKUBO
           </h1>
 
-          <p className="text-[#0000004f] font-secondary font-medium md:text-xl max-w-[42rem] my-10 mt-5">
+          <p className="text-[#0000004f] font-secondary font-medium md:text-xl max-w-[42rem] my-10 mt-0">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam sed
             debitis praesentium laudantium architecto repudiandae minus at ipsum
             quis iusto vel iste, non accusamus magnam ut voluptas? Illo, nobis
             tempore?
           </p>
 
-          <Button className="bg-button hover:bg-nav text-lg md:mt-1 md:mr-2 md:mb-2 px-6 py-4">
-            <p className="font-secondary text-[1rem]">See More</p>
+          <Button className="bg-button hover:bg-nav text-lg md:mt-1 md:mr-2 md:mb-2 px-6 py-4" asChild>
+            <Link href="/home">
+              <p className="font-secondary text-[1rem]">See More</p>
+            </Link>
           </Button>
         </div>
         <div className="w-full align-center h-fit hidden md:block">

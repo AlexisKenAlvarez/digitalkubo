@@ -105,6 +105,8 @@ const AdminCreate = () => {
     if (!file) {
       setError("Please upload a file.");
     } else {
+      const date = new Date();
+
       formData.append("title", data.acpName);
       formData.append("access", data.acpType);
       formData.append("pricing", data.acpPrice);
@@ -112,6 +114,7 @@ const AdminCreate = () => {
       formData.append("file", file as Blob);
       formData.append("fileName", file.name);
       formData.append("upload_preset", "digitalkubo");
+      formData.append("createdAt", date.toISOString());
 
       setData((items) => [...items, formData]);
       setValue("acpName", "");
@@ -240,6 +243,7 @@ const AdminCreate = () => {
                           onValueChange={(e) => {
                             field.onChange(e);
                           }}
+                          value={field.value}
                         >
                           <FormControl>
                             <SelectTrigger>
@@ -300,22 +304,13 @@ const AdminCreate = () => {
                               <SelectValue placeholder="Free" />
                             </SelectTrigger>
                           </FormControl>
-                          <SelectContent
-                            position="popper"
-                            defaultValue="free"
-                          >
-                            <SelectItem
-                              value="free"
-                              className="cursor-pointer"
-                            >
+                          <SelectContent position="popper" defaultValue="free">
+                            <SelectItem value="free" className="cursor-pointer">
                               <div className="flex items-center gap-x-[5px] py-2">
                                 <p className="">Free</p>
                               </div>
                             </SelectItem>
-                            <SelectItem
-                              value="paid"
-                              className="cursor-pointer"
-                            >
+                            <SelectItem value="paid" className="cursor-pointer">
                               <div className="flex items-center gap-x-[5px] py-2">
                                 <p className="">Paid</p>
                               </div>
@@ -348,9 +343,11 @@ const AdminCreate = () => {
                         className="hidden"
                         onChange={handleUpload}
                         accept="application/pdf"
-                        onClick={(e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
-                          const element = e.target as HTMLInputElement
-                          element.value = ''
+                        onClick={(
+                          e: React.MouseEvent<HTMLInputElement, MouseEvent>
+                        ) => {
+                          const element = e.target as HTMLInputElement;
+                          element.value = "";
                         }}
                       />
                     </div>
@@ -384,6 +381,7 @@ const AdminCreate = () => {
                   <TableHead>Title</TableHead>
                   <TableHead>Access</TableHead>
                   <TableHead>File</TableHead>
+                  <TableHead>Pricing</TableHead>
                   <TableHead>Delete</TableHead>
                 </TableRow>
               </TableHeader>
@@ -399,6 +397,9 @@ const AdminCreate = () => {
                       </TableCell>
                       <TableCell className="text-black">
                         {items.get("fileName")?.toString()}
+                      </TableCell>
+                      <TableCell className="text-black capitalize">
+                        {items.get("pricing")?.toString()}
                       </TableCell>
                       <TableCell className="text-black">
                         <button

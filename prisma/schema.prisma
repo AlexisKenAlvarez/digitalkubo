@@ -66,6 +66,7 @@ model ActionPlans {
   fileName String            @db.VarChar(100)
   link     String            @db.VarChar(150)
   publicId String            @db.VarChar(55)
+  createdAt DateTime         @default(now())
   locked   ActionPlanAccess?
   pricing  ActionPlanPrice?
 }

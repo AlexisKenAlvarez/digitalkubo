@@ -17,7 +17,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       locked: string,
       fileName: string,
       public_id: string,
-      pricing: string
+      pricing: string,
+      createdAt: string
     ) => {
       const data = await prisma.actionPlans.create({
         data: {
@@ -25,6 +26,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
           fileName,
           link: url,
           publicId: public_id,
+          createdAt,
           locked: {
             create: {
               locked: locked === "locked" ? true : false,
@@ -57,7 +59,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
           fields.access[0],
           fields.fileName[0],
           data.public_id,
-          fields.pricing[0]
+          fields.pricing[0],
+          fields.createdAt[0]
         );
 
         res.status(200).json({ success: true });
