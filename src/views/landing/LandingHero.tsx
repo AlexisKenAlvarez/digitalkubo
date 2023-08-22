@@ -19,7 +19,7 @@ const LandingHero = () => {
           </p>
 
           <Button className="bg-button hover:bg-nav text-lg md:mt-1 md:mr-2 md:mb-2 px-6 py-4" asChild>
-            <Link href="/home">
+            <Link href="/#latest">
               <p className="font-secondary text-[1rem]">See More</p>
             </Link>
           </Button>
