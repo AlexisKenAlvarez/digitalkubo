@@ -49,7 +49,7 @@ const Title = () => {
                   <span className="pl-2">
                     <AiOutlineFileWord size={27} />
                   </span>
-                  <p className="font-secondary font-bold text-sm px-4">
+                  <p className="font-secondary font-bold text-sm px-2">
                     EXPORT AS WORD
                   </p>
                 </Button>
