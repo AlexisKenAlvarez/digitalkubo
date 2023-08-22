@@ -43,7 +43,7 @@ function MyApp({ Component, pageProps }: AppPropsWithAuth) {
             theme="light"
             transition={Slide}
           />
-          <div className="mt-14 md:mt-[6.5rem] bg-bg font-secondary">
+          <div className="mt-14 md:mt-[6.5rem] min-h-screen bg-bg font-secondary">
             {Component.requireAuth ? (
               <ProtectedLayout>
                 <Component {...pageProps} />
@@ -51,6 +51,7 @@ function MyApp({ Component, pageProps }: AppPropsWithAuth) {
             ) : (
               <Component {...pageProps} key={router.asPath} />
             )}
+            {/* <Component {...pageProps} key={router.asPath} /> */}
           </div>
           <Footer />
         </div>

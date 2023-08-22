@@ -1,24 +1,25 @@
-import { prisma } from "./_base";
-
 import { NextApiRequest, NextApiResponse } from "next";
+import { prisma } from "./_base";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   try {
-    const { email } = await req.body;
+    const { email } = req.body;
 
-    const data = await prisma.users.findFirst({
+    console.log(email)
+
+    const data = await prisma.adminList.findMany({
       where: {
         email,
       },
     });
 
     if (data) {
-      res.status(200).json({ found: true, accountType: data.accountType });
+      res.status(200).json({ success: true });
     } else {
-      res.status(200).json({ found: false });
+      res.status(200).json({ success: false });
     }
   } catch (error) {
     console.log(error);

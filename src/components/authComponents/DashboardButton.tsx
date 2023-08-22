@@ -15,7 +15,7 @@ const DashboardButton = () => {
                         <div className="group-hover:text-nav transition-all ease-in-out duration-100">
                             <LayoutDashboard className="mr-2 h-4 w-4" />
                         </div>
-                        <span className="group-hover:text-nav transition-all ease-in-out duration-100">Dashboard</span>
+                        <span className="group-hover:text-nav transition-all ease-in-out duration-100">Home</span>
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
             </Link>
@@ -29,7 +29,7 @@ const DashboardButton = () => {
                 <div className="group-hover:text-nav transition-all ease-in-out duration-100">
                     <LayoutDashboard className="mr-2 h-4 w-4" />
                 </div>
-                <span className="group-hover:text-nav transition-all ease-in-out duration-100">Dashboard / Login</span>
+                <span className="group-hover:text-nav transition-all ease-in-out duration-100">Home / Login</span>
             </DropdownMenuItem>
         </DropdownMenuGroup>
 

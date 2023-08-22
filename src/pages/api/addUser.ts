@@ -9,6 +9,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
         const { email, password, accountType } = req.body;
 
+        console.log("Account Type from API", accountType)
+
 
         const exist = await prisma.users.findFirst({
             where: {

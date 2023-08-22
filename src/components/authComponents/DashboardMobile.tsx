@@ -10,7 +10,7 @@ const DashboardMobile = ({ navDesktopActive }: { navDesktopActive: boolean }) =>
         return (
             <Link href="home">
                 <motion.li initial={{ x: 100, opacity: 0 }} animate={navDesktopActive ? { x: 0, opacity: 1 } : {}} transition={{ duration: 0.7, delay: 0, ease: [0.16, 0.77, 0.47, .97] }} className={`border-b-[1px] border-black/10 py-5 `}>
-                    Dashboard
+                    Home
                 </motion.li>
             </Link>
         )
@@ -18,7 +18,7 @@ const DashboardMobile = ({ navDesktopActive }: { navDesktopActive: boolean }) =>
 
     return (
         <motion.li initial={{ x: 100, opacity: 0 }} animate={navDesktopActive ? { x: 0, opacity: 1 } : {}} transition={{ duration: 0.7, delay: 0, ease: [0.16, 0.77, 0.47, .97] }} className={`border-b-[1px] border-black/10 py-5`} onClick={() => {signIn()}}>
-            Dashboard
+            Home
         </motion.li>
     );
 }
