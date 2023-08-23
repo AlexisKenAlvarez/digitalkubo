@@ -3,12 +3,24 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
+import { useState } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import Link from "next/link";
 
 const Latest = () => {
 
   const slider = React.useRef<Slider>(null);
-  var settings = { 
+  var settings = {
     dots: true,
     infinite: true,
     speed: 500,
@@ -26,26 +38,35 @@ const Latest = () => {
         breakpoint: 390,
         settings: {
           slidesToShow: 1,
-        }
-      }
+        },
+      },
     ],
   };
 
   const arr = [...new Array(6)];
+  const [isOpen, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
-    <section className="w-full md:px-24 2xl:px-5 md:py-10 relative bg-white">
+    <section className="w-full md:px-24 2xl:px-5 md:py-10 relative bg-white" id="latest">
       <div className="max-w-[1400px] w-full mx-auto flex flex-wrap">
         <div className="w-full mx-auto py-10">
-          <h1 className="text-[#D1770E] font-primary md:text-[24px] font-bold md:text-left text-center text-[24px] tracking-wide">
+          <h1 className="text-[#D1770E] font-primary md:text-[24px] font-bold md:text-left text-center text-[24px] tracking-wide pb-4">
             LATEST ACTION PLAN
           </h1>
           <div className="flex items-center justify-center">
             <Button
-              className="text-[#ffffff] content-none p-2 md:text-[32px]"
+              className="text-[#ffffff] content-none p-2 md:text-[24px]"
               onClick={() => slider?.current?.slickPrev()}
             >
-              {"<"}
+              {"⮜"}
             </Button>
             <Slider
               {...settings}
@@ -55,11 +76,12 @@ const Latest = () => {
               {arr.map((items, i) => {
                 return (
                   <div
+                    onClick={handleOpen}
                     className="my-5 md:max-w-[18rem] lg:ml-2 border"
                     key={i + items}
                   >
                     <Image
-                      src="/pdf.webp"
+                      src="/sample.webp"
                       alt={i.toString()}
                       width="500"
                       height="500"
@@ -72,11 +94,42 @@ const Latest = () => {
                 );
               })}
             </Slider>
+            <AlertDialog open={isOpen}>
+              <AlertDialogContent className="border-[#D1770E] border-2 pt-0 pb-6 px-0">
+                <AlertDialogCancel
+                  onClick={handleClose}
+                  className="border-0 text-right justify-end ml-auto hover:bg-white text-[18px]"
+                >
+                  x
+                </AlertDialogCancel>
+                <AlertDialogHeader>
+                  <AlertDialogTitle className="font-['Inter'] md:text-[32px] text-[24px] text-center md:px-10 leading-8">
+                    Please log in first to view these contents
+                  </AlertDialogTitle>
+                  <AlertDialogDescription className="font-['Inter'] text-[#64748B] px-6 py-4 text-center">
+                    This content is only available for our beloved users. We
+                    encourage you to create an account or login to access these
+                    action plans.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter className=" sm:mx-auto sm:items-center gap-x-4 pb-10 md:pl-4 gap-y-2">
+                  <AlertDialogAction className="font-['Inter'] text-white shadow-lg">
+                    <Link href="/auth/login/">Log In</Link>
+                  </AlertDialogAction>
+                  <p className="font-['Inter'] text-[#64748B] text-center">
+                    or
+                  </p>
+                  <AlertDialogAction className="font-['Inter'] border-2 border-[#D1770E] bg-[#ffffff] text-[#D1770E] hover:text-white shadow-lg">
+                    <Link href="/auth/signup/">Create an account</Link>
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
             <Button
-              className="text-[#ffffff] content-none p-2 md:text-[32px]"
+              className="text-[#ffffff] content-none p-2 md:text-[24px]"
               onClick={() => slider?.current?.slickNext()}
             >
-              {">"}
+              {"⮞"}
             </Button>
           </div>
         </div>
@@ -101,8 +154,8 @@ const Latest = () => {
           <div className="w-full align-center h-fit hidden lg:block">
             <Image
               className="mx-auto hidden md:block"
-              width="500"
-              height="500"
+              width="700"
+              height="600"
               alt="Business"
               src="/business.webp"
             ></Image>
