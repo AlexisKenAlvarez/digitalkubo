@@ -6,9 +6,6 @@ import Image from "next/image";
 import { GetServerSideProps } from "next";
 import axios from "axios";
 import Link from "next/link";
-import {pdfjs, Document, Page} from 'react-pdf'
-
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { id, title } = ctx.query;
@@ -37,30 +34,26 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 };
 
 const Title = ({ title, link }: { title: string; link: string }) => {
-  const [numPages, setNumPages] = useState<number | null>(null);
-  const [pageNumber, setPageNumber] = useState(1);
-  const [pdfBlobUrl, setPdfBlobUrl] = useState<string | null>(null);
+  const [docxContent, setDocxContent] = useState("");
 
   useEffect(() => {
-    axios
-      .get(link, { responseType: "blob" })
-      .then((response) => {
-        const blobUrl = URL.createObjectURL(response.data);
-        setPdfBlobUrl(blobUrl);
+    // Fetch the DOCX file
+    fetch(link)
+      .then((response) => response.arrayBuffer())
+      .then((arrayBuffer) => {
+        // Convert the array buffer to a base64-encoded string
+        const base64Data = btoa(
+          new Uint8Array(arrayBuffer).reduce(
+            (data, byte) => data + String.fromCharCode(byte),
+            ""
+          )
+        );
+        setDocxContent(base64Data);
       })
       .catch((error) => {
-        console.error("Error fetching PDF:", error);
+        console.error("Error fetching DOCX:", error);
       });
-  }, [link]);
-
-  useEffect(() => {
-    console.log(pdfBlobUrl);
-  }, [pdfBlobUrl]);
-
-  const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
-    setNumPages(numPages);
-  };
-
+  }, []);
 
   return (
     <div className="w-full h-auto">
@@ -89,8 +82,11 @@ const Title = ({ title, link }: { title: string; link: string }) => {
         />
         <div className="flex  lg:flex-row flex-col pb-24 pt-14 container">
           <div className="w-50% h-screen border z-10">
-            <div className="md:w-[40rem] h-full overflow-hidden">
-              <iframe src={link}  className="w-full h-[calc(100%+3.5rem)] -mt-14"/>
+            <div className="w-[50rem] h-full">
+              <iframe
+              className="w-full h-full"
+                src={`https://drive.google.com/viewerng/viewer?embedded=true&url=${link}`}
+              />
             </div>
           </div>
           <div className="w-50% xl:h-screen pt-4 z-10">
