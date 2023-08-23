@@ -10,10 +10,15 @@ import ActionPlanSkeleton from "@/skeleton/ActionPlanSkeleton";
 import { debounce } from "lodash";
 import { FaFilter } from "react-icons/fa";
 import { BiSolidDownArrow } from "react-icons/bi";
+import { dateFilter, titleFilter, pricingFilter } from "@/lib/list";
+import { Column } from "@tanstack/react-table";
 
 const Home = () => {
   const [search, setSearching] = useState("");
   const [sortOrder, setSortOrder] = useState("desc");
+  const [titleOrder, setTitleOrder] = useState("");
+  const [pricing, setPricingFilter] = useState("");
+
   const [filterOpen, setFilterOpen] = useState(false);
 
   const [acpUnlocked, setAcpUnlocked] = useState<ColumnData[]>([
@@ -72,7 +77,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-    console.log("HELLO")
     if (unlockedQuery.data) {
       setAcpUnlocked(unlockedQuery.data.data);
     }
@@ -120,52 +124,94 @@ const Home = () => {
     };
   }, [search]);
 
-  const dateFilter = [
-    {
-      label: "Oldest First",
-      value: "desc",
-    },
-    {
-      label: "Newest First",
-      value: "asc",
-    },
-  ];
-
-  const debounceOrder = (value: string) => {
+  const debounceOrder = (value: string, type: string) => {
     try {
-      const sortedDataLocked = [...acpLocked].sort((a, b) => {
-        const dateA = new Date(a.actionPlan.createdAt).getTime();
-        const dateB = new Date(b.actionPlan.createdAt).getTime();
+      const sortFunc = (a: ColumnData, b: ColumnData) => {
+        if (type === "date") {
+          const dateA = new Date(a.actionPlan.createdAt).getTime();
+          const dateB = new Date(b.actionPlan.createdAt).getTime();
 
-        console.log(dateA, dateB)
-
-        if (value === "desc") {
-          return dateA - dateB;
+          if (value === "desc") {
+            return dateA - dateB;
+          } else {
+            return dateB - dateA;
+          }
         } else {
-          return dateB - dateA;
+          const titleA = a.actionPlan.title.toUpperCase();
+          const titleB = b.actionPlan.title.toUpperCase();
+          if (value === "asc") {
+            if (titleA < titleB) {
+              return -1;
+            }
+            if (titleA > titleB) {
+              return 1;
+            }
+          } else if (value === "desc") {
+            if (titleA > titleB) {
+              return -1;
+            }
+            if (titleA < titleB) {
+              return 1;
+            }
+          }
+
+          return 0;
         }
+      };
+
+      const sortedDataLocked = [...acpLocked].sort((a, b) => {
+        return sortFunc(a, b);
       });
 
       const sortedDataUnlocked = [...acpUnlocked].sort((a, b) => {
-        const dateA = new Date(a.actionPlan.createdAt).getTime();
-        const dateB = new Date(b.actionPlan.createdAt).getTime();
-
-        if (value === "desc") {
-          return dateA - dateB;
-        } else {
-          return dateB - dateA;
-        }
+        return sortFunc(a, b);
       });
 
       setAcpUnlocked(sortedDataUnlocked);
       setAcpLocked(sortedDataLocked);
-    } catch (error) {console.log(error)}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleSortOrder = debounce((value: string) => {
-    debounceOrder(value);
-    setSortOrder(value);
+  const handleSortOrder = debounce(
+    ({ value, type }: { value: string; type: string }) => {
+      debounceOrder(value, type);
+
+      if (type === "date") {
+        setSortOrder(value);
+        setTitleOrder('')
+      } else if (type === "title") {
+        setTitleOrder(value);
+        setSortOrder('')
+      }
+    },
+    300
+  );
+
+  const debouncePricing = debounce((value: string) => {
+    const dataCopy = unlockedQuery.data.data;
+
+    const filteredData = dataCopy.filter((items: ColumnData) => {
+      return items.actionPlan.pricing.pricing === value;
+    });
+
+    setAcpUnlocked(filteredData);
   }, 300);
+
+  const handlePricing = (value: string) => {
+    if (value === pricing) {
+      const resetData = debounce(() => {
+        setAcpUnlocked(unlockedQuery.data.data);
+      }, 300);
+
+      resetData()
+      setPricingFilter("");
+    } else {
+      debouncePricing(value);
+      setPricingFilter(value);
+    }
+  };
 
   const handleFilterState = () => {
     setFilterOpen((current) => !current);
@@ -215,27 +261,74 @@ const Home = () => {
           </button>
           <div
             className={`w-full h-auto overflow-hidden origin-top transition-all ease-out duration-500 ${
-              filterOpen ? "max-h-[10rem]" : "max-h-0"
+              filterOpen ? "max-h-[20rem]" : "max-h-0"
             }`}
           >
-            <div className="p-5">
-              <h2 className="">Fitler by Date</h2>
-              <div className="flex gap-x-5 items-center mt-2">
-                {dateFilter.map((items) => {
-                  return (
-                    <button
-                      className={` px-10 py-3 rounded-md hover:bg-nav/20 transition-all ease-in-out duration-300 capitalize ${
-                        items.value === sortOrder ? "bg-nav/20" : "bg-nav/10"
-                      }`}
-                      key={items.value}
-                      onClick={() => {
-                        handleSortOrder(items.value);
-                      }}
-                    >
-                      {items.label}
-                    </button>
-                  );
-                })}
+            <div className="sm:p-5 py-5 flex flex-col gap-y-4">
+              <div>
+                <h2 className="">Filter by Date</h2>
+                <div className="flex gap-x-5 items-center mt-2 sm:text-base text-sm">
+                  {dateFilter.map((items) => {
+                    return (
+                      <button
+                        className={` sm:px-10 px-7 py-3 rounded-md hover:bg-nav/20 transition-all ease-in-out duration-300 capitalize ${
+                          items.value === sortOrder ? "bg-nav/20" : "bg-nav/10"
+                        }`}
+                        key={items.value}
+                        onClick={() => {
+                          handleSortOrder({ value: items.value, type: "date" });
+                        }}
+                      >
+                        {items.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div>
+                <h2 className="">Filter by Title</h2>
+                <div className="flex gap-x-5 items-center mt-2 sm:text-base text-sm">
+                  {titleFilter.map((items) => {
+                    return (
+                      <button
+                        className={` sm:px-10 px-7 py-3 rounded-md hover:bg-nav/20 transition-all ease-in-out duration-300 capitalize ${
+                          items.value === titleOrder ? "bg-nav/20" : "bg-nav/10"
+                        }`}
+                        key={items.value}
+                        onClick={() => {
+                          handleSortOrder({
+                            value: items.value,
+                            type: "title",
+                          });
+                        }}
+                      >
+                        {items.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div>
+                <h2 className="">Filter by Pricing</h2>
+                <div className="flex gap-x-5 items-center mt-2 sm:text-base text-sm">
+                  {pricingFilter.map((items) => {
+                    return (
+                      <button
+                        className={` sm:px-10 px-7 py-3 rounded-md hover:bg-nav/20 transition-all ease-in-out duration-300 capitalize ${
+                          items.value === pricing ? "bg-nav/20" : "bg-nav/10"
+                        }`}
+                        key={items.value}
+                        onClick={() => {
+                          handlePricing(items.value);
+                        }}
+                      >
+                        {items.label}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>

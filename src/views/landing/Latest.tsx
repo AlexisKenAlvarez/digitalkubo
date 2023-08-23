@@ -18,6 +18,7 @@ import {
 import Link from "next/link";
 
 const Latest = () => {
+
   const slider = React.useRef<Slider>(null);
   var settings = {
     dots: true,
