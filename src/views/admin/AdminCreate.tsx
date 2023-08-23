@@ -342,7 +342,7 @@ const AdminCreate = () => {
                         id="uploadedFile"
                         className="hidden"
                         onChange={handleUpload}
-                        accept="application/pdf"
+                        accept="application/msword"
                         onClick={(
                           e: React.MouseEvent<HTMLInputElement, MouseEvent>
                         ) => {

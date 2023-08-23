@@ -12,6 +12,7 @@ import { FaFilter } from "react-icons/fa";
 import { BiSolidDownArrow } from "react-icons/bi";
 import { dateFilter, titleFilter, pricingFilter } from "@/lib/list";
 import { Column } from "@tanstack/react-table";
+import Link from "next/link";
 
 const Home = () => {
   const [search, setSearching] = useState("");
@@ -239,13 +240,13 @@ const Home = () => {
     <div className="bg-[#F7F7F7] w-[full] ">
       {/* WELCOME TO */}
       <div className="min-h-[50vh] h-auto flex flex-col items-center md:justify-center justify-start px-5">
-        <h1 className="font-bold md:text-2xl sm:text-2xl text-2xl text-[#D1770E] font-primary text-center pt-10 md:pt-0">
+        <h1 className="font-bold md:text-2xl sm:text-2xl text-xl text-[#D1770E] font-primary text-center sm:mt-5 mt-20">
           WELCOME TO
         </h1>
-        <h1 className="font-bold md:text-7xl sm:text-5xl text-5xl text-[#D1770E] font-primary text-center pt-2 md:pt-0">
+        <h1 className="font-bold md:text-7xl sm:text-5xl text-4xl text-[#D1770E] font-primary text-center pt-2 md:pt-0">
           DIGITALKUBO
         </h1>
-        <h1 className="max-w-[40rem] md:pt-3  mt-3 font-secondary text-black/70 text-center">
+        <h1 className="max-w-[40rem] md:pt-3 sm:text-base text-sm  mt-3 font-secondary text-black/70 text-center">
           Access Our Free Action Plans Today! Upgrade Your Account for Premium
           Access to Unleash Even More Possibilities.
         </h1>
@@ -329,7 +330,7 @@ const Home = () => {
               </div>
 
               <div>
-                <h2 className="">Filter by Pricing</h2>
+                <h2 className="">Filter by Category</h2>
                 <div className="flex gap-x-5 items-center mt-2 sm:text-base text-sm">
                   {pricingFilter.map((items) => {
                     return (
@@ -381,34 +382,33 @@ const Home = () => {
             ) : acpUnlocked && acpUnlocked.length > 0 ? (
               acpUnlocked.map((action, i) => {
                 return (
-                  <div
-                    key={i}
-                    className="max-w-[24rem] w-full h-[11rem] bg-nav/10 shadow-md rounded-xl border-[1px] md:border-nav/20 flex sm:flex-row flex-col pt-5 md:pl-5 md:border-t-0 border-t-[0.8rem] border-nav"
-                  >
-                    <div className="items-end justify-center sm:flex hidden flex-shrink-0 ">
-                      <Image
-                        className="w-28"
-                        src="/action.webp"
-                        width={102}
-                        height={138}
-                        alt="/"
-                      />
-                    </div>
-                    <div className="md:pl-3 md:pr-3 px-5">
-                      <div className="w-full block overflow-hidden">
-                        <h1 className="max-h-24 line-clamp-4 font-medium text-sm">
-                          {action.actionPlan.title}
-                        </h1>
+                  <Link href={`/actionplan/${action.actionPlan.title}?id=${action.actionPlan.id}`} key={i}>
+                    <div className="max-w-[24rem] w-full h-[11rem] bg-nav/10 shadow-md rounded-xl border-[1px] md:border-nav/20 flex sm:flex-row flex-col pt-5 md:pl-5 md:border-t-0 border-t-[0.8rem] border-nav">
+                      <div className="items-end justify-center sm:flex hidden flex-shrink-0 ">
+                        <Image
+                          className="w-28"
+                          src="/action.webp"
+                          width={102}
+                          height={138}
+                          alt="/"
+                        />
                       </div>
-                      <Badge className="text-nav mt-2 bg-nav/25 hover:bg-nav/30">
-                        {action.locked ? "Locked" : "Unlocked"}
-                      </Badge>
-                      <span className="px-1"></span>
-                      <Badge className="text-nav bg-nav/25 capitalize hover:bg-nav/30">
-                        {action.actionPlan.pricing.pricing}
-                      </Badge>
+                      <div className="md:pl-3 md:pr-3 px-5">
+                        <div className="w-full block overflow-hidden">
+                          <h1 className="max-h-24 line-clamp-4 font-medium text-sm">
+                            {action.actionPlan.title}
+                          </h1>
+                        </div>
+                        <Badge className="text-nav mt-2 bg-nav/25 hover:bg-nav/30">
+                          {action.locked ? "Locked" : "Unlocked"}
+                        </Badge>
+                        <span className="px-1"></span>
+                        <Badge className="text-nav bg-nav/25 capitalize hover:bg-nav/30">
+                          {action.actionPlan.pricing.pricing}
+                        </Badge>
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 );
               })
             ) : (
