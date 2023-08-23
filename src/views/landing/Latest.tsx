@@ -103,23 +103,23 @@ const Latest = () => {
                   x
                 </AlertDialogCancel>
                 <AlertDialogHeader>
-                  <AlertDialogTitle className="font-['Inter'] md:text-[32px] text-[24px] text-center md:px-10 leading-8">
+                  <AlertDialogTitle className="font-primary md:text-[32px] text-[24px] text-center md:px-10 leading-8">
                     Please log in first to view these contents
                   </AlertDialogTitle>
-                  <AlertDialogDescription className="font-['Inter'] text-[#64748B] px-6 py-4 text-center">
+                  <AlertDialogDescription className="font-secondary text-[#64748B] px-6 py-4 text-center">
                     This content is only available for our beloved users. We
                     encourage you to create an account or login to access these
                     action plans.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter className=" sm:mx-auto sm:items-center gap-x-4 pb-10 md:pl-4 gap-y-2">
-                  <AlertDialogAction className="font-['Inter'] text-white shadow-lg">
+                  <AlertDialogAction className="font-secondary text-white shadow-lg">
                     <Link href="/auth/login/">Log In</Link>
                   </AlertDialogAction>
-                  <p className="font-['Inter'] text-[#64748B] text-center">
+                  <p className="font-secondary text-[#64748B] text-center">
                     or
                   </p>
-                  <AlertDialogAction className="font-['Inter'] border-2 border-[#D1770E] bg-[#ffffff] text-[#D1770E] hover:text-white shadow-lg">
+                  <AlertDialogAction className="font-secondary border-2 border-[#D1770E] bg-[#ffffff] text-[#D1770E] hover:text-white shadow-lg">
                     <Link href="/auth/signup/">Create an account</Link>
                   </AlertDialogAction>
                 </AlertDialogFooter>
