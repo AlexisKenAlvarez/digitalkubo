@@ -10,10 +10,16 @@ import ActionPlanSkeleton from "@/skeleton/ActionPlanSkeleton";
 import { debounce } from "lodash";
 import { FaFilter } from "react-icons/fa";
 import { BiSolidDownArrow } from "react-icons/bi";
+import { dateFilter, titleFilter, pricingFilter } from "@/lib/list";
+import { Column } from "@tanstack/react-table";
+import Link from "next/link";
 
 const Home = () => {
   const [search, setSearching] = useState("");
   const [sortOrder, setSortOrder] = useState("desc");
+  const [titleOrder, setTitleOrder] = useState("");
+  const [pricing, setPricingFilter] = useState("");
+
   const [filterOpen, setFilterOpen] = useState(false);
 
   const [acpUnlocked, setAcpUnlocked] = useState<ColumnData[]>([
@@ -72,7 +78,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-    console.log("HELLO")
     if (unlockedQuery.data) {
       setAcpUnlocked(unlockedQuery.data.data);
     }
@@ -91,19 +96,25 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if (unlockedQuery.data) {
+    if (unlockedQuery.data && lockedQuery.data) {
       const filteredArrayUnlocked = unlockedQuery.data.data.filter(
-        (item: { actionPlan: { title: string } }) => {
-          return item.actionPlan.title
-            .toLowerCase()
-            .includes(search.toLowerCase());
+        (item: ColumnData) => {
+          // If there is no pricing filter then search for the default values, else search for the filtered values
+          if (pricing === "") {
+            return item.actionPlan.title
+              .toLowerCase()
+              .includes(search.toLowerCase());
+          } else {
+            return (
+              item.actionPlan.title
+                .toLowerCase()
+                .includes(search.toLowerCase()) &&
+              item.actionPlan.pricing.pricing === pricing
+            );
+          }
         }
       );
 
-      setAcpUnlocked(filteredArrayUnlocked);
-    }
-
-    if (lockedQuery.data) {
       const filteredArrayLocked = lockedQuery.data.data.filter(
         (item: { actionPlan: { title: string } }) => {
           return item.actionPlan.title
@@ -113,6 +124,7 @@ const Home = () => {
       );
 
       setAcpLocked(filteredArrayLocked);
+      setAcpUnlocked(filteredArrayUnlocked);
     }
 
     return () => {
@@ -120,52 +132,105 @@ const Home = () => {
     };
   }, [search]);
 
-  const dateFilter = [
-    {
-      label: "Oldest First",
-      value: "desc",
-    },
-    {
-      label: "Newest First",
-      value: "asc",
-    },
-  ];
-
-  const debounceOrder = (value: string) => {
+  const debounceOrder = debounce((value: string, type: string) => {
     try {
-      const sortedDataLocked = [...acpLocked].sort((a, b) => {
-        const dateA = new Date(a.actionPlan.createdAt).getTime();
-        const dateB = new Date(b.actionPlan.createdAt).getTime();
+      const sortFunc = (a: ColumnData, b: ColumnData) => {
+        if (type === "date") {
+          const dateA = new Date(a.actionPlan.createdAt).getTime();
+          const dateB = new Date(b.actionPlan.createdAt).getTime();
 
-        console.log(dateA, dateB)
-
-        if (value === "desc") {
-          return dateA - dateB;
+          if (value === "desc") {
+            return dateA - dateB;
+          } else {
+            return dateB - dateA;
+          }
         } else {
-          return dateB - dateA;
+          const titleA = a.actionPlan.title.toUpperCase();
+          const titleB = b.actionPlan.title.toUpperCase();
+          if (value === "asc") {
+            if (titleA < titleB) {
+              return -1;
+            }
+            if (titleA > titleB) {
+              return 1;
+            }
+          } else if (value === "desc") {
+            if (titleA > titleB) {
+              return -1;
+            }
+            if (titleA < titleB) {
+              return 1;
+            }
+          }
+
+          return 0;
         }
+      };
+
+      const sortedDataLocked = [...acpLocked].sort((a, b) => {
+        return sortFunc(a, b);
       });
 
       const sortedDataUnlocked = [...acpUnlocked].sort((a, b) => {
-        const dateA = new Date(a.actionPlan.createdAt).getTime();
-        const dateB = new Date(b.actionPlan.createdAt).getTime();
-
-        if (value === "desc") {
-          return dateA - dateB;
-        } else {
-          return dateB - dateA;
-        }
+        return sortFunc(a, b);
       });
 
       setAcpUnlocked(sortedDataUnlocked);
       setAcpLocked(sortedDataLocked);
-    } catch (error) {console.log(error)}
+    } catch (error) {
+      console.log(error);
+    }
+  }, 300);
+
+  const handleSortOrder = ({
+    value,
+    type,
+  }: {
+    value: string;
+    type: string;
+  }) => {
+    debounceOrder(value, type);
+
+    if (type === "date") {
+      setSortOrder(value);
+      setTitleOrder("");
+    } else if (type === "title") {
+      setTitleOrder(value);
+      setSortOrder("");
+    }
   };
 
-  const handleSortOrder = debounce((value: string) => {
-    debounceOrder(value);
-    setSortOrder(value);
+  const debouncePricing = debounce((value: string) => {
+    const dataCopyUnlocked = unlockedQuery.data.data;
+    const dataCopyLocked = unlockedQuery.data.data;
+
+    const filteredDataUnlocked = dataCopyUnlocked.filter(
+      (items: ColumnData) => {
+        return items.actionPlan.pricing.pricing === value;
+      }
+    );
+
+    const filteredDataLocked = dataCopyLocked.filter((items: ColumnData) => {
+      return items.actionPlan.pricing.pricing === value;
+    });
+
+    setAcpUnlocked(filteredDataUnlocked);
+    setAcpLocked(filteredDataLocked);
   }, 300);
+
+  const handlePricing = (value: string) => {
+    if (value === pricing) {
+      const resetData = debounce(() => {
+        setAcpUnlocked(unlockedQuery.data.data);
+      }, 300);
+
+      resetData();
+      setPricingFilter("");
+    } else {
+      debouncePricing(value);
+      setPricingFilter(value);
+    }
+  };
 
   const handleFilterState = () => {
     setFilterOpen((current) => !current);
@@ -175,13 +240,13 @@ const Home = () => {
     <div className="bg-[#F7F7F7] w-[full] ">
       {/* WELCOME TO */}
       <div className="min-h-[50vh] h-auto flex flex-col items-center md:justify-center justify-start px-5">
-        <h1 className="font-bold md:text-2xl sm:text-2xl text-2xl text-[#D1770E] font-primary text-center pt-10 md:pt-0">
+        <h1 className="font-bold md:text-2xl sm:text-2xl text-xl text-[#D1770E] font-primary text-center sm:mt-5 mt-20">
           WELCOME TO
         </h1>
-        <h1 className="font-bold md:text-7xl sm:text-5xl text-5xl text-[#D1770E] font-primary text-center pt-2 md:pt-0">
+        <h1 className="font-bold md:text-7xl sm:text-5xl text-4xl text-[#D1770E] font-primary text-center pt-2 md:pt-0">
           DIGITALKUBO
         </h1>
-        <h1 className="max-w-[40rem] md:pt-3  mt-3 font-secondary text-black/70 text-center">
+        <h1 className="max-w-[40rem] md:pt-3 sm:text-base text-sm  mt-3 font-secondary text-black/70 text-center">
           Access Our Free Action Plans Today! Upgrade Your Account for Premium
           Access to Unleash Even More Possibilities.
         </h1>
@@ -215,27 +280,74 @@ const Home = () => {
           </button>
           <div
             className={`w-full h-auto overflow-hidden origin-top transition-all ease-out duration-500 ${
-              filterOpen ? "max-h-[10rem]" : "max-h-0"
+              filterOpen ? "max-h-[20rem]" : "max-h-0"
             }`}
           >
-            <div className="p-5">
-              <h2 className="">Fitler by Date</h2>
-              <div className="flex gap-x-5 items-center mt-2">
-                {dateFilter.map((items) => {
-                  return (
-                    <button
-                      className={` px-10 py-3 rounded-md hover:bg-nav/20 transition-all ease-in-out duration-300 capitalize ${
-                        items.value === sortOrder ? "bg-nav/20" : "bg-nav/10"
-                      }`}
-                      key={items.value}
-                      onClick={() => {
-                        handleSortOrder(items.value);
-                      }}
-                    >
-                      {items.label}
-                    </button>
-                  );
-                })}
+            <div className="sm:p-5 py-5 flex flex-col gap-y-4">
+              <div>
+                <h2 className="">Filter by Date</h2>
+                <div className="flex gap-x-5 items-center mt-2 sm:text-base text-sm">
+                  {dateFilter.map((items) => {
+                    return (
+                      <button
+                        className={` sm:px-10 px-7 py-3 rounded-md hover:bg-nav/20 transition-all ease-in-out duration-300 capitalize ${
+                          items.value === sortOrder ? "bg-nav/20" : "bg-nav/10"
+                        }`}
+                        key={items.value}
+                        onClick={() => {
+                          handleSortOrder({ value: items.value, type: "date" });
+                        }}
+                      >
+                        {items.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div>
+                <h2 className="">Filter by Title</h2>
+                <div className="flex gap-x-5 items-center mt-2 sm:text-base text-sm">
+                  {titleFilter.map((items) => {
+                    return (
+                      <button
+                        className={` sm:px-10 px-7 py-3 rounded-md hover:bg-nav/20 transition-all ease-in-out duration-300 capitalize ${
+                          items.value === titleOrder ? "bg-nav/20" : "bg-nav/10"
+                        }`}
+                        key={items.value}
+                        onClick={() => {
+                          handleSortOrder({
+                            value: items.value,
+                            type: "title",
+                          });
+                        }}
+                      >
+                        {items.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div>
+                <h2 className="">Filter by Category</h2>
+                <div className="flex gap-x-5 items-center mt-2 sm:text-base text-sm">
+                  {pricingFilter.map((items) => {
+                    return (
+                      <button
+                        className={` sm:px-10 px-7 py-3 rounded-md hover:bg-nav/20 transition-all ease-in-out duration-300 capitalize ${
+                          items.value === pricing ? "bg-nav/20" : "bg-nav/10"
+                        }`}
+                        key={items.value}
+                        onClick={() => {
+                          handlePricing(items.value);
+                        }}
+                      >
+                        {items.label}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
@@ -270,34 +382,33 @@ const Home = () => {
             ) : acpUnlocked && acpUnlocked.length > 0 ? (
               acpUnlocked.map((action, i) => {
                 return (
-                  <div
-                    key={i}
-                    className="max-w-[24rem] w-full h-[11rem] bg-nav/10 shadow-md rounded-xl border-[1px] md:border-nav/20 flex sm:flex-row flex-col pt-5 md:pl-5 md:border-t-0 border-t-[0.8rem] border-nav"
-                  >
-                    <div className="items-end justify-center sm:flex hidden flex-shrink-0 ">
-                      <Image
-                        className="w-28"
-                        src="/action.webp"
-                        width={102}
-                        height={138}
-                        alt="/"
-                      />
-                    </div>
-                    <div className="md:pl-3 md:pr-3 px-5">
-                      <div className="w-full block overflow-hidden">
-                        <h1 className="max-h-24 line-clamp-4 font-medium text-sm">
-                          {action.actionPlan.title}
-                        </h1>
+                  <Link href={`/actionplan/${action.actionPlan.title}?id=${action.actionPlan.id}`} key={i}>
+                    <div className="max-w-[24rem] w-full h-[11rem] bg-nav/10 shadow-md rounded-xl border-[1px] md:border-nav/20 flex sm:flex-row flex-col pt-5 md:pl-5 md:border-t-0 border-t-[0.8rem] border-nav">
+                      <div className="items-end justify-center sm:flex hidden flex-shrink-0 ">
+                        <Image
+                          className="w-28"
+                          src="/action.webp"
+                          width={102}
+                          height={138}
+                          alt="/"
+                        />
                       </div>
-                      <Badge className="text-nav mt-2 bg-nav/25 hover:bg-nav/30">
-                        {action.locked ? "Locked" : "Unlocked"}
-                      </Badge>
-                      <span className="px-1"></span>
-                      <Badge className="text-nav bg-nav/25 capitalize hover:bg-nav/30">
-                        {action.actionPlan.pricing.pricing}
-                      </Badge>
+                      <div className="md:pl-3 md:pr-3 px-5">
+                        <div className="w-full block overflow-hidden">
+                          <h1 className="max-h-24 line-clamp-4 font-medium text-sm">
+                            {action.actionPlan.title}
+                          </h1>
+                        </div>
+                        <Badge className="text-nav mt-2 bg-nav/25 hover:bg-nav/30">
+                          {action.locked ? "Locked" : "Unlocked"}
+                        </Badge>
+                        <span className="px-1"></span>
+                        <Badge className="text-nav bg-nav/25 capitalize hover:bg-nav/30">
+                          {action.actionPlan.pricing.pricing}
+                        </Badge>
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 );
               })
             ) : (

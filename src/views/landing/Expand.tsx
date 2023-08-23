@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
+
 
 const Expand = () => {
     return (
@@ -10,7 +12,7 @@ const Expand = () => {
                     <h1 className="text-[#D1770E] font-primary md:text-[52px] font-bold md:text-center text-[24px] tracking-wide">
                         EXPAND YOUR BUSINESS WITH US!</h1>
                     <Button className="bg-button hover:bg-nav text-lg mt-5 mr-2 mb-2 px-7 py-5">
-                        <p className="font-secondary text-[1rem]">Sign Up</p>
+                        <Link href="/auth/signup/" className="font-secondary text-[1rem]">Sign Up</Link>
                     </Button>
                 </div>
                 <div className="w-full mt-24 md:mt-52 pt-5 border-t border-neutral-300">

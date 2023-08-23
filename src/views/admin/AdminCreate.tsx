@@ -71,7 +71,7 @@ const AdminCreate = () => {
       setFile(uploadedFile);
       setError("");
 
-      if (uploadedFile.type !== "application/pdf") {
+      if (uploadedFile.type !== "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
         setError("File must be a type of pdf.");
       }
     }
@@ -342,7 +342,7 @@ const AdminCreate = () => {
                         id="uploadedFile"
                         className="hidden"
                         onChange={handleUpload}
-                        accept="application/pdf"
+                        accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                         onClick={(
                           e: React.MouseEvent<HTMLInputElement, MouseEvent>
                         ) => {

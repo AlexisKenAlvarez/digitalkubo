@@ -1,7 +1,9 @@
 import React from "react";
 
-const index = () => {
+const Index = () => {
   return <div>index</div>;
 };
 
-export default index;
+Index.requireAuth = true;
+
+export default Index;
