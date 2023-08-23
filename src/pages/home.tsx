@@ -95,19 +95,25 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if (unlockedQuery.data) {
+    if (unlockedQuery.data && lockedQuery.data) {
       const filteredArrayUnlocked = unlockedQuery.data.data.filter(
-        (item: { actionPlan: { title: string } }) => {
-          return item.actionPlan.title
-            .toLowerCase()
-            .includes(search.toLowerCase());
+        (item: ColumnData) => {
+          // If there is no pricing filter then search for the default values, else search for the filtered values
+          if (pricing === "") {
+            return item.actionPlan.title
+              .toLowerCase()
+              .includes(search.toLowerCase());
+          } else {
+            return (
+              item.actionPlan.title
+                .toLowerCase()
+                .includes(search.toLowerCase()) &&
+              item.actionPlan.pricing.pricing === pricing
+            );
+          }
         }
       );
 
-      setAcpUnlocked(filteredArrayUnlocked);
-    }
-
-    if (lockedQuery.data) {
       const filteredArrayLocked = lockedQuery.data.data.filter(
         (item: { actionPlan: { title: string } }) => {
           return item.actionPlan.title
@@ -117,6 +123,7 @@ const Home = () => {
       );
 
       setAcpLocked(filteredArrayLocked);
+      setAcpUnlocked(filteredArrayUnlocked);
     }
 
     return () => {
@@ -124,7 +131,7 @@ const Home = () => {
     };
   }, [search]);
 
-  const debounceOrder = (value: string, type: string) => {
+  const debounceOrder = debounce((value: string, type: string) => {
     try {
       const sortFunc = (a: ColumnData, b: ColumnData) => {
         if (type === "date") {
@@ -172,31 +179,42 @@ const Home = () => {
     } catch (error) {
       console.log(error);
     }
+  }, 300);
+
+  const handleSortOrder = ({
+    value,
+    type,
+  }: {
+    value: string;
+    type: string;
+  }) => {
+    debounceOrder(value, type);
+
+    if (type === "date") {
+      setSortOrder(value);
+      setTitleOrder("");
+    } else if (type === "title") {
+      setTitleOrder(value);
+      setSortOrder("");
+    }
   };
 
-  const handleSortOrder = debounce(
-    ({ value, type }: { value: string; type: string }) => {
-      debounceOrder(value, type);
-
-      if (type === "date") {
-        setSortOrder(value);
-        setTitleOrder('')
-      } else if (type === "title") {
-        setTitleOrder(value);
-        setSortOrder('')
-      }
-    },
-    300
-  );
-
   const debouncePricing = debounce((value: string) => {
-    const dataCopy = unlockedQuery.data.data;
+    const dataCopyUnlocked = unlockedQuery.data.data;
+    const dataCopyLocked = unlockedQuery.data.data;
 
-    const filteredData = dataCopy.filter((items: ColumnData) => {
+    const filteredDataUnlocked = dataCopyUnlocked.filter(
+      (items: ColumnData) => {
+        return items.actionPlan.pricing.pricing === value;
+      }
+    );
+
+    const filteredDataLocked = dataCopyLocked.filter((items: ColumnData) => {
       return items.actionPlan.pricing.pricing === value;
     });
 
-    setAcpUnlocked(filteredData);
+    setAcpUnlocked(filteredDataUnlocked);
+    setAcpLocked(filteredDataLocked);
   }, 300);
 
   const handlePricing = (value: string) => {
@@ -205,7 +223,7 @@ const Home = () => {
         setAcpUnlocked(unlockedQuery.data.data);
       }, 300);
 
-      resetData()
+      resetData();
       setPricingFilter("");
     } else {
       debouncePricing(value);
