@@ -3,9 +3,10 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 
 const Latest = () => {
+
   const slider = React.useRef<Slider>(null);
   var settings = { 
     dots: true,
