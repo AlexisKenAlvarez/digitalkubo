@@ -273,6 +273,8 @@ const AP = () => {
               height="25"
             ></Image>
           </Button>
+
+          {/*SEARCH BAR*/}
           <Input
             className="w-[45%] mt-4 md:mt-0 border-nav outline-0 focus-visible:ring-0 rounded-none bg-transparent"
             type="search"
@@ -414,26 +416,6 @@ const AP = () => {
                 </div>
               </div>
             </div>
-
-            <div className="md:flex items-center justify-between flex-row">
-              <div className=" flex flex-col ">
-                <h1 className=" mt-6 text-3xl font-primary text-nav font-bold ">
-                  Action Plans
-                </h1>
-                <p className=" font-secondary text-black/50">
-                  Access our free action plans
-                </p>
-              </div>
-
-              {/* SEARCH BAR */}
-              <Input
-                className="w-64 mt-4 md:mt-0 border-nav outline-0 focus-visible:ring-0"
-                type="search"
-                placeholder="Search"
-                onChange={handleSearch}
-              />
-            </div>
-
             <div className="w-full mx-auto grid 2xl:grid-cols-4 lg:grid-cols-3 gap-8 md:grid-cols-2 items-center mt-10">
               {unlockedQuery.isLoading ? (
                 <>
@@ -470,63 +452,6 @@ const AP = () => {
                           </Badge>
                         </div>
                       </div>
-                  );
-                })
-              ) : (
-                <p>No results...</p>
-              )}
-            </div>
-
-            {/* LOCKED ACTION PLANS */}
-
-            <div className="">
-              <h1 className="  mt-20 text-3xl font-primary text-nav font-bold">
-                Locked Action Plans
-              </h1>
-              <p className=" font-secondary text-black/50 max-w-[25rem]">
-                Upgrade your account to unlock all the locked action plans.
-              </p>
-            </div>
-            <div className="w-full mx-auto grid 2xl:grid-cols-4 lg:grid-cols-3 gap-8 md:grid-cols-2 items-center mt-10">
-              {lockedQuery.isLoading ? (
-                <>
-                  <ActionPlanSkeleton />
-                  <ActionPlanSkeleton />
-                  <ActionPlanSkeleton />
-                  <ActionPlanSkeleton />
-                </>
-              ) : acpLocked && acpLocked.length > 0 ? (
-                acpLocked.map((action, i) => {
-                  return (
-                    <div
-                      onClick={handleOpen}
-                      key={i}
-                      className="max-w-[24rem] w-full h-[11rem] bg-lock/40 shadow-md rounded-xl border-[1px] md:border-lock2/20 flex sm:flex-row flex-col pt-5 md:pl-5 md:border-t-[1px] border-t-[0.8rem] border-lock2"
-                    >
-                      <div className="items-end justify-center sm:flex hidden flex-shrink-0 ">
-                        <Image
-                          className="w-28"
-                          src="/locked.webp"
-                          width={102}
-                          height={138}
-                          alt="/"
-                        />
-                      </div>
-                      <div className="md:pl-3 md:pr-3 px-5">
-                        <div className="w-full block overflow-hidden">
-                          <h1 className="max-h-24 line-clamp-4 font-medium text-sm">
-                            {action.actionPlan.title}
-                          </h1>
-                        </div>
-                        <Badge className="text-black mt-2 bg-lock2/25 hover:bg-lock2/30">
-                          {action.locked ? "Locked" : "Unlocked"}
-                        </Badge>
-                        <span className="px-1"></span>
-                        <Badge className="text-black bg-lock2/25 capitalize hover:bg-lock2/30">
-                          {action.actionPlan.pricing.pricing}
-                        </Badge>
-                      </div>
-                    </div>
                   );
                 })
               ) : (
