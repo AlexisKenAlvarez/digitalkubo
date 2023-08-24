@@ -103,10 +103,10 @@ const Latest = () => {
                   x
                 </AlertDialogCancel>
                 <AlertDialogHeader>
-                  <AlertDialogTitle className="font-primary md:text-[32px] text-[24px] text-center md:px-10 leading-8">
+                  <AlertDialogTitle className="font-primary md:text-[32px] text-[28px] text-center md:px-10 leading-8">
                     Please log in first to view these contents
                   </AlertDialogTitle>
-                  <AlertDialogDescription className="font-secondary text-[#64748B] px-6 py-4 text-center">
+                  <AlertDialogDescription className="font-secondary text-[#64748B] px-2 md:px-6 py-4 text-center">
                     This content is only available for our beloved users. We
                     encourage you to create an account or login to access these
                     action plans.
