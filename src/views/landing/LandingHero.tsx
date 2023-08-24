@@ -18,7 +18,7 @@ const LandingHero = () => {
             tempore?
           </p>
 
-          <Button className="bg-button hover:bg-nav text-lg md:mt-1 md:mr-2 md:mb-2 px-6 py-4" asChild>
+          <Button className="bg-button hover:bg-nav text-lg md:mt-1 md:mr-2 md:mb-2 px-6 py-4 scroll-smooth" asChild>
             <Link href="/#latest">
               <p className="font-secondary text-[1rem]">See More</p>
             </Link>

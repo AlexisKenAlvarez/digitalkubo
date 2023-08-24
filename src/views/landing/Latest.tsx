@@ -55,7 +55,7 @@ const Latest = () => {
   };
 
   return (
-    <section className="w-full md:px-24 2xl:px-5 md:py-10 relative bg-white" id="latest">
+    <section className="w-full md:px-24 2xl:px-5 md:py-10 relative bg-white scroll-smooth" id="latest">
       <div className="max-w-[1400px] w-full mx-auto flex flex-wrap">
         <div className="w-full mx-auto py-10">
           <h1 className="text-[#D1770E] font-primary md:text-[24px] font-bold md:text-left text-center text-[24px] tracking-wide pb-4">
@@ -148,7 +148,7 @@ const Latest = () => {
               imperdiet. Duis sagittis ipsum. Praesent mauris.
             </p>
             <Button className="bg-button hover:bg-nav text-lg mt-6 mr-2 mb-2 px-6 py-4">
-              <p className="font-secondary md:text-[16px]">See More</p>
+              <Link href="/home" className="font-secondary md:text-[16px]">See More</Link>
             </Button>
           </div>
           <div className="w-full align-center h-fit hidden lg:block">
