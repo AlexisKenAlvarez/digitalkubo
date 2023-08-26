@@ -29,6 +29,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import { Checkbox } from "@/components/ui/checkbox";
+
 import { Button } from "../ui/button";
 import { Input } from "@/components/ui/input";
 import { useEffect } from "react";
@@ -50,6 +52,7 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+  const [rowSelection, setRowSelection] = React.useState({});
 
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -70,20 +73,34 @@ export function DataTable<TData, TValue>({
       sorting,
       columnFilters,
       columnVisibility,
+      rowSelection,
     },
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
   });
 
   useEffect(() => {
     table.setPageSize(pageSize);
   }, []);
 
+  const handleClick = () => {
+    var filteredRows = table.getFilteredSelectedRowModel().rows;
+    var originalItems = [];
+
+    for (var i = 0; i < filteredRows.length; i++) {
+      originalItems.push(filteredRows[i].original);
+    }
+
+    console.log(originalItems)
+  };
+
   return (
     <>
       <div className="flex md:items-center ml-auto w-full gap-3 md:justify-between md:flex-row flex-col justify-start items-start">
         <h1 className="font-primary text-2xl">{tableName}</h1>
+        <button onClick={handleClick}>Press me</button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="md:ml-auto">

@@ -19,9 +19,9 @@ const LandingHero = () => {
           </p>
 
           <Button className="bg-button hover:bg-nav text-lg md:mt-1 md:mr-2 md:mb-2 px-6 py-4" asChild>
-            <Link href="/#latest">
+            <a href="#latest">
               <p className="font-secondary text-[1rem]">See More</p>
-            </Link>
+            </a>
           </Button>
         </div>
         <div className="w-full align-center h-fit hidden md:block">

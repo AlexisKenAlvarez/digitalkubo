@@ -222,6 +222,7 @@ const Home = () => {
     if (value === pricing) {
       const resetData = debounce(() => {
         setAcpUnlocked(unlockedQuery.data.data);
+        setAcpLocked(lockedQuery.data.data);
       }, 300);
 
       resetData();

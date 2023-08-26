@@ -6,6 +6,7 @@ import Image from "next/image";
 import { GetServerSideProps } from "next";
 import axios from "axios";
 import Link from "next/link";
+import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { id, title } = ctx.query;
@@ -34,25 +35,40 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 };
 
 const Title = ({ title, link }: { title: string; link: string }) => {
-  const [docxContent, setDocxContent] = useState("");
+
+  const [downloadUrl, setDownload] = useState('')
+
+  const [docxContent, setDocxContent] = useState([
+    {
+      uri: link,
+      fileType: "pdf",
+      fileName: title,
+    },
+  ]);
 
   useEffect(() => {
-    // Fetch the DOCX file
-    fetch(link)
-      .then((response) => response.arrayBuffer())
-      .then((arrayBuffer) => {
-        // Convert the array buffer to a base64-encoded string
-        const base64Data = btoa(
-          new Uint8Array(arrayBuffer).reduce(
-            (data, byte) => data + String.fromCharCode(byte),
-            ""
-          )
+    const insertStringAfterSubstring = (
+      originalString: string,
+      stringToInsert: string,
+      substring: string | any[]
+    ) => {
+      const position = originalString.indexOf(substring as string);
+      if (position !== -1) {
+        return (
+          originalString.slice(0, position + substring.length) +
+          stringToInsert +
+          originalString.slice(position + substring.length)
         );
-        setDocxContent(base64Data);
-      })
-      .catch((error) => {
-        console.error("Error fetching DOCX:", error);
-      });
+      }
+      return originalString;
+    };
+    const modifiedUrl = insertStringAfterSubstring(
+      link,
+      "fl_attachment/",
+      "upload/"
+    );
+
+    setDownload(modifiedUrl)
   }, []);
 
   return (
@@ -82,16 +98,13 @@ const Title = ({ title, link }: { title: string; link: string }) => {
         />
         <div className="flex  lg:flex-row flex-col pb-24 pt-14 container">
           <div className="w-50% h-screen border z-10">
-            <div className="w-[50rem] h-full">
-              <iframe
-              className="w-full h-full"
-                src={`https://drive.google.com/viewerng/viewer?embedded=true&url=${link}`}
-              />
+            <div className="w-[50rem] h-full overflow-hidden relative">
+              <iframe src={`${link}#toolbar=0&navpanes=0`} className="w-full h-full overflow-auto" />
             </div>
           </div>
           <div className="w-50% xl:h-screen pt-4 z-10">
             <div className="xl:w-[40rem] flex flex-col gap-y-4">
-              <span className="lg:pl-8">
+              <a href={downloadUrl} download={title} className="lg:pl-8">
                 <Button className="bg-nav hover:bg-button pl-2 py-6">
                   <span className="pl-2">
                     <AiOutlineFilePdf size={27} />
@@ -100,7 +113,7 @@ const Title = ({ title, link }: { title: string; link: string }) => {
                     EXPORT AS PDF
                   </p>
                 </Button>
-              </span>
+              </a>
               <span className="lg:pl-8">
                 <Button className="bg-nav hover:bg-button pl-2 py-6">
                   <span className="pl-2">
