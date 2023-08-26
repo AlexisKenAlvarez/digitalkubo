@@ -36,12 +36,6 @@ const faq = () => {
             <h1 className="text-3xl md:text-5xl lg:text-7xl text-center  text-nav flex-col font-bold font-primary p-8 ">
               FREQUENTLY ASKED QUESTIONS
             </h1>
-            <p className="text-black/70 font-inter text-xl">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente
-              dolores quisquam fugit perspiciatis quae vel? Quas, modi ipsum.
-              Magni distinctio nam maiores. Deserunt reiciendis, omnis maxime
-              fuga molestias ullam minima.
-            </p>
           </div>
           <div className="w-[50%] lg:block hidden">
             <Image
@@ -49,7 +43,7 @@ const faq = () => {
               alt="kubo"
               width="1000"
               height="1000"
-              className="w-[45rem] mt-10 rounded-md"
+              className="w-[45rem] mt-5 rounded-md"
             />
           </div>
         </div>
