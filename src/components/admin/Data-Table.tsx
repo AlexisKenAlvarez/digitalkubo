@@ -34,12 +34,17 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "../ui/button";
 import { Input } from "@/components/ui/input";
 import { useEffect } from "react";
+import axios from "axios";
+import { ColumnData } from "./Columns";
+import { toast } from "react-toastify";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   pageSize: number;
   tableName: string;
+  access: string;
 }
 
 export function DataTable<TData, TValue>({
@@ -47,15 +52,19 @@ export function DataTable<TData, TValue>({
   data,
   pageSize,
   tableName,
+  access,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
-  const [rowSelection, setRowSelection] = React.useState({});
 
+  const [selected, setSelected] = React.useState(false);
+  const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
+
+  const queryClient = useQueryClient();
 
   const table = useReactTable({
     data,
@@ -85,25 +94,72 @@ export function DataTable<TData, TValue>({
     table.setPageSize(pageSize);
   }, []);
 
-  const handleClick = () => {
+  useEffect(() => {
+    if (table.getFilteredSelectedRowModel().rows.length > 0) {
+      setSelected(true);
+    } else {
+      setSelected(false);
+    }
+  }, [table.getFilteredSelectedRowModel().rows]);
+
+  const deleteMutate = useMutation({
+    mutationFn: async () => {
+      return await deleteQuery();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["adminData", { type: access }]);
+      console.log(access);
+    },
+  });
+
+  const deleteQuery = () => {
     var filteredRows = table.getFilteredSelectedRowModel().rows;
-    var originalItems = [];
+    var originalItems: ColumnData[] = [];
 
     for (var i = 0; i < filteredRows.length; i++) {
-      originalItems.push(filteredRows[i].original);
+      originalItems.push(filteredRows[i].original as ColumnData);
     }
 
-    console.log(originalItems)
+    const deleteQuery = originalItems.map(async (item) => {
+      const data = await axios.post("/api/deletePdf", {
+        public_id: item.actionPlan.publicId,
+      });
+      return data;
+    });
+
+    const myPromise = Promise.all(deleteQuery);
+
+    toast.promise(myPromise, {
+      pending:
+        originalItems.length > 1
+          ? `Deleting ${originalItems.length} action plans...`
+          : "Deleting 1 file...",
+      success: "Successfuly deleted!",
+      error: "Something went wrong. Please try again later.",
+    });
+
+    return myPromise;
+  };
+
+  const handleDelete = () => {
+    deleteMutate.mutate();
   };
 
   return (
     <>
-      <div className="flex md:items-center ml-auto w-full gap-3 md:justify-between md:flex-row flex-col justify-start items-start">
+      <div className="flex lg:items-center ml-auto w-full gap-3 lg:justify-between lg:flex-row flex-col justify-start items-start">
         <h1 className="font-primary text-2xl">{tableName}</h1>
-        <button onClick={handleClick}>Press me</button>
+
+        <Button
+          disabled={!selected}
+          className="lg:ml-auto ml-0"
+          onClick={handleDelete}
+        >
+          Delete
+        </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="md:ml-auto">
+            <Button variant="outline" className="">
               Columns
             </Button>
           </DropdownMenuTrigger>

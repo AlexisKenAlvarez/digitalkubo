@@ -71,7 +71,7 @@ const AdminCreate = () => {
       setFile(uploadedFile);
       setError("");
 
-      if (uploadedFile.type !== "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+      if (uploadedFile.type !== "application/pdf") {
         setError("File must be a type of pdf.");
       }
     }
@@ -298,6 +298,7 @@ const AdminCreate = () => {
                           onValueChange={(e) => {
                             field.onChange(e);
                           }}
+                          value={field.value}
                         >
                           <FormControl>
                             <SelectTrigger>

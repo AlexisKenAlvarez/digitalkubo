@@ -27,8 +27,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
         email: session?.user.email,
       });
 
-      console.log(data)
-
       if (data.data.success) {
         return {
           props: {
@@ -106,6 +104,7 @@ const Index = () => {
                   data={unlockedPdf.data.data}
                   pageSize={REACT_TABLE_PAGE_SIZE}
                   tableName="Unlocked Action Plans"
+                  access="unlocked"
                 />
               )}
             </div>
@@ -119,6 +118,7 @@ const Index = () => {
                   data={lockedPdf.data?.data}
                   pageSize={REACT_TABLE_PAGE_SIZE}
                   tableName="Locked Action Plans"
+                  access="locked"
                 />
               )}
             </div>

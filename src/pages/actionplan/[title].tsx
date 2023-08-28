@@ -35,8 +35,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 };
 
 const Title = ({ title, link }: { title: string; link: string }) => {
-
-  const [downloadUrl, setDownload] = useState('')
+  const [downloadUrl, setDownload] = useState("");
 
   const [docxContent, setDocxContent] = useState([
     {
@@ -68,7 +67,7 @@ const Title = ({ title, link }: { title: string; link: string }) => {
       "upload/"
     );
 
-    setDownload(modifiedUrl)
+    setDownload(modifiedUrl);
   }, []);
 
   return (
@@ -81,7 +80,7 @@ const Title = ({ title, link }: { title: string; link: string }) => {
               <h1 className="font-secondary">Back</h1>
             </Link>
           </span>
-          <h1 className="text-nav font-bold font-primary pt-4 md:text-3xl text-4xl">
+          <h1 className="text-nav font-bold font-primary pt-4 text-xl sm:text-2xl  md:text-3xl">
             {title}
           </h1>
         </div>
@@ -97,33 +96,26 @@ const Title = ({ title, link }: { title: string; link: string }) => {
           className="absolute top-0 left-0 object cover w-full h-full object-top"
         />
         <div className="flex  lg:flex-row flex-col pb-24 pt-14 container">
-          <div className="w-50% h-screen border z-10">
-            <div className="w-[50rem] h-full overflow-hidden relative">
-              <iframe src={`${link}#toolbar=0&navpanes=0`} className="w-full h-full overflow-auto" />
+          <div className="w-full h-screen border z-10">
+            <div className="w-full h-full overflow-hidden relative">
+              <iframe
+                src={`${link}#toolbar=0&navpanes=0`}
+                className="w-full h-full overflow-auto"
+              />
             </div>
           </div>
-          <div className="w-50% xl:h-screen pt-4 z-10">
+          <div className="w-full pt-4 z-10">
             <div className="xl:w-[40rem] flex flex-col gap-y-4">
               <a href={downloadUrl} download={title} className="lg:pl-8">
-                <Button className="bg-nav hover:bg-button pl-2 py-6">
+                <Button className="pl-2 py-6">
                   <span className="pl-2">
                     <AiOutlineFilePdf size={27} />
                   </span>
                   <p className="font-secondary font-bold text-sm px-4">
-                    EXPORT AS PDF
+                    Download PDF
                   </p>
                 </Button>
               </a>
-              <span className="lg:pl-8">
-                <Button className="bg-nav hover:bg-button pl-2 py-6">
-                  <span className="pl-2">
-                    <AiOutlineFileWord size={27} />
-                  </span>
-                  <p className="font-secondary font-bold text-sm px-2">
-                    EXPORT AS WORD
-                  </p>
-                </Button>
-              </span>
             </div>
           </div>
         </div>

@@ -6,12 +6,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { email, password } = await req.body;
+  const { password, email } = req.body;
 
   async function checkUser(password: string, hashed: string) {
     const match = await bcrypt.compare(password, hashed);
-
-    console.log(match);
 
     if (match) {
       return true;
@@ -34,14 +32,13 @@ export default async function handler(
       if (result) {
         res.status(200).json({ success: true, data });
       } else {
-        res.status(200).json({ success: false, data });
-
+        res.status(200).json({ success: false });
       }
     } else {
       res.status(200).json({ success: false });
     }
-
   } catch (error) {
+    console.log(error);
     res.status(400).json({ error });
   }
 }

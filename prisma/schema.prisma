@@ -69,6 +69,8 @@ model ActionPlans {
   createdAt DateTime         @default(now())
   locked   ActionPlanAccess?
   pricing  ActionPlanPrice?
+
+  @@index([publicId])
 }
 
 model ActionPlanAccess {
