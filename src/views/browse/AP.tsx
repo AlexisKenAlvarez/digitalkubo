@@ -427,7 +427,7 @@ const AP = () => {
               ) : acpUnlocked && acpUnlocked.length > 0 ? (
                 acpUnlocked.map((action, i) => {
                   return (
-                      <div className="max-w-[24rem] w-full h-[11rem] bg-nav/10 shadow-md rounded-xl border-[1px] md:border-nav/20 flex sm:flex-row flex-col pt-5 md:pl-5 md:border-t-0 border-t-[0.8rem] border-nav" onClick={handleOpen}>
+                      <div className="max-w-[24rem] w-full h-[11rem] bg-nav/10 shadow-md rounded-xl border-[1px] md:border-nav/20 flex sm:flex-row flex-col pt-5 md:pl-5 md:border-t-0 border-t-[0.8rem] border-nav" onClick={handleOpen} key={i}>
                         <div className="items-end justify-center sm:flex hidden flex-shrink-0 ">
                           <Image
                             className="w-28"

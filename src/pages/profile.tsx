@@ -127,7 +127,7 @@ const Profile = () => {
                 <AlertDialogHeader>
                   <AlertDialogTitle>Email Address</AlertDialogTitle>
                   <AlertDialogDescription>
-                    This email is used to login to your account. You can't
+                    This email is used to login to your account. You can&apos;t
                     change this address.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
