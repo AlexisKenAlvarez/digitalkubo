@@ -89,17 +89,17 @@ const Profile = () => {
 
   const handleOpen = () => {
     setIsPasswordOpen(true);
-  }
+  };
 
   const handleClose = () => {
     setIsPasswordOpen(false);
-  }
+  };
 
   return (
     <div className="pt-4 container pb-20 h-screen ">
       <DashNav />
 
-      <div className="pl-8 md:flex flex flex-col ">
+      <div className="md:flex flex flex-col ">
         <div className=" flex flex-col pt-10">
           <h1 className=" mt-6 text-4xl font-primary text-nav font-bold ">
             Profile
@@ -112,15 +112,15 @@ const Profile = () => {
           <div className="flex flex-col gap-3 w-full">
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <button className="flex items-center w-full">
+                <button className="flex md:items-center w-full md:flex-row flex-col">
                   <h1 className="text-nav font-primary  font-bold min-w-[16rem] flex items-start">
                     Email:{" "}
                   </h1>
-                  <p className="text-base text-black/50 font-secondary font-medium ml-2">
+                  <p className="text-base text-black/50 font-secondary font-medium">
                     {session?.user?.email}
                   </p>
 
-                  <MdOutlineKeyboardArrowRight className="ml-auto text-lg" />
+                  <MdOutlineKeyboardArrowRight className="ml-auto text-lg md:block hidden" />
                 </button>
               </AlertDialogTrigger>
               <AlertDialogContent>
@@ -142,15 +142,18 @@ const Profile = () => {
             {session && !session.user.image ? (
               <>
                 <AlertDialog onOpenChange={handleSheet} open={isPasswordOpen}>
-                  <AlertDialogTrigger asChild >
-                    <button className="flex items-center w-full" onClick={handleOpen}>
+                  <AlertDialogTrigger asChild>
+                    <button
+                      className="flex md:items-center w-full md:flex-row flex-col"
+                      onClick={handleOpen}
+                    >
                       <h1 className="text-nav font-primary font-bold min-w-[16rem] flex items-start">
                         Password:
                       </h1>
-                      <p className="text-base text-black/50 font-secondary font-medium ml-2">
+                      <p className="text-base text-black/50 font-secondary font-medium">
                         *************
                       </p>
-                      <MdOutlineKeyboardArrowRight className="ml-auto text-lg" />
+                      <MdOutlineKeyboardArrowRight className="ml-auto text-lg md:block hidden" />
                     </button>
                   </AlertDialogTrigger>
                   {!correct ? (
@@ -212,18 +215,21 @@ const Profile = () => {
                       </Form>
                     </AlertDialogContent>
                   ) : (
-                    <EditPassword email={session?.user.email} handleDialog={setIsPasswordOpen} />
+                    <EditPassword
+                      email={session?.user.email}
+                      handleDialog={setIsPasswordOpen}
+                    />
                   )}
                 </AlertDialog>
 
                 <Separator />
               </>
             ) : null}
-            <div className="flex items-center">
+            <div className="md:flex items-center md:flex-row flex-col">
               <h1 className="text-nav font-primary  font-bold min-w-[16rem]">
                 Logged in via:
               </h1>
-              <p className="text-base text-black/50 font-secondary font-medium ml-2">
+              <p className="text-base text-black/50 font-secondary font-medium">
                 {session && session.user.image ? "Google" : "Credentials"}
               </p>
             </div>

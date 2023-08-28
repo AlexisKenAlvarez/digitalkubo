@@ -99,7 +99,7 @@ const EditPassword = ({ email, handleDialog }: { email: string, handleDialog: Di
       <Form {...editPasswordForm}>
         <form
           onSubmit={handleSubmit(updatePassword)}
-          className="flex flex-col gap-y-4"
+          className="flex flex-col"
         >
           <FormField
             control={control}
@@ -119,7 +119,7 @@ const EditPassword = ({ email, handleDialog }: { email: string, handleDialog: Di
                   <div className="">
                     <Input
                       id="password2"
-                      placeholder="********"
+                      placeholder="Enter New Password"
                       autoComplete="off"
                       autoFocus
                       maxLength={100}
@@ -150,7 +150,7 @@ const EditPassword = ({ email, handleDialog }: { email: string, handleDialog: Di
                   <div className="">
                     <Input
                       id="password"
-                      placeholder="********"
+                      placeholder="Confirm Password"
                       autoComplete="off"
                       autoFocus
                       maxLength={100}
@@ -162,7 +162,7 @@ const EditPassword = ({ email, handleDialog }: { email: string, handleDialog: Di
               </FormItem>
             )}
           />
-          <AlertDialogFooter className="w-fit">
+          <AlertDialogFooter className="w-fit mt-4">
             <Button type="submit" disabled={debounce}>
               Continue
             </Button>
