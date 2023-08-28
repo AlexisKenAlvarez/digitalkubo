@@ -40,13 +40,10 @@ export const authOptions: NextAuthOptions = {
           }
         );
 
-        console.log(data);
-
         if (data.success) {
           const user = {
             email,
           };
-
           return user as any;
         } else {
           return null;

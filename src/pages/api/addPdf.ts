@@ -49,7 +49,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       const data = await cloudinary.uploader.unsigned_upload(
         files.file[0].filepath,
         fields.upload_preset[0],
-        { folder: "digitalkubo" }
+        { folder: "digitalkubo", resource_type: "auto" }
       );
 
       if (data) {

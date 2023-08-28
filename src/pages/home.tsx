@@ -11,7 +11,6 @@ import { debounce } from "lodash";
 import { FaFilter } from "react-icons/fa";
 import { BiSolidDownArrow } from "react-icons/bi";
 import { dateFilter, titleFilter, pricingFilter } from "@/lib/list";
-import { Column } from "@tanstack/react-table";
 import Link from "next/link";
 
 const Home = () => {
@@ -222,6 +221,7 @@ const Home = () => {
     if (value === pricing) {
       const resetData = debounce(() => {
         setAcpUnlocked(unlockedQuery.data.data);
+        setAcpLocked(lockedQuery.data.data);
       }, 300);
 
       resetData();
@@ -358,7 +358,7 @@ const Home = () => {
                 Action Plans
               </h1>
               <p className=" font-secondary text-black/50">
-                Acess our free action plans
+                Access our free action plans
               </p>
             </div>
 

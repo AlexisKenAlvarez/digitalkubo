@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { KeyboardEvent, useEffect, useState } from "react";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,6 +14,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { TbLoaderQuarter } from "react-icons/tb";
 import Image from "next/image";
+import { handleEnter } from "@/lib/client-methods";
 
 const Page = () => {
   const [debounce, setDebounce] = useState(false);
@@ -79,6 +80,8 @@ const Page = () => {
     );
   }
 
+
+
   return (
     <section className="w-full min-h-screen h-auto sm:py-4 relative sm:px-5 sm:flex sm:items-center">
       {/* <Image width="400" height="400" src="/logo2.webp" alt="" className="md:w-20 w-16 mx-auto sm:mt-4" /> */}
@@ -114,6 +117,7 @@ const Page = () => {
                     autoComplete="false"
                     autoFocus={items.id === "email" ? true : false}
                     className="outline-none"
+                    onKeyUp={(e) => {handleEnter(e, handleSubmit(submit))}}
                   />
 
                   <div className="text-red-400 text-sm">

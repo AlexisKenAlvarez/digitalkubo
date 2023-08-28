@@ -42,7 +42,7 @@ const Offer = () => {
                     <div className="mx-auto w-[50%] md:w-full md:py-4 md:px-20">
                       <div className="">
                         <Image
-                          className="md:px-22"
+                          className="md:px-22 hover:-scale-x-100 transition"
                           width="500"
                           height="500"
                           alt={`Template${i}`}

@@ -26,4 +26,8 @@
         white-space: pre-line;
     }
 
+    body, html {
+        scroll-behavior: smooth;
+    }
+
 }

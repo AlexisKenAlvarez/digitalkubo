@@ -86,7 +86,8 @@ const ChangePassword = ({ email }: { email: string }) => {
             setDebounce(true)
             const changePassword = await fetchData('changePassword', {
                 email,
-                password: data.password
+                password: data.password,
+                withToken: true
             })
 
             if (changePassword.success) {

@@ -6,6 +6,7 @@ import { Button } from "../ui/button";
 import React from "react";
 import EditData from "./Edit-Data";
 import AdminDropDown from "./AdminDropDown";
+import { Checkbox } from "../ui/checkbox";
 
 export type ActionPlan = {
   fileName: string;
@@ -27,6 +28,25 @@ export type ColumnData = {
 };
 
 export const Columns: ColumnDef<ColumnData>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={table.getIsAllPageRowsSelected()}
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
   {
     accessorKey: "title",
     header: ({ column }) => {
