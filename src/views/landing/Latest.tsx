@@ -145,7 +145,7 @@ const Latest = () => {
               src="/business.webp"
             ></Image>
           </div>
-          <div className="w-full text-left">
+          <div className="w-full text-center md:text-left ">
             <h1 className="text-[#D1770E] font-primary md:text-[40px] font-bold text-[24px] tracking-wide">
               PROMOTE YOUR BUSINESS
             </h1>
