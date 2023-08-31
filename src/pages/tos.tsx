@@ -3,11 +3,13 @@ const tos = () => {
     <section className="w-full bg-white scroll-smooth">
       <div className="max-w-[1400px] w-full mx-auto flex flex-wrap px-6 md:px-20">
         <div className="w-full mx-auto">
-          <h1 className="text-[#D1770E] font-primary md:text-[64px] font-bold text-center text-[32px] tracking-wide pt-10 pb-4">TERMS AND CONDITIONS</h1>
+          <h1 className="text-[#D1770E] font-primary md:text-[64px] font-bold text-center text-[32px] tracking-wide pt-10 pb-4">
+            TERMS AND CONDITIONS
+          </h1>
 
           <p className="font-secondary text-justify py-4">
             These terms and conditions outline the rules and regulations for the
-            use of DigitalKubo's Website, located at www.digitalkubo.com.
+            use of DigitalKubo&apos;s Website, located at www.digitalkubo.com.
           </p>
 
           <p className="font-secondary text-justify py-4">
@@ -91,7 +93,9 @@ const tos = () => {
             causes breach of these Terms and Conditions.
           </p>
 
-          <p className="font-secondary text-justify py-4">You warrant and represent that:</p>
+          <p className="font-secondary text-justify py-4">
+            You warrant and represent that:
+          </p>
 
           <ol>
             <li>
@@ -197,7 +201,9 @@ const tos = () => {
             to link. Wait 2-3 weeks for a response.
           </p>
 
-          <p className="font-secondary text-justify py-4">Approved organizations may hyperlink to our Website as follows:</p>
+          <p className="font-secondary text-justify py-4">
+            Approved organizations may hyperlink to our Website as follows:
+          </p>
 
           <ol>
             <li>By use of our corporate name; or</li>
