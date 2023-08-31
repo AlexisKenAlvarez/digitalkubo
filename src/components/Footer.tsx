@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const Footer = () => {
   return (
     <footer className="w-full p-5 h-auto  text-white flex items-center justify-between">
@@ -6,7 +8,7 @@ const Footer = () => {
       </p>
       <p className="text-black text-sm tracking-widest ">
         {" "}
-        PRIVACY POLICY | TERMS AND CONDITIONS
+        <Link href="/privacy" className="hover:text-[#D1770E]">PRIVACY POLICY</Link> | <Link href="/tos" className="hover:text-[#D1770E]">TERMS AND CONDITIONS</Link>
       </p>
     </footer>
   );
