@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import { TbLoaderQuarter } from "react-icons/tb";
 import { useFetchDebounce } from "@/components/handlers/fetchDebounce";
 import { useSession } from "next-auth/react";
+import { handleEnter } from "@/lib/client-methods";
 
 const Page = () => {
   const { data: fetchData, debounce, setDebounce } = useFetchDebounce();
@@ -117,6 +118,7 @@ const Page = () => {
                     autoComplete="false"
                     autoFocus={items.id === "email" ? true : false}
                     className="outline-none"
+                    onKeyUp={(e) => {handleEnter(e, handleSubmit(submit))}}
                   />
 
                   <div className="text-red-400 text-sm">

@@ -18,7 +18,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         const exist = await prisma.users.findUnique({
             where: {
-                email
+                email,
+                accountType: 1
             }
         })
 

@@ -18,7 +18,6 @@ import {
 import Link from "next/link";
 
 const Latest = () => {
-
   const slider = React.useRef<Slider>(null);
   var settings = {
     dots: true,
@@ -55,10 +54,13 @@ const Latest = () => {
   };
 
   return (
-    <section className="w-full md:px-24 2xl:px-5 md:py-10 relative bg-white scroll-smooth" id="latest">
+    <section
+      className="w-full md:px-24 2xl:px-5 md:py-10 relative bg-white scroll-smooth"
+      id="latest"
+    >
       <div className="max-w-[1400px] w-full mx-auto flex flex-wrap">
         <div className="w-full mx-auto py-10">
-          <h1 className="text-[#D1770E] font-primary md:text-[24px] font-bold md:text-left text-center text-[24px] tracking-wide pb-4">
+          <h1 className="text-[#D1770E] font-primary md:text-[24px] font-bold text-center text-[24px] tracking-wide pb-4">
             LATEST ACTION PLAN
           </h1>
           <div className="flex items-center justify-center">
@@ -134,11 +136,20 @@ const Latest = () => {
           </div>
         </div>
         <div className="max-w-[1400px] w-full mx-auto flex-wrap md:flex-nowrap md:flex py-16 gap-x-10">
-          <div className="w-full text-center">
-            <h1 className="text-[#D1770E] font-primary md:text-[40px] font-bold md:text-center text-[24px] tracking-wide">
+          <div className="w-full align-center h-fit hidden lg:block">
+            <Image
+              className="mx-auto hidden md:block"
+              width="700"
+              height="600"
+              alt="Business"
+              src="/business.webp"
+            ></Image>
+          </div>
+          <div className="w-full text-left">
+            <h1 className="text-[#D1770E] font-primary md:text-[40px] font-bold text-[24px] tracking-wide">
               PROMOTE YOUR BUSINESS
             </h1>
-            <p className="text-[#0000004f] font-secondary md:text-[20px] font-medium md:text-justify text-[16px] sm:text-[16px] px-5 py-5">
+            <p className="text-[#0000004f] font-secondary md:text-[20px] font-medium md:text-justify text-[16px] sm:text-[16px]">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
               nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi.
               Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum.
@@ -148,17 +159,10 @@ const Latest = () => {
               imperdiet. Duis sagittis ipsum. Praesent mauris.
             </p>
             <Button className="bg-button hover:bg-nav text-lg mt-6 mr-2 mb-2 px-6 py-4">
-              <Link href="/home" className="font-secondary md:text-[16px]">See More</Link>
+              <Link href="/home" className="font-secondary md:text-[16px]">
+                See More
+              </Link>
             </Button>
-          </div>
-          <div className="w-full align-center h-fit hidden lg:block">
-            <Image
-              className="mx-auto hidden md:block"
-              width="700"
-              height="600"
-              alt="Business"
-              src="/business.webp"
-            ></Image>
           </div>
         </div>
       </div>
