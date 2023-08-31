@@ -382,7 +382,10 @@ const Home = () => {
             ) : acpUnlocked && acpUnlocked.length > 0 ? (
               acpUnlocked.map((action, i) => {
                 return (
-                  <Link href={`/actionplan/${action.actionPlan.title}?id=${action.actionPlan.id}`} key={i}>
+                  <Link
+                    href={`/actionplan/${action.actionPlan.title}?id=${action.actionPlan.id}`}
+                    key={i}
+                  >
                     <div className="max-w-[24rem] w-full h-[11rem] bg-nav/10 shadow-md rounded-xl border-[1px] md:border-nav/20 flex sm:flex-row flex-col pt-5 md:pl-5 md:border-t-0 border-t-[0.8rem] border-nav">
                       <div className="items-end justify-center sm:flex hidden flex-shrink-0 ">
                         <Image
@@ -437,34 +440,36 @@ const Home = () => {
             ) : acpLocked && acpLocked.length > 0 ? (
               acpLocked.map((action, i) => {
                 return (
-                  <div
+                  <Link
+                    href={`/actionplan/${action.actionPlan.title}?id=${action.actionPlan.id}`}
                     key={i}
-                    className="max-w-[24rem] w-full h-[11rem] bg-lock/40 shadow-md rounded-xl border-[1px] md:border-lock2/20 flex sm:flex-row flex-col pt-5 md:pl-5 md:border-t-[1px] border-t-[0.8rem] border-lock2"
                   >
-                    <div className="items-end justify-center sm:flex hidden flex-shrink-0 ">
-                      <Image
-                        className="w-28"
-                        src="/locked.webp"
-                        width={102}
-                        height={138}
-                        alt="/"
-                      />
-                    </div>
-                    <div className="md:pl-3 md:pr-3 px-5">
-                      <div className="w-full block overflow-hidden">
-                        <h1 className="max-h-24 line-clamp-4 font-medium text-sm">
-                          {action.actionPlan.title}
-                        </h1>
+                    <div className="max-w-[24rem] w-full h-[11rem] bg-lock/40 shadow-md rounded-xl border-[1px] md:border-lock2/20 flex sm:flex-row flex-col pt-5 md:pl-5 md:border-t-[1px] border-t-[0.8rem] border-lock2">
+                      <div className="items-end justify-center sm:flex hidden flex-shrink-0 ">
+                        <Image
+                          className="w-28"
+                          src="/locked.webp"
+                          width={102}
+                          height={138}
+                          alt="/"
+                        />
                       </div>
-                      <Badge className="text-black mt-2 bg-lock2/25 hover:bg-lock2/30">
-                        {action.locked ? "Locked" : "Unlocked"}
-                      </Badge>
-                      <span className="px-1"></span>
-                      <Badge className="text-black bg-lock2/25 capitalize hover:bg-lock2/30">
-                        {action.actionPlan.pricing.pricing}
-                      </Badge>
+                      <div className="md:pl-3 md:pr-3 px-5">
+                        <div className="w-full block overflow-hidden">
+                          <h1 className="max-h-24 line-clamp-4 font-medium text-sm">
+                            {action.actionPlan.title}
+                          </h1>
+                        </div>
+                        <Badge className="text-black mt-2 bg-lock2/25 hover:bg-lock2/30">
+                          {action.locked ? "Locked" : "Unlocked"}
+                        </Badge>
+                        <span className="px-1"></span>
+                        <Badge className="text-black bg-lock2/25 capitalize hover:bg-lock2/30">
+                          {action.actionPlan.pricing.pricing}
+                        </Badge>
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 );
               })
             ) : (

@@ -10,6 +10,7 @@ import { TbLoaderQuarter } from 'react-icons/tb'
 import { useFetchDebounce } from "@/components/handlers/fetchDebounce";
 import { toast } from 'react-toastify';
 import axios from "axios"
+import { handleEnter } from "@/lib/client-methods"
 
 interface ChangePasswordParams {
     token: string,
@@ -97,7 +98,6 @@ const ChangePassword = ({ email }: { email: string }) => {
                 setDebounce(false)
             }
         }
-
     }
 
     return (
@@ -120,6 +120,7 @@ const ChangePassword = ({ email }: { email: string }) => {
                                     id={items.label}
                                     placeholder={items.placeholder}
                                     autoComplete="false"
+                                    onKeyUp={(e) => {handleEnter(e, handleSubmit(submit))}}
                                     autoFocus={items.id === 'password' ? true : false}
                                     className="outline-none" />
 

@@ -30,6 +30,7 @@ model Users {
   ForgotToken ForgotToken?
 
   @@index([accountType])
+  @@index([email])
 }
 
 model ForgotToken {
