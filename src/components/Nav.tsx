@@ -83,7 +83,7 @@ const Nav = () => {
             <DashboardMobile navDesktopActive={navDesktopActive} />
             {navList.map((items, i) => {
               return (
-                <a href={`#${items.slug}`} className="w-full h-full" key={i}>
+                <a href={`${items.slug}`} className="w-full h-full" key={i}>
                   <motion.li
                     initial={{ x: 100, opacity: 0 }}
                     animate={navDesktopActive ? { x: 0, opacity: 1 } : {}}
