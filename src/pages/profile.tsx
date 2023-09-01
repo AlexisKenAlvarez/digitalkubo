@@ -31,6 +31,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import EditPassword from "@/components/EditPassword";
+import { handleEnter } from "@/lib/client-methods";
 
 const Profile = () => {
   const { data: session } = useSession();
@@ -197,6 +198,7 @@ const Profile = () => {
                                       autoFocus
                                       maxLength={100}
                                       type="password"
+                                      onKeyUp={(e) => {handleEnter(e, checkPasswordForm.handleSubmit(verifyPassword))}}
                                       {...field}
                                     />
                                   </div>

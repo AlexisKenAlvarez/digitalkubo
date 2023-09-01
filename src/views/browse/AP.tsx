@@ -254,7 +254,7 @@ const AP = () => {
   };
   return (
     <section className="w-full">
-      <div className="w-full" id="AP">
+      <div className="w-full scroll-smooth" id="AP">
         <div className="w-full text-center">
           <h1 className="font-primary text-[#D1770E] text-[30px] md:text-[60px] lg:text-[80px] font-bold px-4 py-2">
             ACTION PLANS
@@ -416,7 +416,8 @@ const AP = () => {
                 </div>
               </div>
             </div>
-            <div className="w-full mx-auto grid 2xl:grid-cols-4 lg:grid-cols-3 gap-8 md:grid-cols-2 items-center mt-10">
+            <p className="font-primary font-medium md:text-[18px] mt-2">Most Suggested</p>
+            <div className="w-full mx-auto grid 2xl:grid-cols-4 lg:grid-cols-3 gap-8 md:grid-cols-2 items-center mt-5">
               {unlockedQuery.isLoading ? (
                 <>
                   <ActionPlanSkeleton />

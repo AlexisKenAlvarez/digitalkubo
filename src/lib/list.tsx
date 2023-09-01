@@ -1,4 +1,4 @@
-import { HelpCircle, HelpingHand, Phone } from "lucide-react";
+import { HelpCircle, HelpingHand, Lamp, Phone } from "lucide-react";
 import { BiSolidDashboard, BiSolidPlusSquare } from "react-icons/bi";
 
 export const registerList: inputInterface[] = [
@@ -63,14 +63,9 @@ export const changeList: inputInterface[] = [
 
 export const navList = [
   {
-    label: "Guides and Help",
-    slug: "/guides",
-    icon: <HelpingHand className="mr-2 h-4 w-4" />,
-  },
-  {
-    label: "Contact",
-    slug: "/contact",
-    icon: <Phone className="mr-2 h-4 w-4" />,
+    label: "About",
+    slug: "/about",
+    icon: <Lamp className="mr-2 h-4 w-4" />,
   },
   {
     label: "Faq",

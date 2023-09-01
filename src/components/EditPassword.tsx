@@ -23,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { handleEnter } from "@/lib/client-methods";
 
 const EditPassword = ({ email, handleDialog }: { email: string, handleDialog: Dispatch<SetStateAction<boolean>> }) => {
   const [debounce, setDebounce] = useState(false);
@@ -124,6 +125,7 @@ const EditPassword = ({ email, handleDialog }: { email: string, handleDialog: Di
                       autoFocus
                       maxLength={100}
                       type="password"
+                      onKeyUp={(e) => {handleEnter(e, handleSubmit(updatePassword))}}
                       {...field}
                     />
                   </div>
@@ -155,6 +157,7 @@ const EditPassword = ({ email, handleDialog }: { email: string, handleDialog: Di
                       autoFocus
                       maxLength={100}
                       type="password"
+                      onKeyUp={(e) => {handleEnter(e, handleSubmit(updatePassword))}}
                       {...field}
                     />
                   </div>
