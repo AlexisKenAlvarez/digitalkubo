@@ -116,6 +116,17 @@ const Title = ({ title, link }: { title: string; link: string }) => {
                   </p>
                 </Button>
               </a>
+
+              <a href={link} target="_blank" rel="noopener noreferrer" className="lg:pl-8">
+                <Button className="pl-2 py-6">
+                  <span className="pl-2">
+                    <AiOutlineFilePdf size={27} />
+                  </span>
+                  <p className="font-secondary font-bold text-sm px-4">
+                    Open PDF
+                  </p>
+                </Button>
+              </a>
             </div>
           </div>
         </div>
